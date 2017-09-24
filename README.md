@@ -1,7 +1,7 @@
 # IRA
 A discord bot made for the art heaven server
 
-##Credits
+## Credits
 
 IRA character made by Divineluke
 
