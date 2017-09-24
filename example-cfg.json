@@ -1,0 +1,16 @@
+{
+  "prefix":"!",
+  "modrole":"mod perms role id",
+  "version":"1.0",
+  "afterhourstext":"afterhours text channel id",
+  "afterhoursvoice":"afterhours voice channel id",
+  "logs":"logs channel id",
+  "shitpost":"shitpost-central channel id",
+  "token":"bot account token",
+  "owner":"owners user id",
+  "guildid":"guild id",
+  "ratelimitmessage":3000,
+  "ratelimit":3000,
+  "heartbeat":"heartbeat channel if",
+  "ytkey":"Youtbe api key"
+}
