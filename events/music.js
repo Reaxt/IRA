@@ -4,6 +4,7 @@ const events = require("events")
 const ytdl = require('ytdl-core');
 var music = new events();
 var ytID = require("get-youtube-id")
+global.skip = false
 music.on("play", (message) =>{
   global.voteusers = []
   global.votes = 0
@@ -27,10 +28,10 @@ music.on("play", (message) =>{
     } else {
       global.queue.shift()
 
-
+  	setTimeout(function() {
       try{music.emit("play", message)}  catch(err) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
-      }
+      } }, 1000)
     }
   })
 })
@@ -41,6 +42,9 @@ music.on("end", (message) => {
   try{music.emit("play", message)}  catch(err) {
     message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
   }
+})
+music.on("skip", (message) => {
+    message.client.voiceConnections.first().dispatcher.end()
 })
 module.exports.events = music
 module.exports.refresh = (message) => {
@@ -54,4 +58,5 @@ module.exports.refresh = (message) => {
   music = null
   music = new events()
 }
+
 //global.queue.shift();

@@ -1,0 +1,47 @@
+{
+  "name": "reaxt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bulma": "^0.5.1",
+    "cancercase": "^1.0.3",
+    "cleverbot.io": "^1.0.4",
+    "cron": "^1.2.1",
+    "discord.js": "^11.2.1",
+    "eris": "^0.7.1",
+    "ffmpeg": "^0.0.4",
+    "fluent-ffmpeg": "^2.1.0",
+    "get-urls": "^7.0.0",
+    "get-youtube-id": "^1.0.0",
+    "gifencoder": "^1.1.0",
+    "jimp": "^0.2.28",
+    "mail-listener2": "^0.3.1",
+    "mailparser": "^2.0.1",
+    "node-cron": "^1.2.0",
+    "node-schedule": "^1.2.4",
+    "nodejs": "^0.0.0",
+    "nodemailer": "^3.0.1",
+    "nodemailer-smtp-transport": "^2.7.2",
+    "opusscript": "^0.0.3",
+    "owo.js": "^0.0.7",
+    "package.json": "^2.0.1",
+    "png-file-stream": "^1.0.0",
+    "request": "^2.81.0",
+    "snekfetch": "^3.3.0",
+    "sqlite3": "^3.1.8",
+    "superagent": "^3.5.2",
+    "youtube-dl": "^1.11.1",
+    "youtube-search": "^1.0.10",
+    "ytdl-core": "^0.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

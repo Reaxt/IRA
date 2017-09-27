@@ -13,20 +13,20 @@ module.exports = {
     let needed = Math.ceil(message.member.voiceChannel.members.size / 2)
 
     let notskipped = true
+    if(!global.voteusers.includes(message.author.id)) {
+      global.votes++
+      global.voteusers.push(message.author.id)
+      message.channel.send({embed:utils.embed("happy", `You have voted \`${global.votes}/${needed}\``)})
+    } else {
+      message.channel.send({embed:utils.embed("sad", `You already voted \`${global.votes}/${needed}"`)})
+    }
     if(global.votes >= needed) {
 
       message.channel.send({embed:utils.embed("happy",`\`${global.votes}/${needed}\` Votes received`)})
-      music.events.emit("play", message)
-      notskipped = false
-    }
-    if(global.voteusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("sad", `You already voted, votes are\`${global.votes}/${needed}\``)})
-    if(global.votes >= needed) return 
-    global.votes++
-    global.voteusers.push(message.author.id)
-    if(global.votes >= needed && notskipped) {
+      music.events.emit("skip", message)
 
-        message.channel.send({embed:utils.embed("happy",`\`${global.votes}/${needed}\` Votes received`)})
-        music.events.emit("play", message)
     }
+
+
   }
 }

@@ -8,7 +8,7 @@ module.exports = {
   mod:true,
   music:true,
   func:function(message){
-    try {music.events.emit("play", message)} catch(err) {
+    try {music.events.emit("skip", message)} catch(err) {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
     }
 
