@@ -11,7 +11,7 @@ Second, make the new command file as whatever you refered to it in index.js, and
 const Discord = require("discord.js")
 var utils = require("../utils/index.js")
 module.exports = {
-  name:"!cpmmand",
+  name:"!command",
   desc:"Command Description",
   func:function(message){
     message.channel.send({embed:utils.("expression", "Example text", "Custom color (not required), "Footer"")})
@@ -46,7 +46,7 @@ Replace ytkey with a youtube api key
 
 ## Credits
 
-IRA character made by Tyler Copley
+IRA character made by [Tyler Copley](https://twitter.com/divineluke)
 
 IRA images made by [Doshmobile](http://doshmobile.tumblr.com/)
 
