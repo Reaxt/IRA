@@ -11,6 +11,6 @@
   "guildid":"guild id",
   "ratelimitmessage":3000,
   "ratelimit":3000,
-  "heartbeat":"heartbeat channel if",
+  "heartbeat":"heartbeat channel id",
   "ytkey":"Youtbe api key"
 }
