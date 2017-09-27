@@ -23,16 +23,14 @@ music.on("play", (message) =>{
   message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
   const dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly'}))
   dispatcher.on("end", reason => {
-    if(reason === "skip") {
-
-    } else {
+  console.log("neat")
       global.queue.shift()
 
   	setTimeout(function() {
       try{music.emit("play", message)}  catch(err) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
       } }, 1000)
-    }
+    
   })
 })
 music.on("end", (message) => {
