@@ -113,7 +113,7 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 client.on("message", message1 => {
   let message = message1
   if(client.user.id == message.author.id) return
-  if(!message.content.startsWith("!")) return
+  if(!message.content.startsWith(config.prefix)) return
   let command = message.content.split(config.prefix)[1]
         .split(" ")[0]
         .replace(" ", "")
