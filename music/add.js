@@ -40,32 +40,32 @@ module.exports = {
 
 
               var result = global.queue.filter(function( obj ) {
-              return obj.user.id == message.author.id;
+                return obj.user.id == message.author.id;
               });
-          if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
-          ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id, (err, info) => {
-            if(err){
-              message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
-            } else {
-            let time = utils.tomins(info.length_seconds)
-	   let seconds = time[1] 
-	   if(seconds < 9) seconds = "0" + time[1].toString()
-          global.queue.push({"url":results[numreactions.indexOf(r.emoji.name)].id, "info":results[numreactions.indexOf(r.emoji.name)].title, "user":message.author, "minutes":time[0], "seconds":seconds})
-          message.channel.send({embed:utils.embed("happy", `queued \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
-        }
-        })
+              if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
+              ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id, (err, info) => {
+                if(err){
+                  message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
+                } else {
+                  let time = utils.tomins(info.length_seconds)
+                  let seconds = time[1] 
+                  if(seconds < 9) seconds = "0" + time[1].toString()
+                  global.queue.push({"url":results[numreactions.indexOf(r.emoji.name)].id, "info":results[numreactions.indexOf(r.emoji.name)].title, "user":message.author, "minutes":time[0], "seconds":seconds})
+                  message.channel.send({embed:utils.embed("happy", `queued \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
+                }
+              })
             })
           })
         })
       } else {
-            var result = global.queue.filter(function( obj ) {
+          var result = global.queue.filter(function( obj ) {
             return obj.user.id == message.author.id;
-            });
+          });
         if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
         let time = utils.tomins(info.length_seconds)
-	let seconds = time[1]
+	      let seconds = time[1]
         if(seconds < 9) seconds = "0" + time[1].toString()
-        global.queue.push({"url":message.content.split(" ")[1], "info":info.title, "user":message.author, "time":info.length_seconds, "minutes":time[0], "seconds":seconds})
+        global.queue.push({"url":message.content.split(" ")[1], "info":info.title, "user":message.author, "time":info.length_seconds, "minutes":time[0], "seconds":seconds, "type":"youtube"})
         message.channel.send({embed:utils.embed("happy", `queued \`${info.title}\``)})
       }
     })

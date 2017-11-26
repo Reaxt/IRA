@@ -19,9 +19,14 @@ music.on("play", (message) =>{
     if(global.queue.length === 0) return
     let footer = ytID(global.queue[0]["url"])
     if(footer === null) footer = global.queue[0]["url"]
-
-  message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
-  const dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly'}))
+  
+  switch (global.queue[0]["type"]) {
+    case "youtube":
+      message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
+      const dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly'}))
+    case "soundcloud":
+      
+  }
   dispatcher.on("end", reason => {
   console.log("neat")
       global.queue.shift()
