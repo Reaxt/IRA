@@ -21,7 +21,7 @@ music.on("play", (message) =>{
     if(footer === null) footer = global.queue[0]["url"]
 
   message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
-  const dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly'}))
+  const dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly', quality:"lowest"}))
   dispatcher.on("end", reason => {
   console.log("neat")
       global.queue.shift()

@@ -4,7 +4,7 @@ var events = require("./index.js")
 
 module.exports = {
   name:"!play",
-  desc:"Plays the queue",
+  desc:"Plays the queue (Deprecated)",
   music:true,
   func:function(message){
 
