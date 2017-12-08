@@ -6,6 +6,7 @@ module.exports = {
   name:"!play",
   desc:"Plays the queue (Deprecated)",
   music:true,
+  hidden:true,
   func:function(message){
 
     if(!message.guild.me.voiceChannel) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel, add me in with !summon")})

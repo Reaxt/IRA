@@ -4,6 +4,7 @@ module.exports = {
   name:"!summon",
   desc:"Makes IRA join the voice channel (Deprecated)",
   music:true,
+  hidden:true,
   func:function(message){
     var voiceChannel = message.member.voiceChannel
     if(!voiceChannel) return message.channel.send({embed:utils.embed("sad", "Please join a voice channel first")})
