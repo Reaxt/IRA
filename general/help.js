@@ -18,7 +18,7 @@ module.exports = {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})
     } else {
       items.splice(items.indexOf("index.js"), 1)
-      gencommands = items.map(element => utils.elementToString(element, general))
+      gencommands = items.map(element =>`**${general[element.slice(0, -3)].name}**: ${general[element.slice(0, -3)].desc} \n`)
       fs.readdir("./music", function(err, items) {
         if(err) {
           message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})
@@ -28,14 +28,14 @@ module.exports = {
           items.splice(items.indexOf("index.js"), 1)
 
 
-          musiccommands = items.map(r => utils.elementToString(r, music))
+          musiccommands = items.map(r => `**${music[r.slice(0, -3)].name}**: ${music[r.slice(0, -3)].desc} \n`)
           fs.readdir("./shitpost", function(err, items) {
             if(err) {
               message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})
             } else {
 
               items.splice(items.indexOf("index.js"), 1)
-              shitpostcommands = items.map(element => utils.elementToString(element, shitpost))
+              shitpostcommands = items.map(element =>`**${shitpost[element.slice(0, -3)].name}**: ${shitpost[element.slice(0, -3)].desc} \n`)
 
               let embed = new Discord.RichEmbed()
               .setTitle(`IRA ${config.version} command menu`)
