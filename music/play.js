@@ -9,7 +9,7 @@ module.exports = {
   hidden:true,
   func:function(message){
 
-    if(!message.guild.me.voiceChannel) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel, add me in with !summon")})
+    if(!message.guild.voiceConnection) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel, add me in with !summon")})
     if(global.queue.length === 0) return message.channel.send({embed:utils.embed("sad","Theres no songs in the queue, add one with !add")})
 
     if(message.guild.voiceConnection.speaking || global.playing) return //message.channel.send({embed:utils.embed("angry", "Im already playing stuff")})
