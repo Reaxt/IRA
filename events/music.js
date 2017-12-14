@@ -34,6 +34,12 @@ music.on("play", (message) =>{
   	setTimeout(function() {
       try{music.emit("play", message)}  catch(err) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+        global.playing = false;
+        if (err == "spawn ENOMEM") {
+          setTimeout(function () {
+            music.emit("end", message)
+          }, 1000);
+        }
       } }, 1000)
     
   })
@@ -42,6 +48,7 @@ music.on("end", (message) => {
   global.voteusers = []
   global.votes = 0
   global.queue = []
+  global.playing = false
   try{music.emit("play", message)}  catch(err) {
     message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
   }
