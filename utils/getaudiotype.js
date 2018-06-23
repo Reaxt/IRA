@@ -6,6 +6,8 @@ module.exports = (url) => {
         var hostname = url.split('/')[2]
         if (hostname.includes('youtube') || hostname.includes('youtu.be')) {
             return "youtube";
+        } else if (hostname.includes('soundcloud.com')) {
+            return "soundcloud";
         } else {
             return "direct";
         }

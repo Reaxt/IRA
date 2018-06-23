@@ -16,9 +16,17 @@ module.exports = {
       let footer = ytID(global.queue[0]["url"])
       if(footer === null) footer = global.queue[0]["url"]
       let second = played[1]
-      if(second < 9) second = "0" + played[1].toString()
+      if(second < 10) second = "0" + played[1].toString()
       message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` \`${played[0]}:${second}/${global.queue[0].minutes}:${global.queue[0].seconds}\``, undefined, `https://youtu.be/${footer}`)})
-    } else { // because direct currently does not support track length
+    } 
+    else if (global.queue[0].type == "soundcloud") {
+      var seconds = (message.guild.voiceConnection.dispatcher.time / 1000).toFixed(0)
+      let played = utils.tomins(seconds)
+      let second = played[1]
+      if(second < 10) second = "0" + played[1].toString()
+      message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` \`${played[0]}:${second}/${global.queue[0].minutes}:${global.queue[0].seconds}\``, undefined, global.queue[0].permalink_url)})
+    } 
+    else { // because direct currently does not support track length
       message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` `, undefined, global.queue[0].url)})
     }
   }
