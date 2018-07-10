@@ -8,7 +8,4 @@ module.exports = {
   func:function(message){
     snekfetch.get('http://shibe.online/api/shibes?count=1').then(r => {
       message.channel.send({files:r.body})
-    }).catch(err => {
-    var embed = utils.embed("malfunction", `Something went wrong! \`\`\`${arg}\`\`\``)
-      message.channel.send({embed})
-  })}}
+    })}}

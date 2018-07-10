@@ -1,0 +1,51 @@
+{
+  "name": "ytdl-core",
+  "description": "Youtube video downloader in pure javascript.",
+  "keywords": [
+    "youtube",
+    "video",
+    "download"
+  ],
+  "version": "0.20.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fent/node-ytdl-core.git"
+  },
+  "author": "fent (https://github.com/fent)",
+  "contributors": [
+    "Tobias Kutscha (https://github.com/TimeForANinja)",
+    "Andrew Kelley (https://github.com/andrewrk)",
+    "Mauricio Allende (https://github.com/mallendeo)",
+    "Rodrigo Altamirano (https://github.com/raltamirano)",
+    "Jim Buck (https://github.com/JimmyBoh)"
+  ],
+  "main": "./lib/index.js",
+  "types": "./typings/index.d.ts",
+  "files": [
+    "lib",
+    "typings"
+  ],
+  "scripts": {
+    "test": "istanbul cover node_modules/.bin/_mocha -- -t 16000 test/*-test.js"
+  },
+  "dependencies": {
+    "html-entities": "^1.1.3",
+    "m3u8stream": "^0.2.1",
+    "miniget": "^1.1.0",
+    "sax": "^1.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^9.3.0",
+    "assert-diff": "^1.2.4",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.0.0",
+    "muk-prop": "^1.0.0",
+    "nock": "^9.1.5",
+    "sinon": "^4.1.3",
+    "stream-equal": "~1.1.0"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "license": "MIT"
+}

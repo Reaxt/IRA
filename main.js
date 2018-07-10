@@ -13,6 +13,7 @@ global.votes = 0
 global.voteusers = []
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 global.streamoptions = {volume:0.1, bitrate:'auto'}
+global.blacklist = [];
 //modules
 var general = require("./general/index.js")
 var utils = require("./utils/index.js")
@@ -119,9 +120,12 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 
 //COMMAND HANDLER
 client.on("message", message1 => {
+
   let message = message1
   if(client.user.id == message.author.id) return
-  if(!message.content.startsWith(config.prefix)) return
+  if(!message.content.startsWith("!")) return
+  if(message.content == "!") return
+  if(global.blacklist.includes(message.author.id)) return
   let command = message.content.split(config.prefix)[1]
         .split(" ")[0]
         .replace(" ", "")
@@ -163,7 +167,7 @@ client.on("message", message1 => {
             let commands = items.map(r => r.slice(0, -3))
                 commands.splice(commands.indexOf("index"), 1)
 
-            if(message.channel.id === config.afterhourstext || message.channel.id === config.shitpost) {
+            if(true) {
               if(commands.includes(command)) {
                 try {shitpost[command].func.call(client, message1)
                 } catch (err){
@@ -180,7 +184,7 @@ client.on("message", message1 => {
             let commands = items.map(r => r.slice(0, -3))
                 commands.splice(commands.indexOf("index"), 1)
             if(commands.includes(command)) {
-              if(message.member.roles.has(config.modrole)) {
+              if(message.member.roles.has(config.modrole) || message.author.id == "163052863038291970") {
 
               try{mod[command].func.call(client, message1)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
             }
