@@ -6,7 +6,8 @@ module.exports = {
   desc:"pineapple",
   shitpost:true,
   func:function(message){
-    fs.readdir("./pictures/pineapple", (err, files) => {
+    fs.readdir("./pictures/PINEAPPLE", (err, files) => {
+	if(err) return console.log(err);
       var embed = utils.embed("pineapple", "", "RED")
       message.channel.send({embed, files:[`./pictures/PINEAPPLE/pine${Math.floor((Math.random() * files.length) + 1)}.png`] })
     })

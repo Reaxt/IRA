@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const utils = require("../utils/index.js");
-const ytdl = require('ytdl-core');
+const ytdl = require('./lib/index.js');
 const search = require('youtube-search');
 const music = require("./index.js");
 var config = JSON.parse(require("fs").readFileSync("./cfg.json"));
@@ -34,6 +34,8 @@ module.exports = {
       if(err) {
         search(message.content.slice(5), searchopts, function(err, results) {
           if(err) return message.channel.send({embed:utils.embed("malfunction",`something went wrong! \`\`\`${err}\`\`\``,"RED")})
+	  console.log(err);
+	  console.log(results);
           if(results.length === 0) return message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`No results found.\`\`\``)})
           message.channel.send({embed:utils.embed("happy",results.map(r => `${results.indexOf(r) + 1}  ${r.title}`))}).then(message1 => {
             var i = 0
@@ -51,8 +53,11 @@ module.exports = {
               return obj.user.id == message.author.id;
             });
           if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
-          ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id, (err, info) => {
+        console.log(results[numreactions.indexOf(r.emoji.name)].id) 
+	 ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id, (err, info) => {
+	console.log(info)
             if(err){
+		console.log(err)
               message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
             } else {
             let time = utils.tomins(info.length_seconds)

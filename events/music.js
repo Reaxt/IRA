@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 const utils = require("../utils/index.js")
 const events = require("events")
-const ytdl = require('ytdl-core');
+const ytdl = require('../music/lib/index.js');
 var music = new events();
 var ytID = require("get-youtube-id")
 global.skip = false
