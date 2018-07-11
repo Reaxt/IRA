@@ -72,7 +72,7 @@ module.exports = {
                     let time = utils.tomins(info.length_seconds)
                     let seconds = time[1] 
                     if(seconds < 9) seconds = "0" + time[1].toString()
-                    global.queue.push({"url":results[numreactions.indexOf(r.emoji.name)].id, "info":results[numreactions.indexOf(r.emoji.name)].title, "user":message.author, "minutes":time[0], "seconds":seconds})
+                    global.queue.push({"url":results[numreactions.indexOf(r.emoji.name)].id, "info":results[numreactions.indexOf(r.emoji.name)].title, "user":message.author, "minutes":time[0], "seconds":seconds, "type":"youtube"})
                     message.channel.send({embed:utils.embed("happy", `queued \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
                     setTimeout(function () {
                       music.play.func(message)
