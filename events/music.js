@@ -2,6 +2,9 @@ const Discord = require("discord.js")
 const utils = require("../utils/index.js")
 const events = require("events")
 const ytdl = require('../music/lib/index.js');
+const request = require('request');
+var config = JSON.parse(require("fs").readFileSync("./cfg.json"));
+
 var music = new events();
 var ytID = require("get-youtube-id")
 global.skip = false
@@ -18,23 +21,56 @@ music.on("play", (message) =>{
     message.channel.send({embed:utils.embed("happy", `Queue finished, leaving voice.`)})
     message.client.voiceConnections.first().disconnect()
     global.playing = false
+    return
   }
 
-  if(global.queue.length === 0) return
-  let footer = ytID(global.queue[0]["url"])
-  if(footer === null) footer = global.queue[0]["url"]
-
-  message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
+  var dispatcher = undefined;
+  if (global.queue[0].type == "youtube") {
+    let footer = ytID(global.queue[0]["url"])
+    if(footer === null) footer = global.queue[0]["url"]
+    message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
+    dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly'}), global.streamoptions)
+  } 
+  else if (global.queue[0].type == "soundcloud") {
+    message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
+    dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url+"?client_id="+config.scid, (error, response) => {
+      if (error) {
+        message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
+        dispatcher.end();
+      }
+      if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
+        message.channel.send({embed:utils.embed("sad", "Oops! I couldn't find that file..","RED")})
+        dispatcher.end();
+      }
+    }), global.streamoptions)
+  } 
+  else { // A direct link to a audio file. Precursor to SoundCloud functionality.
+      let footer = global.queue[0]["url"]
+      message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\``, undefined, global.queue[0].url)})
+      dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url, (error, response) => {
+        if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
+          message.channel.send({embed:utils.embed("sad", "Oops! I couldn't find that file..","RED")})
+          dispatcher.end();
+        }
+        if (error) {
+          message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
+          dispatcher.end();
+        }
+      }), global.streamoptions)
+  }
   global.playing = true
-  const dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly', quality:"lowest"}))
+  dispatcher.on("debug", info => {
+    console.log(`Debug from stream dispatcher: ${info}`);
+  })
   dispatcher.on("end", reason => {
-  console.log("neat")
-      global.queue.shift()
+    console.log("neat")
+    global.queue.shift()
 
   	setTimeout(function() {
       try{music.emit("play", message)}  catch(err) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
-      } }, 1000)
+      } 
+    }, 1000)
     
   })
 })

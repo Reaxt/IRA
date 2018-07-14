@@ -12,6 +12,7 @@ global.queue = []
 global.votes = 0
 global.voteusers = []
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
+global.streamoptions = {volume:0.1, bitrate:'auto'}
 global.blacklist = [];
 //modules
 var general = require("./general/index.js")
@@ -70,6 +71,13 @@ function reload(arg, message) {
           delete require.cache[require.resolve('./events/logs/index.js')]
           poll = null
           poll = require('./events/poll.js')
+          break;
+        case "utils":
+          utils.refresh()
+          delete require.cache[require.resolve('./utils/index.js')]
+          utils = require('./utils/index.js')
+          message.channel.send({embed:utils.embed("happy", `Reloaded module ${arg}`)})
+          break;
         default:
             message.channel.send({embed:utils.embed("malfunction", "Invalid Option")})
           }

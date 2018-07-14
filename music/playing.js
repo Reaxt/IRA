@@ -10,12 +10,24 @@ module.exports = {
     if(!message.guild.me.voiceChannel) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel, add me in with !summon")})
     if(queue.length === 0) return message.channel.send({embed:utils.embed("sad","Theres no songs in the queue, add one with !add")})
     if(!message.guild.voiceConnection.speaking) return message.channel.send({embed:utils.embed("angry", "Im not playing stuff")})
-    var seconds = (message.guild.voiceConnection.dispatcher.time / 1000).toFixed(0)
-    let played = utils.tomins(seconds)
-    let footer = ytID(global.queue[0]["url"])
-    if(footer === null) footer = global.queue[0]["url"]
-    let second = played[1]
-    if(second < 9) second = "0" + played[1].toString()
-    message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` \`${played[0]}:${second}/${global.queue[0].minutes}:${global.queue[0].seconds}\``, undefined, `https://youtu.be/${footer}`)})
+    if (global.queue[0].type == "youtube") {
+      var seconds = (message.guild.voiceConnection.dispatcher.time / 1000).toFixed(0)
+      let played = utils.tomins(seconds)
+      let footer = ytID(global.queue[0]["url"])
+      if(footer === null) footer = global.queue[0]["url"]
+      let second = played[1]
+      if(second < 10) second = "0" + played[1].toString()
+      message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` \`${played[0]}:${second}/${global.queue[0].minutes}:${global.queue[0].seconds}\``, undefined, `https://youtu.be/${footer}`)})
+    } 
+    else if (global.queue[0].type == "soundcloud") {
+      var seconds = (message.guild.voiceConnection.dispatcher.time / 1000).toFixed(0)
+      let played = utils.tomins(seconds)
+      let second = played[1]
+      if(second < 10) second = "0" + played[1].toString()
+      message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` \`${played[0]}:${second}/${global.queue[0].minutes}:${global.queue[0].seconds}\``, undefined, global.queue[0].permalink_url)})
+    } 
+    else { // because direct currently does not support track length
+      message.channel.send({embed:utils.embed("happy", `\`Playing ${global.queue[0]["info"]}\` `, undefined, global.queue[0].url)})
+    }
   }
 }
