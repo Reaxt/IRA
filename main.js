@@ -12,7 +12,7 @@ global.queue = []
 global.votes = 0
 global.voteusers = []
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
-global.streamoptions = {volume:0.1, bitrate:'auto'}
+global.streamoptions = {volume:0.25, bitrate:'auto'}
 global.blacklist = [];
 //modules
 var general = require("./general/index.js")
