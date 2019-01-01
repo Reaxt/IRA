@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 const utils = require("../utils/index.js")
 const events = require("events")
-const ytdl = require('ytdl-core');
+const ytdl = require('../music/lib/index.js');
 const request = require('request');
 var config = JSON.parse(require("fs").readFileSync("./cfg.json"));
 
