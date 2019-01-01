@@ -5,6 +5,7 @@ module.exports = {
 
   name:"inkling",
   desc:"Puts an image in the inklings eye",
+  hidden:true,
   func:function(message) {
     if(message.attachments.size > 0) {
       if(message.attachments.first().filename.toLowerCase().endsWith(".png") || message.attachments.first().filename.toLowerCase().endsWith(".jpg")){

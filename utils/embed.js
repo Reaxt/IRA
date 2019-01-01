@@ -5,30 +5,22 @@ module.exports = (expression, content, color, footer) => {
 
   switch(expression) {
     case "happy":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357357104098443264/irahappyf.png"
+      url = "https://cdn.discordapp.com/attachments/203334579166117888/528414646034628625/abbyhappy.png"
       break;
     case "sad":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357357110175989760/irasadf.png"
+      url = "https://cdn.discordapp.com/attachments/203334579166117888/528414649302122506/abbysad.png"
       break;
     case "malfunction":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357357105667244053/iramalfunctionf.png"
-      break;
-    case "pepsi":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357357106652774401/irapepsif.png"
-      break;
-    case "totinos":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357357107777110017/iratotinosf.png"
+      url = "https://cdn.discordapp.com/attachments/203334579166117888/528414647573938186/abbymalfunction.png"
+      Ecolor = "RED";
       break;
     case "angry":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357357109018361866/iraangryf.png"
+      url = "https://cdn.discordapp.com/attachments/203334579166117888/528414643962642465/abbyangry.png"
       break;
     case "gun":
-      url = "https://cdn.discordapp.com/attachments/356544587504025610/357358740208615424/irapineapple.png"
+      url = null;
       break;
-    case "pineapple":
-     url = "https://cdn.discordapp.com/attachments/356544587504025610/357360525312655360/i_hate_all_of_you.png"
-     break;
-    case null:
+    default:
       url = null;
       break;
   }
@@ -40,7 +32,7 @@ module.exports = (expression, content, color, footer) => {
   if(footer != undefined) {
 
   }
-  let result = new Discord.RichEmbed().setTitle("IRA").setColor(Ecolor).setThumbnail(url).setDescription(content)
+  let result = new Discord.RichEmbed().setTitle("Abby").setColor(Ecolor).setThumbnail(url).setDescription(content)
 
   if(footer != undefined) {
     result.setFooter(footer)

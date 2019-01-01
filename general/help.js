@@ -40,7 +40,7 @@ module.exports = {
               shitpostcommands = items.map(element => utils.elementToString(element, shitpost))
 
               let embed = new Discord.RichEmbed()
-              .setTitle(`IRA ${config.version} command menu`)
+              .setTitle(`Here's what I can do! ${config.version}`)
               .setColor("#f7ce55")
               .setThumbnail(client.user.avatarURL)
               .addField("**General Commands**", gencommands.join(""), true)

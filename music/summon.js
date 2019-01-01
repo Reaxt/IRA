@@ -2,7 +2,7 @@ var utils = require("../utils/index.js")
 const Discord = require("discord.js")
 module.exports = {
   name:"!summon",
-  desc:"Makes IRA join the voice channel (Deprecated)",
+  desc:"Makes me join the voice channel (Deprecated)",
   music:true,
   hidden:true,
   func:function(message){

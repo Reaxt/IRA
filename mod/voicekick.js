@@ -6,7 +6,7 @@ module.exports = {
 
     let mention = message.content.split(" ")[1]
     if (mention.startsWith("<@") && mention.endsWith(">")) {
-      message.channel.guild.createChannel("LOLBYE", "voice", null, "test").then(channel => {
+      message.channel.guild.createChannel("LOWER THAN DIRT", "voice", null, "test").then(channel => {
         message.mentions.members.first().setVoiceChannel(channel).then( () => {
           channel.delete()
         })

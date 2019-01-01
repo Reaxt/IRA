@@ -103,8 +103,8 @@ let content = message.content.substr(message.content.split(" ")[0].length + 1)
 //READY EVENT
 client.on("ready", () => {
  if(JSON.parse(fs.readFileSync("./shutdownstatus.json")).shutdown === false){
-    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "THE BOT HAS UNEXPECTDLEY CRASHED, I WILL TRY AND RESTORE ANY POLLS. Please tell Reaxt asap")})} else {
-   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `IRA VERSION ${config.version} RESTARTED`)})
+    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...")})} else {
+   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! I'm feeling like a ${config.version} today.`)})
    fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
@@ -200,7 +200,7 @@ client.on("message", message1 => {
 
 
               if(commands.includes(command)) {
-                if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Hey, don’t spam commands! You gonna overload my systems!`)}).then((message) => {
+                if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Hey, give me a break! Why do I gotta do everything, anyways?`)}).then((message) => {
                   setTimeout(function() {
                     message.delete()
                   }, config.ratelimitmessage)

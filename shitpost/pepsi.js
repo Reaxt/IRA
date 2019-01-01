@@ -5,6 +5,7 @@ module.exports = {
   name:"!pepsi",
   desc:"pepsi",
   shitpost:true,
+  hidden:true,
   func:function(message){
     fs.readdir("./pictures/PEPSI", (err, files) => {
       var embed = utils.embed("pepsi", "", "RED")

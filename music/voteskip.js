@@ -22,7 +22,7 @@ module.exports = {
     }
     if(global.votes >= needed) {
 
-      message.channel.send({embed:utils.embed("happy",`\`${global.votes}/${needed}\` Votes received`)})
+      message.channel.send({embed:utils.embed("happy",`\`${global.votes}/${needed}\` Votes received. Yoink!`)})
       music.events.emit("skip", message)
 
     }

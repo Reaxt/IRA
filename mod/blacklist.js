@@ -12,10 +12,10 @@ module.exports = {
 	console.log(message.mentions.users.first())
 	if(global.blacklist.includes(message.mentions.users.first().id)) {
 	global.blacklist.splice(global.blacklist.indexOf(message.mentions.users.first().id), 1)
-	message.channel.send(`unblacklisted user <@${message.mentions.users.first().id}>`)
+	message.channel.send(`Oh, there you are, <@${message.mentions.users.first().id}>!`)
 } else {
 	global.blacklist.push(message.mentions.users.first().id)
-	message.channel.send(`blacklisted user <@${message.mentions.users.first().id}>`)
+	message.channel.send(`<@${message.mentions.users.first().id}>? More like, who?`)
 }
 }
 

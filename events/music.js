@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 const utils = require("../utils/index.js")
 const events = require("events")
-const ytdl = require('../music/lib/index.js');
+const ytdl = require('ytdl');
 const request = require('request');
 var config = JSON.parse(require("fs").readFileSync("./cfg.json"));
 
@@ -18,7 +18,7 @@ music.on("play", (message) =>{
   }
 
   if(global.queue.length === 0) {
-    message.channel.send({embed:utils.embed("happy", `Queue finished, leaving voice.`)})
+    message.channel.send({embed:utils.embed("happy", `Queue's done! I'm outta here.`)})
     message.client.voiceConnections.first().disconnect()
     global.playing = false
     return
@@ -39,7 +39,7 @@ music.on("play", (message) =>{
         dispatcher.end();
       }
       if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
-        message.channel.send({embed:utils.embed("sad", "Oops! I couldn't find that file..","RED")})
+        message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
         dispatcher.end();
       }
     }), global.streamoptions)

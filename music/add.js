@@ -64,7 +64,7 @@ module.exports = {
                 var result = global.queue.filter(function( obj ) {
                   return obj.user.id == message.author.id;
                 });
-                if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
+                if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
                 ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id, (err, info) => {
                   if(err){
                     message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
@@ -86,7 +86,7 @@ module.exports = {
           var result = global.queue.filter(function( obj ) {
             return obj.user.id == message.author.id;
           });
-          if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
+          if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
           let time = utils.tomins(info.length_seconds)
           let seconds = time[1]
           if(seconds < 10) seconds = "0" + time[1].toString()
@@ -111,7 +111,7 @@ module.exports = {
         var result = global.queue.filter(function( obj ) {
           return obj.user.id == message.author.id;
         });
-        if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
+        if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
         //duration conversion (ms to min:sec)
         let length_seconds = Math.floor(track.duration/1000)
         let time = utils.tomins(length_seconds)
@@ -129,7 +129,7 @@ module.exports = {
       var result = global.queue.filter(function( obj ) {
         return obj.user.id == message.author.id;
       });
-      if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "I’m afraid you threw too much… stuff… in the playlist. Please wait until your part of the queue is finished.")})
+      if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
       var info = target.split('/').pop()
       global.queue.push({"url":target, "info":info, "user":message.author, "type":"direct"})
       message.channel.send({embed:utils.embed("happy", `queued \`${info}\``)})
