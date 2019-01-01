@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const utils = require("../utils/index.js");
-const ytdl = require('./lib/index.js');
+const ytdl = require('ytdl-core');
 const search = require('youtube-search');
 const music = require("./index.js");
 const request = require("request")
