@@ -49,7 +49,7 @@ music.on("play", (message) =>{
       message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\``, undefined, global.queue[0].url)})
       dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url, (error, response) => {
         if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
-          message.channel.send({embed:utils.embed("sad", "Oops! I couldn't find that file..","RED")})
+          message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
           dispatcher.end();
         }
         if (error) {

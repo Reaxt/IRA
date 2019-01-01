@@ -5,6 +5,7 @@ module.exports = {
   name:"!pineapple",
   desc:"pineapple",
   shitpost:true,
+  hidden:true,
   func:function(message){
     fs.readdir("./pictures/PINEAPPLE", (err, files) => {
 	if(err) return console.log(err);

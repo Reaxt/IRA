@@ -1,4 +1,4 @@
-# IRA
+# Abby (formerly IRA)
 A discord bot made for the art heaven server
 ## Making simple commands easily
 
@@ -46,8 +46,10 @@ Replace ytkey with a youtube api key
 
 ## Credits
 
+Abby character made by [Doshmobile](http://doshmobile.tumblr.com/)
+
 IRA character made by [Tyler Copley](https://twitter.com/divineluke)
 
-IRA images made by [Doshmobile](http://doshmobile.tumblr.com/)
-
-All programming by Reaxt
+Created by Reaxt
+Supported by Jwapple
+Hosted thanks to Urotsuki
