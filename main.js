@@ -105,7 +105,7 @@ client.on("ready", () => {
  if(JSON.parse(fs.readFileSync("./shutdownstatus.json")).shutdown === false){
     client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "THE BOT HAS UNEXPECTDLEY CRASHED, I WILL TRY AND RESTORE ANY POLLS. Please tell Reaxt asap")})} else {
    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `IRA VERSION ${config.version} RESTARTED`)})
-   fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`)
+   fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 
