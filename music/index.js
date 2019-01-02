@@ -1,3 +1,5 @@
+var events = require("../events/music.js")
+module.exports.events = events.events;
 fs = require("fs");
 fs.readdirSync("./music/").forEach(file => { // Get files in this directory and add a corresponding require if .js
     if (file.includes(".js")) {
@@ -15,6 +17,8 @@ module.exports.refresh = () => {
             module.exports[commandName] = thisCommand;
         }
     });
+	delete require.cache[require.resolve('../events/music.js')]
+	events = require("../events/music.js")
     events.refresh(message);
 }
 /**
