@@ -18,7 +18,7 @@ music.on("play", (message) =>{
   }
 
   if(global.queue.length === 0) {
-    message.channel.send({embed:utils.embed("happy", `Queue's done! I'm outta here.`)})
+    message.channel.send({embed:utils.embed("happy", `That's all for now! I'm off.`)})
     message.client.voiceConnections.first().disconnect()
     global.playing = false
     return

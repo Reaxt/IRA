@@ -1,3 +1,22 @@
+fs = require("fs");
+fs.readdirSync("./utils/").forEach(file => { // Get files in this directory and add a corresponding require if .js
+    if (file.includes(".js")) {
+        commandName = file.split(".js")[0];
+        var thisCommand = require("./"+file);
+        module.exports[commandName] = thisCommand;
+    }
+});
+module.exports.refresh = () => { 
+    fs.readdirSync("./utils/").forEach(file => {
+        if (file.includes(".js")) {
+            delete require.cache[require.resolve("./"+file)];
+            commandName = file.slice(".js")[0];
+            var thisCommand = require("./"+file);
+            module.exports[commandName] = thisCommand;
+        }
+    });
+}
+/**
 var embed= require("./embed.js")
 var numreact= require("./numreact.js")
 var tomins= require("./tomins.js")
@@ -20,3 +39,4 @@ module.exports.numreact = numreact
 module.exports.tomins = tomins
 module.exports.elementToString = elementToString
 module.exports.getaudiotype = getaudiotype
+**/

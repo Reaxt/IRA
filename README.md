@@ -2,9 +2,10 @@
 A discord bot made for the art heaven server
 ## Making simple commands easily
 
-### Updating index.js and command layout
+~~### Updating index.js and command layout~~
 
-First, make sure to have your command added in the index.js in the folder you wish to have the command, (See shitpost index.js for a good example)
+~~First, make sure to have your command added in the index.js in the folder you wish to have the command, (See shitpost index.js for a good example)~~  
+This process is now automated. Note that the filenames of commands must be in all lowercase due to input parsing.
 
 Second, make the new command file as whatever you refered to it in index.js, and use this layout
 ```
@@ -19,18 +20,23 @@ module.exports = {
 }
 ```
 
-Different expressions (First argument) are happy, sad, angry, malfunction, pepsi, pineapple, and gun
+Different expressions (First argument) are happy, sad, angry, malfunction
 
 To use footer without the custom color, just put undefined in custom color (Not a string)
 ## Setting up
 To run the bot on your own build to test stuff or just mess around, follow these instructions
 ### Installing Prerequisites
 First make sure to install nodejs, (newest version, around 8.0)
-
-Then install required dependencies via npm and the package.json by executing this in the directory
+Packages require that node-gyp is functional on your machine. On windows, that means you will need to run `npm install --global --production windows-build-tools`
+The live version uses Yarn to build the packages. 
+```
+yarn install
+```
+You can also install required dependencies via npm and the package.json by executing this in the directory
 ```
 npm install package.json
 ```
+
 ### Set up cfg.json
 Duplicate example-cfg.json
 

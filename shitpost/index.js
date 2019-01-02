@@ -1,3 +1,22 @@
+fs = require("fs");
+fs.readdirSync("./shitpost/").forEach(file => { // Get files in this directory and add a corresponding require if .js
+    if (file.includes(".js")) {
+        commandName = file.split(".js")[0];
+        var thisCommand = require("./"+file);
+        module.exports[commandName] = thisCommand;
+    }
+});
+module.exports.refresh = () => { 
+    fs.readdirSync("./shitpost/").forEach(file => {
+        if (file.includes(".js")) {
+            delete require.cache[require.resolve("./"+file)];
+            commandName = file.slice(".js")[0];
+            var thisCommand = require("./"+file);
+            module.exports[commandName] = thisCommand;
+        }
+    });
+}
+/**
 var paint= require("./paint.js")
 var shibe= require("./shibe.js")
 var pepsi= require("./pepsi.js")
@@ -24,3 +43,4 @@ module.exports.pepsi = pepsi
 module.exports.pineapple = pineapple
 module.exports.totinos = totinos
 module.exports.inkling = inkling
+**/

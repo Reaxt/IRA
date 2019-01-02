@@ -1,3 +1,23 @@
+fs = require("fs");
+fs.readdirSync("./music/").forEach(file => { // Get files in this directory and add a corresponding require if .js
+    if (file.includes(".js")) {
+        commandName = file.split(".js")[0];
+        var thisCommand = require("./"+file);
+        module.exports[commandName] = thisCommand;
+    }
+});
+module.exports.refresh = () => { 
+    fs.readdirSync("./music/").forEach(file => {
+        if (file.includes(".js")) {
+            delete require.cache[require.resolve("./"+file)];
+            commandName = file.slice(".js")[0];
+            var thisCommand = require("./"+file);
+            module.exports[commandName] = thisCommand;
+        }
+    });
+    events.refresh(message);
+}
+/**
 var summon= require("./summon.js")
 var add= require("./add.js")
 var queue = require("./queue.js")
@@ -5,6 +25,7 @@ var play = require("./play.js")
 var voteskip = require("./voteskip.js")
 var events = require("../events/music.js")
 var playing = require("./playing.js")
+var debug = require("./debug.js")
 module.exports.refresh = (message) => {
 
     delete require.cache[require.resolve('./summon.js')]
@@ -14,6 +35,7 @@ module.exports.refresh = (message) => {
     delete require.cache[require.resolve('../events/music.js')]
     delete require.cache[require.resolve('./voteskip.js')]
     delete require.cache[require.resolve('./playing.js')]
+    delete require.cache[require.resolve('./debug.js')]
     events = require("../events/music.js")
     play = require("./play.js")
     queue = require("./queue.js")
@@ -21,6 +43,7 @@ module.exports.refresh = (message) => {
     summon = require("./summon.js")
     voteskip = require("./voteskip.js")
     playing = require("./playing.js")
+    playing = require("./debug.js")
     events.refresh(message)
 }
 module.exports.summon = summon
@@ -30,3 +53,5 @@ module.exports.play = play
 module.exports.events = events.events
 module.exports.voteskip = voteskip
 module.exports.playing = playing
+module.exports.debug = debug
+**/

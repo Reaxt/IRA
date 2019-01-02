@@ -2,7 +2,15 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const fs = require('fs');
 const eventEmitter = require('events');
-var config = JSON.parse(fs.readFileSync("./cfg.json"))
+// CONFIG DETERMINATION (reads different files with 'live' or 'dev' command line param)
+var config;
+if (process.argv.length > 2) {
+  switch (process.argv[2]) {
+    case ("live"): {config = JSON.parse(fs.readFileSync("./cfg_live.json")); break};
+    case ("dev"): {config = JSON.parse(fs.readFileSync("./cfg_dev.json")); break};
+    default: config = JSON.parse(fs.readFileSync("./cfg.json"));
+  } 
+} else config = JSON.parse(fs.readFileSync("./cfg.json"));
 //IRA HANDLER
 const ira = new eventEmitter()
 //local VARIABLES
@@ -14,12 +22,15 @@ global.voteusers = []
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 global.streamoptions = {volume:0.25, bitrate:'auto'}
 global.blacklist = [];
+global.config = config;
+global.client = client;
 //modules
 var general = require("./general/index.js")
 var utils = require("./utils/index.js")
 var shitpost = require("./shitpost/index.js")
 var mod = require("./mod/index.js")
 var music = require("./music/index.js")
+var botmanage = require("./botmanage/index.js")
 var logs = require("./events/logs/index.js")
 var poll = require("./events/poll.js")
 //RELOAD FUNC
@@ -30,7 +41,7 @@ function shutdown(message) {
 
 }
 function reload(arg, message) {
-    if(config.owner === message.author.id) {
+    if(config.owners.includes(message.author.id)) {
       arg = message.content.split(" ")[1]
       switch (arg) {
         case "general":
@@ -94,8 +105,11 @@ let content = message.content.substr(message.content.split(" ")[0].length + 1)
     try {
       evalresponse = eval(content)
     } catch(err) {
-      return message.channel.sendMessage("An Error Occured with the input " + content + "\n ```" + err.stack + "```")
-    } if(evalresponse === undefined) {return message.channel.sendMessage("```undefined```")} else if (evalresponse === null) {message.channel.sendMessage("```null```")} else {
+      return message.channel.send("An Error Occured with the input " + content + "\n ```" + err.stack + "```")
+    } 
+    if(evalresponse === undefined) {return message.channel.send("```undefined```")} 
+    else if (evalresponse === null) {message.channel.send("```null```")} 
+    else {
       message.channel.sendMessage({embed:utils.embed("happy", `Eval response:\`\`\`${evalresponse.toString()}\`\`\``)})
     }
 
@@ -104,7 +118,7 @@ let content = message.content.substr(message.content.split(" ")[0].length + 1)
 client.on("ready", () => {
  if(JSON.parse(fs.readFileSync("./shutdownstatus.json")).shutdown === false){
     client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...")})} else {
-   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! I'm feeling like a ${config.version} today.`)})
+   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${config.version} today.`)})
    fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
@@ -119,9 +133,8 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 })
 
 //COMMAND HANDLER
-client.on("message", message1 => {
+client.on("message", message => {
 
-  let message = message1
   if(client.user.id == message.author.id) return
   if(!message.content.startsWith("!")) return
   if(message.content == "!") return
@@ -129,94 +142,106 @@ client.on("message", message1 => {
   let command = message.content.split(config.prefix)[1]
         .split(" ")[0]
         .replace(" ", "")
-        .toLowerCase()
-        if(command === "reload") return reload(message.content.split(" ")[1], message)
-        if(command === "eval" && message.author.id === config.owner) return evalcmd(message1)
-        if(command === "shutdown" && message.author.id === config.owner) return shutdown(message1)
-        let ran = false
-        fs.readdir("./general", function(err, items) {
-          if(err) {
-            error(message, err)
-          } else {
-            let commands = items.map(r => r.slice(0, -3))
-                commands.splice(commands.indexOf("index"), 1)
-
-            if(commands.includes(command)) {
-              if(limitusers.includes(message.author.id)) return message.channel.send({embed:new Discord.RichEmbed().setTitle(`IRA`).setColor("#f7ce55").setThumbnail("https://cdn.discordapp.com/attachments/356544587504025610/357357109018361866/iraangryf.png").setDescription(`Hey, don’t spam commands! You gonna overload my systems!`)}).then((message) => {
-                setTimeout(function() {
-                  message.delete()
-                }, config.ratelimitmessage)
-                ran = true
-              })
-              try {
-              general[command].func.call(client, message1)
-              ira.emit("ratelimit", message.author)
-            }catch(err) {
-              var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
-              message.channel.send({embed})
-            }
-              ran = true
-            }
-          }
+        .toLowerCase();
+  if(!command) return;
+  if(command === "reload") return reload(message.content.split(" ")[1], message)
+  if(command === "eval" && config.owners.includes(message.author.id)) return evalcmd(message)
+  if(command === "shutdown" && config.owners.includes(message.author.id)) return shutdown(message)
+  let ran = false
+  fs.readdir("./general", function(err, items) {
+    if(err) {
+      error(message, err)
+    } else {
+      let commands = items.map(r => r.slice(0, -3))
+          commands.splice(commands.indexOf("index"), 1)
+      if(commands.includes(command)) {
+        if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Wait up, I don't want to trip any breakers.`)}).then((message) => {
+          setTimeout(function() {
+            message.delete()
+          }, config.ratelimitmessage)
+          ran = true
         })
+        try {
+        general[command].func.call(client, message)
+        ira.emit("ratelimit", message.author)
+      }catch(err) {
+        var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
+        message.channel.send({embed})
+      }
+        ran = true
+      }
+    }
+  })
 
-        fs.readdir("./shitpost", function(err, items) {
-          if(err) {
-            error(message, err)
-          } else {
-            let commands = items.map(r => r.slice(0, -3))
-                commands.splice(commands.indexOf("index"), 1)
+  fs.readdir("./shitpost", function(err, items) {
+    if(err) {
+      error(message, err)
+    } else {
+      let commands = items.map(r => r.slice(0, -3))
+          commands.splice(commands.indexOf("index"), 1)
 
-            if(true) {
-              if(commands.includes(command)) {
-                try {shitpost[command].func.call(client, message1)
-                } catch (err){
-                  var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
-                message.channel.send({embed})}}
-              ran = true
-            }
-          }
-        })
-        fs.readdir("./mod", function(err, items) {
-          if(err) {
-            error(message, err)
-          } else {
-            let commands = items.map(r => r.slice(0, -3))
-                commands.splice(commands.indexOf("index"), 1)
-            if(commands.includes(command)) {
-              if(message.member.roles.has(config.modrole) || message.author.id == "163052863038291970") {
+      if(true) {
+        if(commands.includes(command)) {
+          try {shitpost[command].func.call(client, message)
+          } catch (err){
+            var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
+          message.channel.send({embed})}}
+        ran = true
+      }
+    }
+  })
+  fs.readdir("./mod", function(err, items) {
+    if(err) {
+      error(message, err)
+    } else {
+      let commands = items.map(r => r.slice(0, -3))
+          commands.splice(commands.indexOf("index"), 1)
+      if(commands.includes(command)) {
+        if(message.member.roles.has(config.modrole)) {
+          try{mod[command].func.call(client, message)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
+        }
+      }
+  }})
 
-              try{mod[command].func.call(client, message1)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
-            }
-            }
-        }})
+  fs.readdir("./botmanage", function(err, items) {
+    if(err) {
+      error(message, err)
+    } else {
+      let commands = items.map(r => r.slice(0, -3))
+          commands.splice(commands.indexOf("index"), 1)
+      if(commands.includes(command)) {
+        if(message.member.roles.has(config.modrole) || config.owners.includes(message.author.id)) {
+          try{botmanage[command].func.call(client, message)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
+        }
+      }
+  }})
 
-        fs.readdir("./music", function(err, items) {
-          if(err) {
-            error(meesage, err)
-          } else {
-            let commands = items.map(r => r.slice(0, -3))
-              commands.splice(commands.indexOf("index"), 1)
+  fs.readdir("./music", function(err, items) {
+    if(err) {
+      error(meesage, err)
+    } else {
+      let commands = items.map(r => r.slice(0, -3))
+        commands.splice(commands.indexOf("index"), 1)
 
 
-              if(commands.includes(command)) {
-                if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Hey, give me a break! Why do I gotta do everything, anyways?`)}).then((message) => {
-                  setTimeout(function() {
-                    message.delete()
-                  }, config.ratelimitmessage)
-                  ran = true
-                })
-                try {
-                music[command].func.call(client, message)
-                ira.emit("ratelimit", message.author)
-              }catch(err) {
-                var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
-                message.channel.send({embed})
-              }
-                ran = true
-              }
-          }
-        })
+        if(commands.includes(command)) {
+          if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Wait up, I don't want to trip any breakers.`)}).then((message) => {
+            setTimeout(function() {
+              message.delete()
+            }, config.ratelimitmessage)
+            ran = true
+          })
+          try {
+          music[command].func.call(client, message)
+          ira.emit("ratelimit", message.author)
+        }catch(err) {
+          var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
+          message.channel.send({embed})
+        }
+          ran = true
+        }
+    }
+  })
 })
 //BOT HANDLER EVENTS
 ira.on("ratelimit", (user) => {
@@ -253,7 +278,7 @@ client.on("messageReactionAdd", (reaction, user) =>{
 //LOGS OVER HERE
 //log error function
 function logerr(err) {
-  client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", `Something went wrong when trying to log something! \`\`\`${err}\`\`\``)})
+  client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", `Something's wrong with my logs. Know someone who can see what's up? \`\`\`${err}\`\`\``)})
 }
 //Log events
 client.on("messageDelete", (message) => {
