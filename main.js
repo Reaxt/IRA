@@ -35,10 +35,9 @@ var logs = require("./events/logs/index.js")
 var poll = require("./events/poll.js")
 //RELOAD FUNC
 function shutdown(message) {
+  message.channel.send({embed:utils.embed("happy", "Good night!")})
   fs.writeFileSync("./shutdownstatus.json", `{"shutdown":true}`)
-  message.channel.send({embed:utils.embed("happy", "Restarting the bot")})
-    process.exit()
-
+  client.destroy().then((function() {process.exit()}));
 }
 function reload(arg, message) {
     if(config.owners.includes(message.author.id)) {
