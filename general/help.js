@@ -18,7 +18,6 @@ module.exports = {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})
     } else {
       items.splice(items.indexOf("index.js"), 1)
-      console.log(items)
       gencommands = items.map(element => utils.elementToString(element, general))
       fs.readdir("./music", function(err, items) {
         if(err) {
