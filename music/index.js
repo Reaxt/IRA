@@ -12,7 +12,7 @@ module.exports.refresh = () => {
     fs.readdirSync("./music/").forEach(file => {
         if (file.includes(".js")) {
             delete require.cache[require.resolve("./"+file)];
-            commandName = file.slice(".js")[0];
+            commandName = file.split(".js")[0]
             var thisCommand = require("./"+file);
             module.exports[commandName] = thisCommand;
         }
