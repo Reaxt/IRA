@@ -29,7 +29,6 @@ module.exports = {
           items.splice(items.indexOf("index.js"), 1)
 
           items.splice(items.indexOf("lib"), 1)
-	console.log(items);
           musiccommands = items.map(r => utils.elementToString(r, music))
           fs.readdir("./shitpost", function(err, items) {
             if(err) {

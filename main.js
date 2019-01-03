@@ -135,8 +135,8 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 client.on("message", message => {
 
   if(client.user.id == message.author.id) return
-  if(!message.content.startsWith("!")) return
-  if(message.content == "!") return
+  if(!message.content.startsWith(config.prefix)) return
+  if(message.content == config.prefix) return
   if(global.blacklist.includes(message.author.id)) return
   let command = message.content.split(config.prefix)[1]
         .split(" ")[0]

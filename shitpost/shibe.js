@@ -1,11 +1,20 @@
 const Discord = require("discord.js")
 var utils = require("../utils/index.js")
-const snekfetch = require("snekfetch")
+const request = require("request")
 module.exports = {
   name:"!shibe",
-  desc:"shibe",
+  desc:"a nice shibe for your eye-holes",
   shitpost:true,
   func:function(message){
-    snekfetch.get('http://shibe.online/api/shibes?count=1').then(r => {
-      message.channel.send({files:r.body})
-    })}}
+    request('http://shibe.online/api/shibes?count=1&urls=true', (error, response, body) => {
+    	if (error) { //request error case
+          	message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
+        }
+        try {
+        	message.channel.send(new Discord.RichEmbed().setImage(JSON.parse(body)[0]));
+        } catch (err) {
+        	message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+        }
+    })
+  }
+}
