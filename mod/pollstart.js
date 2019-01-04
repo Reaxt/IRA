@@ -16,7 +16,7 @@ module.exports = {
        utils.numreact(message, i, global.pollobject.pollamount)
        global.pollobject.pollmessage = message.id
        pollobject.pollchan = message.channel.id
-       fs.writeFile("./poll.json", JSON.stringify(global.pollobject))
+       fs.writeFileSync("./poll.json", JSON.stringify(global.pollobject))
     })
   }
 }

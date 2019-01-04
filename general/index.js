@@ -1,6 +1,6 @@
 fs = require("fs");
 fs.readdirSync("./general/").forEach(file => { // Get files in this directory and add a corresponding require if .js
-	if (file.includes(".js")) {
+	if (file.endsWith(".js")) {
 		commandName = file.split(".js")[0];
 		var thisCommand = require("./"+file);
 		module.exports[commandName] = thisCommand;
@@ -8,7 +8,7 @@ fs.readdirSync("./general/").forEach(file => { // Get files in this directory an
 });
 module.exports.refresh = () => { 
 	fs.readdirSync("./general/").forEach(file => {
-		if (file.includes(".js")) {
+		if (file.endsWith(".js")) {
 			delete require.cache[require.resolve("./"+file)];
 			commandName = file.split(".js")[0];
 			var thisCommand = require("./"+file);

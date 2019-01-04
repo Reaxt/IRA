@@ -6,7 +6,7 @@ module.exports = (message) => {
     if(message.author === message.client.user) return
     if(message.channel.type === "dm") return
     let embed = new Discord.RichEmbed()
-    .setTitle(`🗑️MESSAGE BY \`${message.author.username}#${message.author.discriminator} DELETED`)
+    .setTitle(`🗑Message by \`${message.author.username}#${message.author.discriminator} deleted`)
     .setThumbnail(message.author.avatarURL)
     .setDescription(`Message content was \`${message.content}\``)
     .setColor(`RED`)

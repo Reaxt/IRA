@@ -35,9 +35,10 @@ var logs = require("./events/logs/index.js")
 var poll = require("./events/poll.js")
 //RELOAD FUNC
 function shutdown(message) {
-  message.channel.send({embed:utils.embed("happy", "Good night!")})
-  fs.writeFileSync("./shutdownstatus.json", `{"shutdown":true}`)
-  client.destroy().then((function() {process.exit()}));
+  message.channel.send({embed:utils.embed("happy", "Good night!")}).then( function() {
+    fs.writeFileSync("./shutdownstatus.json", `{"shutdown":true}`)
+    client.destroy().then((function() {process.exit()}))
+  });
 }
 function reload(arg, message) {
     if(config.owners.includes(message.author.id)) {
@@ -61,6 +62,13 @@ function reload(arg, message) {
           mod.refresh()
           delete require.cache[require.resolve('./mod/index.js')]
           mod = require('./mod/index.js')
+          embed = utils.embed("happy", `Reloaded module ${arg}`)
+          message.channel.send({embed})
+          break;
+        case "botmanage":
+          botmanage.refresh()
+          delete require.cache[require.resolve('./botmanage/index.js')]
+          mod = require('./botmanage/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
           message.channel.send({embed})
           break;
@@ -134,7 +142,16 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 //COMMAND HANDLER
 client.on("message", message => {
 
+  try {
+
   if(client.user.id == message.author.id) return
+
+  // if bot is mentioned, forward it to owner
+  if(message.isMentioned(client.user)) {
+    utils.messageOwner.func("I've been messaged: "+message.url);
+  }
+
+  // command handling
   if(!message.content.startsWith(config.prefix)) return
   if(message.content == config.prefix) return
   if(global.blacklist.includes(message.author.id)) return
@@ -196,7 +213,8 @@ client.on("message", message => {
       let commands = items.map(r => r.slice(0, -3))
           commands.splice(commands.indexOf("index"), 1)
       if(commands.includes(command)) {
-        if(message.member.roles.has(config.modrole)) {
+        if (!message.guild) return;
+        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole)) {
           try{mod[command].func.call(client, message)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
         }
       }
@@ -209,7 +227,8 @@ client.on("message", message => {
       let commands = items.map(r => r.slice(0, -3))
           commands.splice(commands.indexOf("index"), 1)
       if(commands.includes(command)) {
-        if(message.member.roles.has(config.modrole) || config.owners.includes(message.author.id)) {
+        if (!message.guild && !config.owners.includes(message.author.id)) return;
+        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole) ) {
           try{botmanage[command].func.call(client, message)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
         }
       }
@@ -241,6 +260,14 @@ client.on("message", message => {
         }
     }
   })
+
+  } catch (err) { // There was some error which wasn't inside a promise
+    utils.messageOwner.func({embed:utils.embed(
+      `malfunction`, 
+      `Unhandled error due to \`${message.content}\`! \`\`\`${err}\`\`\` ${message.url}`, 
+      "RED", 
+      )});
+  }
 })
 //BOT HANDLER EVENTS
 ira.on("ratelimit", (user) => {

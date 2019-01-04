@@ -4,7 +4,7 @@ module.exports = {
   desc:"Changes my name",
   hidden:true,
   func:function(message){
-  	global.client.user.setName(message.content.substring(message.content.indexOf(" ")+1));
+  	this.user.setUsername(message.content.substring(message.content.indexOf(" ")+1));
     message.channel.send("That should do it.");
   }
 }

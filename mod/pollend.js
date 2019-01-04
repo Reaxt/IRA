@@ -18,7 +18,7 @@ module.exports = {
     global.pollobject.pollmessage = null
     global.pollobject.pollchan = null
 
-    fs.writeFile("./poll.json", JSON.stringify(global.pollobject))
+    fs.writeFileSync("./poll.json", JSON.stringify(global.pollobject))
     })
   }
 }

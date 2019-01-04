@@ -4,7 +4,7 @@ const music = require("../music/index.js")
 
 module.exports = {
   name:"!skip",
-  desc:"Skips the current song (ONLY USE WHEN SOMETHINGS ACTUALLY PLAYING)",
+  desc:"Skips the current song",
   mod:true,
   music:true,
   func:function(message){
