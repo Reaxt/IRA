@@ -6,7 +6,7 @@ var music = require("../music/index.js")
 var shitpost = require("../shitpost/index.js")
 var botmanage = require("../botmanage/index.js")
 var mod = require("../mod/index.js")
-var config = JSON.parse(fs.readFileSync("./cfg.json"))
+var config = global.config
 function filterItems(items) {
   for (var i = 0; i < items.length; ) {
     if (items[i] == "index.js") items.splice(i, 1)
