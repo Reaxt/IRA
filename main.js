@@ -30,6 +30,7 @@ var utils = require("./utils/index.js")
 var shitpost = require("./shitpost/index.js")
 var mod = require("./mod/index.js")
 var music = require("./music/index.js")
+var dj = require("./dj/index.js")
 var botmanage = require("./botmanage/index.js")
 var logs = require("./events/logs/index.js")
 var poll = require("./events/poll.js")
@@ -72,6 +73,13 @@ function reload(arg, message) {
           embed = utils.embed("happy", `Reloaded module ${arg}`)
           message.channel.send({embed})
           break;
+        case "dj":
+          botmanage.refresh()
+          delete require.cache[require.resolve('./dj/index.js')]
+          mod = require('./dj/index.js')
+          embed = utils.embed("happy", `Reloaded module ${arg}`)
+          message.channel.send({embed})
+          break;
         case "music":
           music.refresh(message)
           delete require.cache[require.resolve('./music/index.js')]
@@ -105,9 +113,7 @@ function reload(arg, message) {
 }
 //EVAL FUNC
 function evalcmd(message) {
-
-
-let content = message.content.substr(message.content.split(" ")[0].length + 1)
+  let content = message.content.substr(message.content.split(" ")[0].length + 1)
   let evalresponse
     try {
       evalresponse = eval(content)
@@ -119,7 +125,6 @@ let content = message.content.substr(message.content.split(" ")[0].length + 1)
     else {
       message.channel.sendMessage({embed:utils.embed("happy", `Eval response:\`\`\`${evalresponse.toString()}\`\`\``)})
     }
-
 }
 //READY EVENT
 client.on("ready", () => {
@@ -128,7 +133,7 @@ client.on("ready", () => {
    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${config.version} today.`)})
    fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
-global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
+ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 
  if(global.pollobject.pollmessage != null) {
    client.guilds.get(config.guildid).channels.get(global.pollobject["pollchan"]).fetchMessage(global.pollobject.pollmessage)
@@ -138,135 +143,87 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
    client.guilds.get(config.guildid).me.voiceChannel.leave()
  }
 })
+// COMMAND HANDLING PT 1
+// lookupCommand(message, command): searches command lists and returns the corresponding function if it exists. 
+function lookupCommand(message, command) {
+      if(general.commandList.includes(command)) {
+        return general[command].func
+      }
+      else if(shitpost.commandList.includes(command)) {
+        return shitpost[command].func
+      }
+      else if(music.commandList.includes(command)) {
+        if (!message.guild) return;
+        return music[command].func
+      }
+      else if (dj.commandList.includes(command)) { // these commands must check for permissions. currently these are hard-coded and do not respond to the perms specified within the module index.js
+        if (!message.guild) return;
+        if (message.member.roles.has(config.djrole) || message.member.roles.has(config.modrole) || config.owners.includes(message.author.id))
+          return dj[command].func;
+        else return;
+      }
+      else if(mod.commandList.includes(command)) {
+        if (!message.guild) return;
+        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole)) {
+          return mod[command].func;
+        } else return;
+
+      }
+      else if(botmanage.commandList.includes(command)) {
+        if (!message.guild && !config.owners.includes(message.author.id)) return;
+        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole) ) {
+          return botmanage[command].func;
+        } else return;
+      }
+      return;
+}
 
 //COMMAND HANDLER
 client.on("message", message => {
 
   try {
 
-  if(client.user.id == message.author.id) return
+    if(client.user.id == message.author.id) return
 
-  // if bot is mentioned, forward it to owner
-  if(message.isMentioned(client.user)) {
-    utils.messageOwner.func("I've been messaged: "+message.url);
-  }
+    // if bot is mentioned, forward it to owner
+    if(message.isMentioned(client.user)) {
+      utils.messageOwner.func("I've been messaged: "+message.url);
+    }
 
-  // command handling
-  if(!message.content.startsWith(config.prefix)) return
-  if(message.content == config.prefix) return
-  if(global.blacklist.includes(message.author.id)) return
-  let command = message.content.split(config.prefix)[1]
-        .split(" ")[0]
-        .replace(" ", "")
-        .toLowerCase();
-  if(!command) return;
-  if(command === "reload") return reload(message.content.split(" ")[1], message)
-  if(command === "eval" && config.owners.includes(message.author.id)) return evalcmd(message)
-  if(command === "shutdown" && config.owners.includes(message.author.id)) return shutdown(message)
-  let ran = false
-  fs.readdir("./general", function(err, items) {
-    if(err) {
-      error(message, err)
-    } else {
-      let commands = items.map(r => r.slice(0, -3))
-          commands.splice(commands.indexOf("index"), 1)
-      if(commands.includes(command)) {
-        if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Wait up, I don't want to trip any breakers.`)}).then((message) => {
-          setTimeout(function() {
-            message.delete()
-          }, config.ratelimitmessage)
-          ran = true
-        })
-        try {
-        general[command].func.call(client, message)
+    // basic input parsing
+    if(!message.content.startsWith(config.prefix)) return
+    if(message.content == config.prefix) return
+    if(global.blacklist.includes(message.author.id)) return
+    let command = message.content.split(config.prefix)[1]
+          .split(" ")[0]
+          .replace(" ", "")
+          .toLowerCase();
+    if(!command) return;
+    if(command === "reload") return reload(message.content.split(" ")[1], message)
+    if(command === "eval" && config.owners.includes(message.author.id)) return evalcmd(message)
+    if(command === "shutdown" && config.owners.includes(message.author.id)) return shutdown(message)
+    
+    var func = lookupCommand(message, command); 
+    if (func) {
+      if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Wait up, I don't want to trip any breakers.`)}).then((message) => {
+        setTimeout(function() {
+          message.delete()
+        }, config.ratelimitmessage)
+      })
+      try {
+        func.call(client, message)
         ira.emit("ratelimit", message.author)
       }catch(err) {
         var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
         message.channel.send({embed})
       }
-        ran = true
-      }
     }
-  })
-
-  fs.readdir("./shitpost", function(err, items) {
-    if(err) {
-      error(message, err)
-    } else {
-      let commands = items.map(r => r.slice(0, -3))
-          commands.splice(commands.indexOf("index"), 1)
-
-      if(true) {
-        if(commands.includes(command)) {
-          try {shitpost[command].func.call(client, message)
-          } catch (err){
-            var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
-          message.channel.send({embed})}}
-        ran = true
-      }
-    }
-  })
-  fs.readdir("./mod", function(err, items) {
-    if(err) {
-      error(message, err)
-    } else {
-      let commands = items.map(r => r.slice(0, -3))
-          commands.splice(commands.indexOf("index"), 1)
-      if(commands.includes(command)) {
-        if (!message.guild) return;
-        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole)) {
-          try{mod[command].func.call(client, message)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
-        }
-      }
-  }})
-
-  fs.readdir("./botmanage", function(err, items) {
-    if(err) {
-      error(message, err)
-    } else {
-      let commands = items.map(r => r.slice(0, -3))
-          commands.splice(commands.indexOf("index"), 1)
-      if(commands.includes(command)) {
-        if (!message.guild && !config.owners.includes(message.author.id)) return;
-        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole) ) {
-          try{botmanage[command].func.call(client, message)}catch(err){message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})}
-        }
-      }
-  }})
-
-  fs.readdir("./music", function(err, items) {
-    if(err) {
-      error(meesage, err)
-    } else {
-      let commands = items.map(r => r.slice(0, -3))
-        commands.splice(commands.indexOf("index"), 1)
-
-
-        if(commands.includes(command)) {
-          if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Wait up, I don't want to trip any breakers.`)}).then((message) => {
-            setTimeout(function() {
-              message.delete()
-            }, config.ratelimitmessage)
-            ran = true
-          })
-          try {
-          music[command].func.call(client, message)
-          ira.emit("ratelimit", message.author)
-        }catch(err) {
-          var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
-          message.channel.send({embed})
-        }
-          ran = true
-        }
-    }
-  })
-
-  } catch (err) { // There was some error which wasn't inside a promise
+  } catch (err) { // Catch an error not in a promise
     utils.messageOwner.func({embed:utils.embed(
       `malfunction`, 
       `Unhandled error due to \`${message.content}\`! \`\`\`${err}\`\`\` ${message.url}`, 
       "RED", 
-      )});
+    )});
   }
 })
 //BOT HANDLER EVENTS

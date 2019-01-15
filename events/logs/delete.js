@@ -10,5 +10,6 @@ module.exports = (message) => {
     .setThumbnail(message.author.avatarURL)
     .setDescription(`Message content was \`${message.content}\``)
     .setColor(`RED`)
+    .setFooter(`#${message.channel.name}`)
     message.client.guilds.get(config.guildid).channels.get(config.logs).send({embed})
   }

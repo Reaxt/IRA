@@ -37,8 +37,7 @@ music.on("play", (message) =>{
       if (error) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
         dispatcher.end();
-      }
-      if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
+      } else if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
         message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
         dispatcher.end();
       }
@@ -48,12 +47,11 @@ music.on("play", (message) =>{
       let footer = global.queue[0]["url"]
       message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\``, undefined, global.queue[0].url)})
       dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url, (error, response) => {
-        if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
-          message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
-          dispatcher.end();
-        }
         if (error) {
           message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
+          dispatcher.end();
+        } else if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
+          message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
           dispatcher.end();
         }
       }), global.streamoptions)
@@ -81,10 +79,17 @@ music.on("end", (message) => {
   try{music.emit("play", message)}  catch(err) {
     message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
   }
+  global.streamoptions.volume = 0.25;
 })
 music.on("skip", (message) => {
     message.client.voiceConnections.first().dispatcher.end()
 })
+music.on("setVolume", (message) => {
+  global.streamoptions.volume = message.content.split(" ")[1]
+  if (message.client.voiceConnections.first().dispatcher)
+    message.client.voiceConnections.first().dispatcher.setVolume(message.content.split(" ")[1]);
+})
+
 module.exports.events = music
 module.exports.refresh = (message) => {
   global.queue = []

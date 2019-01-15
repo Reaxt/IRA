@@ -6,6 +6,7 @@ var music = require("../music/index.js")
 var shitpost = require("../shitpost/index.js")
 var botmanage = require("../botmanage/index.js")
 var mod = require("../mod/index.js")
+var dj = require("../dj/index.js")
 var config = global.config
 function filterItems(items) {
   for (var i = 0; i < items.length; ) {
@@ -22,6 +23,7 @@ module.exports = {
   let gencommands = []
   let musiccommands = []
   let shitpostcommands = []
+  let djcommands = []
   let modcommands = []
   let botcommands = []
   try {
@@ -34,6 +36,9 @@ module.exports = {
     items = fs.readdirSync("./shitpost")
     filterItems(items)
     shitpostcommands = items.map(element => utils.elementToStringMod(element, shitpost))
+    items = fs.readdirSync("./dj");
+    filterItems(items)
+    djcommands = items.map(r => utils.elementToString(r, dj))
     items = fs.readdirSync("./mod")
     filterItems(items)
     modcommands = items.map(element => utils.elementToStringMod(element, mod))
@@ -47,6 +52,7 @@ module.exports = {
     .setThumbnail(client.user.avatarURL)
     .addField("**General Commands**", gencommands.join(""), true)
     .addField("**Music Commands**", musiccommands.join(""), true)
+    .addField("**DJ Commands** (requires DJ role)", djcommands.join(""), true)
     .addField("**Mod Commands**", modcommands.join(""), true)
     .addField("**Bot Management Commands**", botcommands.join(""), true)
     .addField("**Shitpost Commands**(only in shitpost central or after hours)", shitpostcommands.join(""), true)

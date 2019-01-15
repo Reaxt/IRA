@@ -1,21 +1,29 @@
 fs = require("fs");
+var commandList = []
 fs.readdirSync("./shitpost/").forEach(file => { // Get files in this directory and add a corresponding require if .js
-    if (file.endsWith(".js")) {
-        commandName = file.split(".js")[0];
+    if (file.endsWith(".js") && file != "index.js") {
+        var commandName = file.split(".js")[0];
         var thisCommand = require("./"+file);
         module.exports[commandName] = thisCommand;
+        commandList.push(commandName);
     }
 });
+
+module.exports.commandList = commandList;
 module.exports.refresh = () => { 
+    var commandList = []
     fs.readdirSync("./shitpost/").forEach(file => {
-        if (file.endsWith(".js")) {
+        if (file.endsWith(".js") && file != "index.js") {
             delete require.cache[require.resolve("./"+file)];
-            commandName = file.split(".js")[0]
+            var commandName = file.split(".js")[0];
             var thisCommand = require("./"+file);
             module.exports[commandName] = thisCommand;
+            commandList.push(commandName);
         }
     });
+    module.exports.commandList = commandList;
 }
+
 /**
 var paint= require("./paint.js")
 var shibe= require("./shibe.js")

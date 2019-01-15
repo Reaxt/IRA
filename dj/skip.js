@@ -1,0 +1,18 @@
+var utils = require("../utils/index.js")
+const Discord = require("discord.js")
+const music = require("../music/index.js")
+
+module.exports = {
+  name:"!skip",
+  desc:"Skips the current song",
+  music:true,
+  func:function(message){
+  	if(!message.guild.voiceConnection) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel..")})
+  	if(message.member.voiceChannel =! message.guild.me.voiceChannel) return message.channel.send({embed:utils.embed("sad", "Youre not in the same voice channel as me")})
+  	if(!message.client.voiceConnections.first().dispatcher) return message.channel.send({embed:utils.embed("sad", "Sorry, im not playing anything right now")})
+    try {music.events.emit("skip", message)} catch(err) {
+      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
+    }
+  }
+}
+//en dme

@@ -8,9 +8,10 @@ module.exports = (OldMessage, NewMessage) => {
     if(NewMessage.content === OldMessage.content) return
     let embed = new Discord.RichEmbed()
     .setTitle(`ℹ️ Message by ${OldMessage.author.username} has been edited`)
-  .setColor("BLUE")
-  .setThumbnail(OldMessage.author.avatarURL)
-  .setDescription(`Original message was \n\`${OldMessage.content}\`\n new message was \n\`${NewMessage.content}\``)
+    .setColor("BLUE")
+    .setThumbnail(OldMessage.author.avatarURL)
+    .setDescription(`Original message was \n\`${OldMessage.content}\`\n new message was \n\`${NewMessage.content}\``)
+    .setFooter(`#${message.channel.name}`)
 
     NewMessage.client.guilds.get(config.guildid).channels.get(config.logs).send({embed})
   }

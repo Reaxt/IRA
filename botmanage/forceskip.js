@@ -3,15 +3,14 @@ const Discord = require("discord.js")
 const music = require("../music/index.js")
 
 module.exports = {
-  name:"!skip",
-  desc:"Skips the current song",
+  name:"!forceSkip",
+  desc:"Skips the current song (old implementation that may help debugging)",
   mod:true,
   music:true,
   func:function(message){
     try {music.events.emit("skip", message)} catch(err) {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
     }
-
   }
 }
 //en dme
