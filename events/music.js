@@ -87,7 +87,11 @@ music.on("skip", (message) => {
 music.on("setVolume", (message) => {
   global.streamoptions.volume = message.content.split(" ")[1]
   if (message.client.voiceConnections.first().dispatcher)
-    message.client.voiceConnections.first().dispatcher.setVolume(message.content.split(" ")[1]);
+    try {
+      message.client.voiceConnections.first().dispatcher.setVolume(message.content.split(" ")[1]);
+    } catch (err) {
+      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+    }
 })
 
 module.exports.events = music
