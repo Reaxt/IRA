@@ -34,7 +34,7 @@ music.on("play", (message) =>{
   else if (global.queue[0].type == "soundcloud") {
     message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
     dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url+"?client_id="+config.scid, (error, response) => {
-      if (error) {
+      if (error || !response) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
         dispatcher.end();
       } else if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
@@ -47,7 +47,7 @@ music.on("play", (message) =>{
       let footer = global.queue[0]["url"]
       message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\``, undefined, global.queue[0].url)})
       dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url, (error, response) => {
-        if (error) {
+        if (error || !response) {
           message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
           dispatcher.end();
         } else if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
