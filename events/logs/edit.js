@@ -11,7 +11,7 @@ module.exports = (OldMessage, NewMessage) => {
     .setColor("BLUE")
     .setThumbnail(OldMessage.author.avatarURL)
     .setDescription(`Original message was \n\`${OldMessage.content}\`\n new message was \n\`${NewMessage.content}\``)
-    .setFooter(`#${message.channel.name}`)
+    .setFooter(`#${OldMessage.channel.name}`)
 
     NewMessage.client.guilds.get(config.guildid).channels.get(config.logs).send({embed})
   }
