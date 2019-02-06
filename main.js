@@ -226,6 +226,14 @@ client.on("message", message => {
     )});
   }
 })
+
+client.on('error', 
+	(error) => utils.messageOwner.func({embed:utils.embed(
+      `malfunction`, 
+      `Unhandled error! \`\`\`${error}\`\`\``, 
+      "RED", 
+    )})
+    )
 //BOT HANDLER EVENTS
 ira.on("ratelimit", (user) => {
   limitusers.push(user.id)
