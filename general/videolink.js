@@ -13,7 +13,6 @@ module.exports = {
       var expression = new RegExp("https:\/\/discordapp\.com\/channels\/"+message.guild.id+"\/..................\/")
       var newTopic = message.channel.topic.replace(expression, urlString)
       message.channel.setTopic(newTopic)
-      console.log(newTopic)
     }
 
     // stuff for making the message to send
