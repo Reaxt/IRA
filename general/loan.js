@@ -14,10 +14,11 @@ module.exports = {
 		let now = new Date()
 		let timeSinceLastLoan = now - userDoc.lastLoan;
 		if (!userDoc.lastLoan || timeSinceLastLoan > 84600000) {
-			let amount = Math.floor(loanAmount * Math.min(timeSinceLastLoan/day, 2)) // The amount you gain scales over two days
-			if (!userDoc.lastLoan) 
-				amount = 2*loanAmount;
-			userDoc.debt += amount;
+      let rawAmount = loanAmount * Math.min(timeSinceLastLoan/day, 2) // The amount you gain scales over two days
+      if (!userDoc.lastLoan) 
+        amount = 2*loanAmount;
+			let amount = Math.floor(rawAmount) 
+			userDoc.debt += rawAmount;
 			userDoc.coins += amount;
 			userDoc.lastLoan = now;
 

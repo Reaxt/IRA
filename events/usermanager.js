@@ -136,6 +136,16 @@ module.exports = {
 			db.update({id:user.id}, doc, {upsert:true});
 		})
 	},
+	getRoles:function(message, user) {
+		return new Promise((resolve, reject) => {
+			if (typeof user !== 'GuildMember') return message.channel.send("attempted to fetch roles of non-guild member")
+			db.findOne({id:user.id}), function(err, doc) {
+				if (!doc) reject("user absent from database")
+				if (!doc.roles) reject("no roles for user")
+				resolve(doc.roles);
+			}
+		})
+	},
 	// callback: function(message, user, Collection<roles>)
 	fetchRoles:function(message, user, callback) {
 		if (typeof user !== 'GuildMember') return message.channel.send("attempted to fetch roles of non-guild member")
