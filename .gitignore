@@ -2,3 +2,4 @@ node_modules
 cfg.json
 cfg*
 yarn.lock
+*.db
