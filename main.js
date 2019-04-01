@@ -11,6 +11,10 @@ if (process.argv.length > 2) {
     default: config = JSON.parse(fs.readFileSync("./cfg.json"));
   } 
 } else config = JSON.parse(fs.readFileSync("./cfg.json"));
+
+// Extra config stuff that I want synced across git
+config.version = "5.0a"
+
 //IRA HANDLER
 const ira = new eventEmitter()
 //local VARIABLES
@@ -24,6 +28,8 @@ global.streamoptions = {volume:0.25, bitrate:'auto'}
 global.blacklist = [];
 global.config = config;
 global.client = client;
+global.usermanager = require("./events/usermanager.js")
+global.cardmanager = require("./events/cardmanager.js")
 //modules
 var general = require("./general/index.js")
 var utils = require("./utils/index.js")
@@ -42,13 +48,18 @@ function shutdown(message) {
   });
 }
 function reload(arg, message) {
+  try {
     if(config.owners.includes(message.author.id)) {
       arg = message.content.split(" ")[1]
       switch (arg) {
         case "general":
           general.refresh()
           delete require.cache[require.resolve('./general/index.js')];
-          general = require('./general/index.js');
+          general = require('./general/index.js'); 
+          delete require.cache[require.resolve('./events/usermanager.js')]
+          global.usermanager = require("./events/usermanager.js")
+          delete require.cache[require.resolve('./events/cardmanager.js')]
+          global.cardmanager = require("./events/cardmanager.js")
           embed = utils.embed("happy", `Reloaded module ${arg}`)
           message.channel.send({embed})
           break;
@@ -110,6 +121,9 @@ function reload(arg, message) {
 
       }
      else {message.channel.send({embed:utils.embed("malfunction", "You dont have permission for this command")})}
+  } catch (err) {
+    message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+  }
 }
 //EVAL FUNC
 function evalcmd(message) {
@@ -227,17 +241,16 @@ client.on("message", message => {
   }
 })
 
-client.on('error', 
-	(error) => {
+client.on('error', (error) => {
 		console.log("Unhandled Error!")
-		console.log(error)
-    })
+		console.log(error.error)
+})
 //BOT HANDLER EVENTS
 ira.on("ratelimit", (user) => {
-  limitusers.push(user.id)
-  setTimeout(function() {
-    limitusers.splice(limitusers.indexOf(user.id))
-  }, config.ratelimit)
+  // limitusers.push(user.id)
+  // setTimeout(function() {
+  //   limitusers.splice(limitusers.indexOf(user.id))
+  // }, config.ratelimit)
 })
 //events and things
 //Poll events
