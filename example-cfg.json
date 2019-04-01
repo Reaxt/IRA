@@ -17,6 +17,6 @@
   "heartbeat":"heartbeat channel id",
   "ytkey":"Youtbe api key",
   "scid":"soundcloud client key",
-  "pullP":[1, 0.85, 0.68, 0.33, 0.08, 0.078],
+  "pullP":[1, 0.85, 0.68, 0.33, 0.08, 0.0078],
   "_pullComment":"pull percents: 1-15%, 2-17%, 3-35%, 4-25%, 5-7.22%, 6-0.78%"
 }
