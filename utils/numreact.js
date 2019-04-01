@@ -4,10 +4,9 @@ function numreact (message1, i, pollamount) {
 
   setTimeout(function () {
 
-    message1.react(numreactions[i])
-
-    numreact(message1, ++i, pollamount);
+    message1.react(numreactions[i]).then(numreact(message1, ++i, pollamount))
 
   }, 500);
+
 }
 module.exports = numreact

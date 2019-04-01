@@ -17,10 +17,11 @@ module.exports = {
 
     // stuff for making the message to send
     var content = utils.embed(null, 
-    	"Here's your video link! \n"+urlString, 
+    	`[\[ ${voiceChannel.name} \]](${urlString})`, 
     	"#5c6ddb", 
-    	message.member.voiceChannel.name);
+    	null);
     content.setTitle("🖥️ Screenshare Link");
+    content.setFooter("Here's your video link!", "https://cdn.discordapp.com/attachments/203334579166117888/528414646034628625/abbyhappy.png")
     message.channel.send({embed: content})
   }
 }
