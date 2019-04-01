@@ -90,6 +90,7 @@ var shopList = [
 		price:500,
 		func:async function(message, doc){
 			global.usermanager.getUser(message, message.author).then(userDoc => {
+				if (!userDoc.gun || isNaN(userDoc.gun)) userDoc.gun = 0;
 				userDoc.gun = userDoc.gun + 1;
 				global.usermanager.setUser(message, message.author, userDoc)
 				message.channel.startTyping()
