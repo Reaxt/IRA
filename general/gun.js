@@ -9,12 +9,15 @@ module.exports = {
       let mention = message.content.split(" ")[1]
       if (mention && mention.startsWith("<@") && mention.endsWith(">")) {
         let targetUser = message.mentions.members.first()
-        if (targetUser.id == client.user.id) {
-          message.channel.send(`*My impeccable steel sides effortlessly deflect the bullet.*`)
+        if (targetUser.user.bot) {
+          if (targetUser.id == client.user.id)
+            message.channel.send(`*My impeccable steel sides effortlessly deflect the bullet.*`)
+          else 
+            message.channel.send(`*Unfortunately, your bullet is no match for **${targetUser.user.username}**'s defenses.*`)
           userDoc.gun--;
           global.usermanager.setUser(message, message.author, userDoc)
         } else {
-          if (targetUser.id = message.author.id) message.channel.send(`*You mercilessly gun down... yourself.. until the magazine is empty. Now where did that get you?*`)
+          if (targetUser.id == message.author.id) message.channel.send(`*You mercilessly gun down... yourself.. until the magazine is empty. Now where did that get you?*`)
           else message.channel.send(`*You mercilessly gun down <@!${targetUser.id}> until the magazine is empty.*`)
 
           userDoc.gun--;
