@@ -14,7 +14,8 @@ module.exports = {
           userDoc.gun--;
           global.usermanager.setUser(message, message.author, userDoc)
         } else {
-          message.channel.send(`*You mercilessly gun down <@!${targetUser.id}> until the magazine is empty.*`)
+          if (targetUser.id = message.author.id) message.channel.send(`*You mercilessly gun down... yourself.. until the magazine is empty. Now where did that get you?*`)
+          else message.channel.send(`*You mercilessly gun down <@!${targetUser.id}> until the magazine is empty.*`)
 
           userDoc.gun--;
           global.usermanager.setUser(message, message.author, userDoc)

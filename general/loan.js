@@ -10,26 +10,27 @@ module.exports = {
   desc:`Take out a loan of ${loanAmount} coins once per day! Don't worry about the debt, you'll figure it out somehow.`,
 
   func:function(message){
+
     global.usermanager.getUser(message, message.author).then(userDoc => {
 		let now = new Date()
 		let timeSinceLastLoan = now - userDoc.lastLoan;
 		if (!userDoc.lastLoan || timeSinceLastLoan > 84600000) {
       let rawAmount = loanAmount * Math.min(timeSinceLastLoan/day, 2) // The amount you gain scales over two days
-      let amount = Math.floor(rawAmount) 
       if (!userDoc.lastLoan) 
-        amount = 2*loanAmount;
+        rawAmount = 2*loanAmount;
+      let amount = Math.floor(rawAmount) 
 			userDoc.debt += rawAmount;
 			userDoc.coins += amount;
 			userDoc.lastLoan = now;
 
 			global.usermanager.setUser(message, message.author, userDoc).then(() => {
-				message.channel.send({embed:utils.embed("happy", `Took out a loan of ${amount} AbbyCoin!`)})
+				message.channel.send({embed:utils.embed("happy", `**${message.author.username}** took out a loan of ${amount} AbbyCoin!`)})
 			}).catch(err => {
 				message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
 			})
 			
 		} else {
-			message.channel.send({embed:utils.embed("sad", `Your loan will regenerate in \`${hm(84600000 - timeSinceLastLoan)}\` hours.`)})
+			message.channel.send({embed:utils.embed("sad", `**${message.author.username}**, your loan will regenerate in \`${hm(84600000 - timeSinceLastLoan)}\` hours.`)})
 		}
     })
   }
