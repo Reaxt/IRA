@@ -18,6 +18,9 @@ module.exports = {
       let rawAmount = loanAmount * Math.min(timeSinceLastLoan/day, 2) // The amount you gain scales over two days
       if (!userDoc.lastLoan) 
         rawAmount = 2*loanAmount;
+      else if (rawAmount < loanAmount) {
+        rawAmount = loanAmount;
+      }
       let amount = Math.floor(rawAmount) 
 			userDoc.debt += rawAmount;
 			userDoc.coins += amount;

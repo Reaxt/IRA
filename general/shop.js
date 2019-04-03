@@ -31,6 +31,11 @@ module.exports = {
   desc:"Opens the shop! Redeem your AbbyCoin for great prizes.",
 
   func:function(message){
+  	let arg = message.content.split(" ")[1]
+  	if (arg && typeof parseInt(arg) === 'number' && arg < shopList.length && arg > 0) {
+  		return global.usermanager.buyItem(message, message.author, shopList[arg-1].price, shopList[arg-1].func)
+  	}
+
   	let shopEmbed = new Discord.RichEmbed().setTitle("Abby's Alley").setColor("#ff2ecb")
   	global.usermanager.getCoins(message, message.author).then(coins => {
   		shopEmbed.setDescription(`${message.author.username}, you have ${coins} AbbyCoin!`)
@@ -73,9 +78,12 @@ var shopList = [
 		func:function(message, doc){
 			global.cardmanager.rollCard(message, message.author, (message, user, cardDoc) => {
 				message.channel.startTyping()
+				let originalPwr = cardDoc.attack + cardDoc.defense
 				cardDoc.attack = Math.floor((1 + (Math.random() * 0.1)) * cardDoc.attack)
 				cardDoc.defense = Math.floor((1 + (Math.random() * 0.1)) * cardDoc.defense)
 				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
+				cardDoc.level = cardDoc.totalPwr / originalPwr
+
 				setTimeout(()=> {
 					message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
 					message.channel.stopTyping()

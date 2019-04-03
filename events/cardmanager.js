@@ -10,27 +10,28 @@ const Sentencer = require("sentencer")
 // i want this to just input and output data and numbers, with other methods handling discord outputs, but the nature of callbacks makes that difficult
 
 // refDB contains every card
-var refDB = new NeDB({filename: './refcards.db'})
+var refDB = new NeDB({inMemoryOnly:true})
 var db = new NeDB({filename: './carddata.db'})
 db.loadDatabase(function (err) {
 	if (err) {
 		console.log("Failed to load carddata! Err: " + err);
 	}
 });
-refDB.loadDatabase(function (err) {
-	if (err) {
-		console.log("Failed to load refcards! Err: " + err);
-	}
-});
+// refDB.loadDatabase(function (err) {
+// 	if (err) {
+// 		console.log("Failed to load refcards! Err: " + err);
+// 	}
+// });
 db.ensureIndex({fieldName:'owner'}, (err) => {
 
 })
 
+
 if (process.argv.length > 3) {
 	if (process.argv[3] == "clearDB") {
-		refDB.remove( {_id: {$exists: true}}, {multi:true}, (err, numRemoved) => {
+		// refDB.remove( {_id: {$exists: true}}, {multi:true}, (err, numRemoved) => {
 
-		})
+		// })
 		db.remove( {_id: {$exists: true}}, {multi:true}, (err, numRemoved) => {
 
 		})
@@ -72,7 +73,11 @@ function createCardFromName(message, user, ref_name) {
 }
 function createCardFromDoc(message, user, doc) {
 	doc._id = undefined
+	doc.active = undefined
+	doc.pullable = undefined
 	doc.owner = user.id
+	doc.imgURL = undefined
+
 	db.insert(doc, function(err, newDoc) {
 		if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
 
@@ -171,6 +176,7 @@ function fuseCards(message, user, cardDoc, callback) {
 				}
 
 				cardDoc.level = Math.sqrt((cardDoc.level*cardDoc.level) + additiveLevel)
+				//if (Math.ceil(cardDoc.level) - cardDoc.level < 0.0001) cardDoc.level = Math.ceil(cardDoc.level)
 				cardDoc.attack = Math.sqrt((cardDoc.attack*cardDoc.attack) + additiveAttack)
 				cardDoc.defense = Math.sqrt((cardDoc.defense*cardDoc.defense) + additiveDefense)
 				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
@@ -188,6 +194,10 @@ function fuseCards(message, user, cardDoc, callback) {
 			})
 		})
 	})
+}
+
+function getRefCard(message, cardName) {
+	return refCards.find(c => {return c.name === cardName})
 }
 
 function favoriteCard(message, cardDoc) {
@@ -210,6 +220,7 @@ module.exports = {
 	rollCard:rollCard,
 	getCardList:getCardList,
 	fuseCards: fuseCards,
+	getRefCard: getRefCard, 
 	favoriteCard: favoriteCard,
 	unFavoriteCard: unFavoriteCard
 }

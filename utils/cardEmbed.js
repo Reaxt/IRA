@@ -6,7 +6,8 @@ var rarities = ["", "★", "★★", "★★★", "★★★★", "★★★★�
 var favSymbol = "🌟"
 module.exports = (cardDoc) => {
 	if (!cardDoc) throw err
-	embed = new Discord.RichEmbed();
+	let embed = new Discord.RichEmbed();
+	let refCard = global.cardmanager.getRefCard(undefined, cardDoc.name)
 
 	if (cardDoc.favorite) 
 		embed.setTitle(favSymbol +" "+ cardDoc.displayName)
@@ -14,8 +15,9 @@ module.exports = (cardDoc) => {
 		embed.setTitle(cardDoc.displayName)
 	embed.setDescription(rarities[cardDoc.rarity] + " Lv. " + (Math.floor(cardDoc.level*100)/100))
 	embed.setColor("#f759e8")
-	embed.setImage(cardDoc.imgURL)
-	embed.addField("Total Power", Math.floor(cardDoc.totalPwr))
+	if (refCard)
+		embed.setImage(refCard.imgURL)
+	embed.addField("Total Power", Math.floor(cardDoc.attack + cardDoc.defense))
 	let owner = client.users.get(cardDoc.owner)
 	embed.setFooter(owner.username, owner.avatarURL)
 	return embed
