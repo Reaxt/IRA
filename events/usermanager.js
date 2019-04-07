@@ -127,33 +127,35 @@ module.exports = {
 			})
 		})
 	},
-	saveRoles:function(message, user) {
-		if (typeof user !== 'GuildMember') return message.channel.send("attempted to save roles of non-guild member")
-		db.findOne({id:user.id}, function(err, doc) {
-			if (!doc) doc = initUser(user)
+	saveRoles:function(message, member) {
+		if (!member.roles) return message.channel.send("no roles found")
+		db.findOne({id:member.user.id}, function(err, doc) {
+			if (!doc) doc = initUser(member.user)
 
-			doc.roles = user.roles
-			db.update({id:user.id}, doc, {upsert:true});
+			doc.roles = member.roles.filter(e => e.name != "@everyone").keyArray()
+			db.update({id:member.user.id}, {$set:{roles: doc.roles}}, function(err, doc) {
+				if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+			});
 		})
 	},
-	getRoles:function(message, user) {
+	getRoles:function(message, member) {
 		return new Promise((resolve, reject) => {
-			if (typeof user !== 'GuildMember') return message.channel.send("attempted to fetch roles of non-guild member")
-			db.findOne({id:user.id}), function(err, doc) {
+			db.findOne({id:member.user.id}, function(err, doc) {
+				if (err) reject(err)
 				if (!doc) reject("user absent from database")
 				if (!doc.roles) reject("no roles for user")
+
 				resolve(doc.roles);
-			}
+			})
 		})
 	},
 	// callback: function(message, user, Collection<roles>)
-	fetchRoles:function(message, user, callback) {
-		if (typeof user !== 'GuildMember') return message.channel.send("attempted to fetch roles of non-guild member")
-		db.findOne({id:user.id}), function(err, doc) {
-			if (!doc) return message.channel.send({embed:utils.embed(`malfunction`,`${user.name} isn't in my systems.`, "RED")})
-			if (!doc.roles) return message.channel.send({embed:utils.embed(`malfunction`,`I don't have anything on file for ${user.name}.`, "RED")})
-			callback(message, user, doc.roles);
-		}
+	fetchRoles:function(message, member, callback) {
+		db.findOne({id:member.user.id}, function(err, doc) {
+			if (!doc) return message.channel.send({embed:utils.embed(`malfunction`,`${member.user.username} isn't in my systems.`, "RED")})
+			if (!doc.roles) return message.channel.send({embed:utils.embed(`malfunction`,`I don't have anything on file for ${member.user.username}.`, "RED")})
+			callback(message, member, doc.roles);
+		})
 	},
 	// callback = function(message, doc)
 	buyItem:function(message, user, price, callback) {

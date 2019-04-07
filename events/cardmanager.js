@@ -40,12 +40,10 @@ if (process.argv.length > 3) {
 }
 
 var refCards = JSON.parse(fs.readFileSync("./events/cards.json"))
-let newCards = 0
 for (let i=0, len=refCards.length; i < len; i++) {
 	if (refCards[i].active) {
 		refCards[i].level = 1;
-		refDB.update({name: refCards[i].name}, refCards[i], {upsert: true}, function(err, numReplaced, upsert) {
-			if (upsert) newCards++
+		refDB.update({name: refCards[i].name}, refCards[i], {upsert: true}, function() {
 		})
 	}
 }
@@ -128,6 +126,11 @@ function getCardList(messasge, user, sort) {
 			})
 		} else if (sort === "rarity") {
 			db.find({owner:user.id}).sort({rarity:-1, totalPwr:-1}).exec((err, docs) => {
+				if (docs) resolve(docs)
+				else reject("No cards found!")
+			})
+		} else if (sort === "type") {
+			db.find({owner:user.id}).sort({rarity:-1, name:1, totalPwr:-1}).exec((err, docs) => {
 				if (docs) resolve(docs)
 				else reject("No cards found!")
 			})
@@ -225,5 +228,5 @@ module.exports = {
 	unFavoriteCard: unFavoriteCard
 }
 
-refDB.count({}, (err, count) => { console.log(`Card Manager initialized with ${count} entries. ${newCards} new cards this boot.`); })
+refDB.count({}, (err, count) => { console.log(`Card Manager initialized with ${count} entries.`); })
 db.count({}, (err, count) => { console.log(` ${count} unique cards have been created.`)})

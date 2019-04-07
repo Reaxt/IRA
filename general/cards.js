@@ -77,13 +77,14 @@ async function cardDisplayReactions (message, sentMsg, cardEmbed, cardDoc) {
 }
 module.exports = {
 	name:"!cards",
-	desc:"Lists your card collection",
+	desc:"Lists your card collection. Sort by power or rarity.",
 	func:function(message){
 
 		// sort type distinction
 		let sort; 
 		let lowercase = message.content.toLowerCase();
-		if (lowercase.includes(" rarity")) sort = "rarity"
+		if (lowercase.includes(" rarity")) sort = "type"
+		else if (lowercase.includes(" type")) sort = "type"
 		else sort = "power"
 
 		let user = message.author

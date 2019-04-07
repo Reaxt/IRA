@@ -17,7 +17,8 @@ module.exports = (cardDoc) => {
 	embed.setColor("#f759e8")
 	if (refCard)
 		embed.setImage(refCard.imgURL)
-	embed.addField("Total Power", Math.floor(cardDoc.attack + cardDoc.defense))
+	embed.addField("Attack", Math.floor(cardDoc.attack), inline=true)
+	embed.addField("Defense", Math.floor(cardDoc.defense), inline=true)
 	let owner = client.users.get(cardDoc.owner)
 	embed.setFooter(owner.username, owner.avatarURL)
 	return embed
