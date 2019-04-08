@@ -161,7 +161,7 @@ function fuseCards(message, user, cardDoc, callback) {
 				let additiveLevel = 0;
 				let selfFuseAvoided = false; // Helps count how many cards were consumed
 				for (let i = 0; i < docs.length; i++) {
-					if (docs[i].level > largestLevel) {
+					if (Math.floor(docs[i].level) > largestLevel) {
 						largestLevel = docs[i].level
 						largestDispName = docs[i].displayName
 					}
@@ -184,9 +184,13 @@ function fuseCards(message, user, cardDoc, callback) {
 				cardDoc.defense = Math.sqrt((cardDoc.defense*cardDoc.defense) + additiveDefense)
 				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
 
-				for (let i = initialLevel; i < Math.floor(cardDoc.level); i++) {
-					cardDoc.displayName = Sentencer.make("{{ adjective }} " + largestDispName)
-					cardDoc.displayName = cardDoc.displayName.charAt(0).toUpperCase() + cardDoc.displayName.substr(1)
+				for (let i = Math.floor(largestLevel); i < Math.floor(cardDoc.level); i++) {
+					if (i == 1 && Math.random() > 0.5) 
+						largestDispName = Sentencer.make("{{ noun }} " + largestDispName)
+					else 
+						largestDispName = Sentencer.make("{{ adjective }} " + largestDispName)
+					largestDispName = largestDispName.charAt(0).toUpperCase() + largestDispName.substr(1)
+					cardDoc.displayName = largestDispName
 				}
 
 				db.update({_id:cardDoc._id}, cardDoc, {}, () => {
