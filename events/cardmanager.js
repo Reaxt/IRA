@@ -152,8 +152,8 @@ function fuseCards(message, user, cardDoc, callback) {
 			db.find({name:cardDoc.name, owner:user.id, favorite:{$ne:true}}, (err, docs) => {
 				// Fusing a less powerful card with a more powerful card should not allow transferring power to a new set of adjectives.
 				// These parameters keep track of that.
-				let largestLevel = 0;
-				let largestDispName;
+				let largestLevel = cardDoc.level;
+				let largestDispName = cardDoc.displayName;
 
 				// Upgrade parameters
 				let additiveAttack = 0;
