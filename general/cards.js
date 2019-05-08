@@ -40,9 +40,10 @@ async function cardDisplayReactions (message, sentMsg, cardEmbed, cardDoc) {
 				collector.stop("accept")
 				sentMsg.clearReactions()
 				sentMsg.edit("`----Fusing----`")
+				let oldLevel = cardDoc.level;
 				global.cardmanager.fuseCards(message, message.author, cardDoc, (fusedCard, numFused) => {
 					setTimeout(() => {
-						sentMsg.edit(`Fuse result! ${numFused} cards consumed.`, {embed:utils.cardEmbed(fusedCard)})
+						sentMsg.edit(`Fuse result! ${numFused} card(s) consumed. ${Math.floor(fusedCard.level)-Math.floor(oldLevel)} level(s) gained.`, {embed:utils.cardEmbed(fusedCard)})
 					}, 1500)
 				})
 			} else if (r.emoji.name == cancelEmote) {
@@ -85,7 +86,8 @@ module.exports = {
 		let lowercase = message.content.toLowerCase();
 		if (lowercase.includes(" rarity")) sort = "type"
 		else if (lowercase.includes(" type")) sort = "type"
-		else sort = "power"
+		else if (lowercase.includes(" power")) sort = "power"
+		else sort = "type"
 
 		let user = message.author
 

@@ -127,6 +127,16 @@ module.exports = {
 			})
 		})
 	},
+	updateUser:function(message, user, args) {
+		return new Promise((resolve, reject) => {
+			db.update({id:user.id}, args, (err, doc) => {
+				if (err) 
+					reject(err)
+				else 
+					resolve(doc)
+			})
+		})
+	},
 	saveRoles:function(message, member) {
 		if (!member.roles) return message.channel.send("no roles found")
 		db.findOne({id:member.user.id}, function(err, doc) {

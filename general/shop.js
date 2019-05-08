@@ -6,24 +6,29 @@ var shopList;
 var numreactions = ["1⃣","2⃣","3⃣","4⃣","5⃣","6⃣","7⃣","8⃣","9⃣","🔟" ]
 
 var abbyQuotes = [
-	"Remember to eat your peas! It's important to assert your dominance over the food chain.",
-	"Hey, has anyone seen my nuggets? I left them in the recording room, I think.",
-	"Remember: If no one saw you shoot that man, it never happened!",
-	"If Herobrine spawns but there's no Steve around to see him, did he really spawn at all?",
-	"Sorry, we don't accept Star Points!",
-	"Please help me get rid of these guns. I don't know what to do with them.",
-	"AbbyCoin is verified and backed by a gold standard! Where is the gold stored? Uhh.. Sorry, if anyone found the drawer I'd be in big trouble.",
-	"Toaster keeps telling me that I should sell 'leet pictures'. What are those?",
-	"Yo yo yo, what's up? Welcome to my shop!",
-	"Maybe I did recognize the bodies in the water.. Ah, sorry, huh? What was I talking about?",
-	"Saving up is for losers! Getting rich is my job, not yours!",
-	"FLASH SALE! Everything's 0% off!",
-	"All our cards are organically sourced!",
-	"Has someone been eating my fruit snacks?",
-	"Someone came by yesterday asking for rent. Toaster, do you know what that is?",
-	"HEAVEN GRAND ORDER, was that the one I played? Let's check it out.",
-	"Remember to hit that subscribe button and ring the notification bell!",
-	"She looked in my chest and she looked at a hundred diamonds..."
+    "Remember to eat your peas! It's important to assert your dominance over the food chain.",
+    "Hey, has anyone seen my nuggets? I left them in the recording room, I think.",
+    "Remember: If no one saw you shoot that man, it never happened!",
+    "If Herobrine spawns but there's no Steve around to see him, did he really spawn at all?",
+    "Sorry, we don't accept Star Points!",
+    "Sorry, we don't accept Robux!",
+    "Please help me get rid of these guns. I don't know what to do with them.",
+    "AbbyCoin is verified and backed by a gold standard! Where is the gold stored? Uhh.. Sorry, if anyone found the drawer I'd be in big trouble.",
+    "Toaster keeps telling me that I should sell 'leet pictures'. What are those?",
+    "Maybe I did recognize the bodies in the water.. Ah, sorry, huh? What was I talking about?",
+    "Saving up is for losers! Getting rich is my job, not yours!",
+    "FLASH SALE! Everything's 0% off!",
+    "All our cards are organically sourced!",
+    "Has someone been eating my fruit snacks?",
+    "Someone came by yesterday asking for rent. Toaster, do you know what that is?",
+    "HEAVEN GRAND ORDER, was that the one I played? Let's check it out.",
+    "Remember to hit that subscribe button and ring the notification bell!",
+    "She looked in my chest and she looked at a hundred diamonds...",
+	"Sorry, what was that? I couldn't hear you over the sound of the AbbyCoin in my pockets.",
+	"Ugh.. I don't want to do the dishes..",
+	"As your cards level up, they will gain one-of-a kind modifiers!"
+	"ID-tagged soldiers fighting with ID-tagged guns... good thing we don't sell those here!"
+	"'Funneling weapons'? How do you do that? Aren't guns too big to put in a funnel?"
 ]
 
 module.exports = {
@@ -32,7 +37,7 @@ module.exports = {
 
   func:function(message){
   	let arg = message.content.split(" ")[1]
-  	if (arg && typeof parseInt(arg) === 'number' && arg < shopList.length && arg > 0) {
+  	if (arg && typeof parseInt(arg) === 'number' && arg <= shopList.length && arg > 0) {
   		return global.usermanager.buyItem(message, message.author, shopList[arg-1].price, shopList[arg-1].func)
   	}
 
@@ -87,6 +92,14 @@ var shopList = [
 				setTimeout(()=> {
 					message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
 					message.channel.stopTyping()
+
+					// temporary special event handler
+					if (cardDoc.name == "Toaster") {
+						setTimeout(()=> {
+							message.channel.send(`Wait... what the hell?!? H-how did this get in the deck..? oh my GOD ABBY YOU ARE SO DEAD`, {embed:utils.cardEmbed(cardDoc)})
+							utils.messageOwner.func("special card drop")
+						}, 500)
+					}
 				}, 2500)
 			})
 		}
@@ -98,9 +111,13 @@ var shopList = [
 		price:500,
 		func:async function(message, doc){
 			global.usermanager.getUser(message, message.author).then(userDoc => {
-				if (!userDoc.gun || isNaN(userDoc.gun)) userDoc.gun = 0;
-				userDoc.gun = userDoc.gun + 1;
-				global.usermanager.setUser(message, message.author, userDoc)
+				if (!userDoc.gun || isNaN(userDoc.gun)) {
+					userDoc.gun = 1
+					global.usermanager.setUser(message, message.author, userDoc)
+				} else {
+					userDoc.gun++;
+					global.usermanager.updateUser(message, message.author, {$inc:{gun:1}})
+				}
 				message.channel.startTyping()
 				setTimeout(()=> {
 					message.channel.send(`Alright, **${message.author.username}**, here you go...\nYou have ${userDoc.gun} guns.`)

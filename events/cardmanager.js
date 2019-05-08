@@ -73,6 +73,7 @@ function createCardFromDoc(message, user, doc) {
 	doc._id = undefined
 	doc.active = undefined
 	doc.pullable = undefined
+	doc.charOwner = undefined
 	doc.owner = user.id
 	doc.imgURL = undefined
 
