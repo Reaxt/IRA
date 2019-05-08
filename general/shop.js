@@ -26,8 +26,8 @@ var abbyQuotes = [
     "She looked in my chest and she looked at a hundred diamonds...",
 	"Sorry, what was that? I couldn't hear you over the sound of the AbbyCoin in my pockets.",
 	"Ugh.. I don't want to do the dishes..",
-	"As your cards level up, they will gain one-of-a kind modifiers!"
-	"ID-tagged soldiers fighting with ID-tagged guns... good thing we don't sell those here!"
+	"As your cards level up, they will gain one-of-a kind modifiers!",
+	"ID-tagged soldiers fighting with ID-tagged guns... good thing we don't sell those here!",
 	"'Funneling weapons'? How do you do that? Aren't guns too big to put in a funnel?"
 ]
 
