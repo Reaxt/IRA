@@ -92,14 +92,6 @@ var shopList = [
 				setTimeout(()=> {
 					message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
 					message.channel.stopTyping()
-
-					// temporary special event handler
-					if (cardDoc.name == "Toaster") {
-						setTimeout(()=> {
-							message.channel.send(`Wait... what the hell?!? H-how did this get in the deck..? oh my GOD ABBY YOU ARE SO DEAD`, {embed:utils.cardEmbed(cardDoc)})
-							utils.messageOwner.func("special card drop")
-						}, 500)
-					}
 				}, 2500)
 			})
 		}
