@@ -9,7 +9,7 @@ module.exports = {
   music:true,
   func:function(message){
  	if(message.mentions.users.first()) {
-		console.log(message.mentions.users.first())
+
 		if(global.blacklist.includes(message.mentions.users.first().id)) {
 			global.blacklist.splice(global.blacklist.indexOf(message.mentions.users.first().id), 1)
 			message.channel.send(`Oh, there you are, <@${message.mentions.users.first().id}>!`)
