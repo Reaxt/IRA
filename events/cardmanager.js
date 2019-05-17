@@ -167,7 +167,6 @@ function fuseCards(message, user, cardDoc, callback) {
 						largestDispName = docs[i].displayName
 					}
 					if (docs[i]._id != cardDoc._id) {
-						if (!docs[i].level) docs[i].level = 1
 						additiveAttack += (docs[i].attack * docs[i].attack)
 						additiveDefense += (docs[i].defense * docs[i].defense)
 						additiveLevel += docs[i].level * docs[i].level
@@ -178,9 +177,9 @@ function fuseCards(message, user, cardDoc, callback) {
 						selfFuseAvoided = true;
 					}
 				}
+				console.log(`The largest card is ${largestDispName} at level ${largestLevel}`)
 
 				cardDoc.level = Math.sqrt((cardDoc.level*cardDoc.level) + additiveLevel)
-				//if (Math.ceil(cardDoc.level) - cardDoc.level < 0.0001) cardDoc.level = Math.ceil(cardDoc.level)
 				cardDoc.attack = Math.sqrt((cardDoc.attack*cardDoc.attack) + additiveAttack)
 				cardDoc.defense = Math.sqrt((cardDoc.defense*cardDoc.defense) + additiveDefense)
 				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
@@ -191,8 +190,8 @@ function fuseCards(message, user, cardDoc, callback) {
 					else 
 						largestDispName = Sentencer.make("{{ adjective }} " + largestDispName)
 					largestDispName = largestDispName.charAt(0).toUpperCase() + largestDispName.substr(1)
-					cardDoc.displayName = largestDispName
 				}
+				cardDoc.displayName = largestDispName
 
 				db.update({_id:cardDoc._id}, cardDoc, {}, () => {
 
