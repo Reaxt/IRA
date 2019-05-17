@@ -89,28 +89,47 @@ module.exports = {
 		else if (lowercase.includes(" power")) sort = "power"
 		else sort = "type"
 
+
 		let user = message.author
 
 		listEmbed = new Discord.RichEmbed()
 		listEmbed.setAuthor(`${user.username}'s Cards`, user.avatarURL)
+		listEmbed.setDescription("Enter the number of a card to view it.")
 		listEmbed.setColor("#f759e8")
 
 		cardList = global.cardmanager.getCardList(message, message.author, sort).then(cards => {
 			if (cards.length == 0) 
 				return message.channel.send({embed:utils.embed('sad', "You haven't acquired any cards yet. Go to the shop to get some!")})
-			listCards(cards, listEmbed, 0, Math.min(10, cards.length))
+
+
+			// number of the first card in display list
+			var i;
+			let splitContent = message.content.split(" ");
+			let numInput = parseInt(splitContent[splitContent.length-1]);
+			if (!isNaN(numInput) && numInput > 0 && (numInput-1)*10 < cards.length) {
+				i = (numInput-1) * 10;
+			} else {
+				i = 0;
+			}
+
+
+			listCards(cards, listEmbed, i, Math.min(i+10, cards.length))
 			message.channel.send({embed:listEmbed}).then(function(sentMsg) {
 				// reaction collection
 				sentMsg.react(arrowreactions[0])
 				setTimeout(function() {
 					sentMsg.react(arrowreactions[1])
-					var i = 0;
-			    	utils.numreact(sentMsg, 0, numreactions.length)
+
+
+			    	//utils.numreact(sentMsg, 0, numreactions.length)
 
 					let collector = sentMsg.createReactionCollector(
-						(reaction, user) =>  (arrowreactions.includes(reaction.emoji.name) || numreactions.includes(reaction.emoji.name)) && user.id === message.author.id,  {time:30000}
+						(reaction, user) =>  (arrowreactions.includes(reaction.emoji.name) || numreactions.includes(reaction.emoji.name)) && user.id === message.author.id,  {time:60000}
 					)
 					collector.on('collect', r => {
+
+					    setTimeout( () => r.remove(user), 100)
+
 						if (r.emoji.name == arrowreactions[0] && i >= 10) {
 							i -= 10
 							sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
@@ -127,10 +146,45 @@ module.exports = {
 							message.channel.send({embed:cardEmbed}).then((cardMsg) => {
 								cardDisplayReactions(message, cardMsg, cardEmbed, cards[i+num])
 							})
-						}
-							
+						}		
 					})
+
+					
+
 				}, 500)
+
+
+				// card choose message collection
+				// If number: choose that card
+				// If another !cards: stop this listener (another will take over)
+				let filter = (m) => m.author.id == message.author.id && (!isNaN(parseInt(m.content)) || m.content.startsWith(global.config.prefix))
+				let textCollector = sentMsg.channel.createMessageCollector(filter, {time:60000})
+				textCollector.on('collect', msg => {
+
+					if (msg.content.startsWith(global.config.prefix)) {
+						textCollector.stop("override")
+					} else {
+						let num = parseInt(msg.content);
+						if (num > 0 && num <= cards.length) {
+							let cardEmbed = utils.cardEmbed(cards[num-1])
+							textCollector.stop("accept")
+							sentMsg.delete()
+							message.channel.send({embed:cardEmbed}).then((cardMsg) => {
+								cardDisplayReactions(message, cardMsg, cardEmbed, cards[num-1])
+							})
+						} else {
+							message.channel.send({embed:utils.embed("sad", "That input is out of bounds.")})
+						}
+					}
+
+				})
+
+				// notify when the collector has timed out
+				textCollector.on('end', (collected, reason) => {
+					if (reason == "time" && !sentMsg.deleted) {
+						sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)).setDescription("This prompt has timed out.")})
+					}
+				}, 60000)
 				
 			})
 		}).catch(err => {

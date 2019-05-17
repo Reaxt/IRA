@@ -13,7 +13,7 @@ if (process.argv.length > 2) {
 } else config = JSON.parse(fs.readFileSync("./cfg.json"));
 
 // Extra config stuff that I want synced across git
-config.version = "5.2.2"
+config.version = "5.3"
 
 //IRA HANDLER
 const ira = new eventEmitter()

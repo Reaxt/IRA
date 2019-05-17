@@ -92,7 +92,7 @@ var shopList = [
 				setTimeout(()=> {
 					message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
 					message.channel.stopTyping()
-				}, 2500)
+				}, 1500)
 			})
 		}
 	},

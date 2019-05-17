@@ -177,7 +177,6 @@ function fuseCards(message, user, cardDoc, callback) {
 						selfFuseAvoided = true;
 					}
 				}
-				console.log(`The largest card is ${largestDispName} at level ${largestLevel}`)
 
 				cardDoc.level = Math.sqrt((cardDoc.level*cardDoc.level) + additiveLevel)
 				cardDoc.attack = Math.sqrt((cardDoc.attack*cardDoc.attack) + additiveAttack)
