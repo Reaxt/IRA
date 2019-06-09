@@ -12,7 +12,7 @@ fs.readdirSync("./music/").forEach(file => { // Get files in this directory and 
 });
 
 module.exports.commandList = commandList;
-module.exports.refresh = () => { 
+module.exports.refresh = (message) => { 
     var commandList = []
     fs.readdirSync("./music/").forEach(file => {
         if (file.endsWith(".js") && file != "index.js") {
