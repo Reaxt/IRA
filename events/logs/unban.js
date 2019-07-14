@@ -7,6 +7,7 @@ module.exports = (user) => {
     .setTitle(`🔨 Member ${user.username} has been unbanned from the server`)
     .setColor("BLUE")
     .setThumbnail(user.avatarURL)
+    .setFooter(user.id)
 
     user.client.guilds.get(config.guildid).channels.get(config.logs).send({embed})
   }
