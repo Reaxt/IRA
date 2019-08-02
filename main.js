@@ -2,6 +2,7 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const fs = require('fs');
 const eventEmitter = require('events');
+const { version } = require('./package.json');
 // CONFIG DETERMINATION (reads different files with 'live' or 'dev' command line param)
 var config;
 if (process.argv.length > 2) {
@@ -13,7 +14,6 @@ if (process.argv.length > 2) {
 } else config = JSON.parse(fs.readFileSync("./cfg.json"));
 
 // Extra config stuff that I want synced across git
-config.version = "5.3"
 
 //IRA HANDLER
 const ira = new eventEmitter()
@@ -24,7 +24,7 @@ global.queue = []
 global.votes = 0
 global.voteusers = []
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
-global.streamoptions = {volume:0.25, bitrate:'auto'}
+global.streamoptions = {volume:0.25, bitrate:192000}
 global.blacklist = [];
 global.config = config;
 global.client = client;
@@ -80,7 +80,7 @@ function reload(arg, message) {
         case "botmanage":
           botmanage.refresh()
           delete require.cache[require.resolve('./botmanage/index.js')]
-          mod = require('./botmanage/index.js')
+          botmanage = require('./botmanage/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
           message.channel.send({embed})
           break;
@@ -144,7 +144,7 @@ function evalcmd(message) {
 client.on("ready", () => {
  if(JSON.parse(fs.readFileSync("./shutdownstatus.json")).shutdown === false){
     client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...")})} else {
-   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${config.version} today.`)})
+   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${version} today.`)})
    fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
  global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
