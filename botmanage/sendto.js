@@ -32,8 +32,8 @@ module.exports = {
     }
 
     // some stuff for effect
-    // targetChannel.startTyping();
-    // setTimeout(function() {
+    targetChannel.startTyping();
+    setTimeout(function() {
 		if (targetChannel.type == "text") {
 			if (message.attachments && message.attachments.size > 0) {
 				const attachment = new Attachment(message.attachments.first().url)
@@ -48,7 +48,7 @@ module.exports = {
 		} else {
 			message.channel.send({embed:utils.embed("malfunction", "Not a text channel")})
 		}
-		// targetChannel.stopTyping();
-  //   }, 700)
+		targetChannel.stopTyping();
+    }, 700)
   }
 }
