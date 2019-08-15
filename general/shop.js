@@ -84,8 +84,8 @@ var shopList = [
 			global.cardmanager.rollCard(message, message.author, (message, user, cardDoc) => {
 				message.channel.startTyping()
 				let originalPwr = cardDoc.attack + cardDoc.defense
-				cardDoc.attack = Math.floor((1 + (Math.random() * 0.1)) * cardDoc.attack)
-				cardDoc.defense = Math.floor((1 + (Math.random() * 0.1)) * cardDoc.defense)
+				cardDoc.attack = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.attack)
+				cardDoc.defense = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.defense)
 				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
 				cardDoc.level = cardDoc.totalPwr / originalPwr
 
