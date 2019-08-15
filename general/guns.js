@@ -11,9 +11,16 @@ module.exports = {
     if (message.mentions.members.first()) user = message.mentions.members.first() 
 
     global.usermanager.getUser(message, user).then( function(userDoc) {
-    	if (userDoc.gun > 5) expr = "sad"
-    	else expr = "happy"
-      	message.channel.send({embed: utils.embed(expr, `You've got \`${userDoc.gun}\` guns.`)});
+      let expr;
+    	if (userDoc.gun > 5) 
+        expr = "sad"
+    	else 
+        expr = "happy"
+
+      if (!userDoc.gun)
+        message.channel.send({embed: utils.embed("happy", `You don't have any guns. Pick one up from the shop?`)})
+      else
+        message.channel.send({embed: utils.embed(expr, `You've got \`${userDoc.gun}\` guns.`)});
     });
   }
 }

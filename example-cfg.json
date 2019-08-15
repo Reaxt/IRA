@@ -10,6 +10,7 @@
   "token":"bot account token",
   "owner":"owners user id",
   "owners":["owner1", "owner2"],
+  "abbyId":"abby account user ID",
   "guildid":"guild id",
   "djrole":"dj role id",
   "ratelimitmessage":3000,

@@ -79,7 +79,7 @@ var shopList = [
 		name:"Card Pull",
 		desc:"Get a random card! Don't be afraid, put your hand in!",
 		icon:"🗑️",
-		price:100,
+		price:300,
 		func:function(message, doc){
 			global.cardmanager.rollCard(message, message.author, (message, user, cardDoc) => {
 				message.channel.startTyping()

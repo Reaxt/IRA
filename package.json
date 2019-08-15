@@ -1,7 +1,7 @@
 {
-  "name": "reaxt",
-  "version": "5.4.0",
-  "description": "",
+  "name": "toaster",
+  "version": "5.5.0",
+  "description": "a discord bot created for Art Heaven",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -19,8 +19,6 @@
     "get-youtube-id": "^1.0.1",
     "gifencoder": "^2.0.1",
     "jimp": "^0.6.4",
-    "mail-listener2": "^0.3.1",
-    "mailparser": "^2.7.1",
     "nedb": "^1.8.0",
     "node-cron": "^2.0.3",
     "node-opus": "^0.3.2",
@@ -37,10 +35,8 @@
     "sqlite3": "^4.0.9",
     "superagent": "^5.1.0",
     "uws": "^100.0.1",
-    "youtube-dl": "^2.0.0",
     "youtube-search": "^1.1.4",
-    "ytdl": "^0.11.1",
-    "ytdl-core": "^0.29.2"
+    "ytdl-core": "^0.29.5"
   },
   "devDependencies": {},
   "scripts": {

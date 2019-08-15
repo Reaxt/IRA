@@ -44,7 +44,7 @@ module.exports = {
 
     //case 1: use youtube
     if (type === "youtube" || type === "search") {
-      ytdl.getInfo(target, (err, info) => {
+      ytdl.getBasicInfo(target, (err, info) => {
         if(err) {
           search(message.content.slice(5), searchopts, function(err, results) {
             if(err) return message.channel.send({embed:utils.embed("malfunction",`something went wrong! \`\`\`${err}\`\`\``,"RED")})
