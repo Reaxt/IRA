@@ -1,6 +1,5 @@
 const Discord = require("discord.js")
 const utils = require("../utils/index.js")
-const events = require("events")
 const NeDB = require("nedb")
 const fs = require("fs")
 const Sentencer = require("sentencer")
@@ -76,6 +75,9 @@ function createCardFromDoc(message, user, doc) {
 	doc.charOwner = undefined
 	doc.owner = user.id
 	doc.imgURL = undefined
+	doc.series = undefined
+	doc.event = undefined
+	doc.totalPwr = undefined
 
 	db.insert(doc, function(err, newDoc) {
 		if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
@@ -92,24 +94,48 @@ function createCardFromDoc(message, user, doc) {
 // Adds a randomly rolled card to a user.
 // message: origin message
 // user: user to add to
-// callback(message, user, newDoc): callback 
-function rollCard(message, user, callback) {
+function rollCard(message, user) {
 	// Roll the rarity of the card.
 	let rarity = global.config.pullP.length;
 	let randNum = Math.random();
 	while (randNum > global.config.pullP[rarity-1] && rarity > 0) {
 		rarity--;
 	}
-	// Fetch a random card of that rarity.
-	refDB.find({rarity: rarity, pullable:true}, (err, docs) => {
-		if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
-		if (docs.length == 0) return message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`No pullable cards.\`\`\``, "RED")})
-
-		cardDoc = docs[Math.floor(Math.random() * docs.length)]
-		cardDoc = createCardFromDoc(message, user, cardDoc)
-		return callback(message, user, cardDoc);
+	return new Promise((resolve, reject) => {
+		// Fetch a random card of that rarity.
+		refDB.find({rarity: rarity, pullable:true, event:false}, (err, docs) => {
+			if (err) {
+				reject(err)
+			} else if (docs.length == 0) {
+				reject("No pullable cards.");
+			} else {
+				cardDoc = docs[Math.floor(Math.random() * docs.length)]
+				cardDoc = createCardFromDoc(message, user, cardDoc)
+				resolve(cardDoc)
+			}
+		})
 	})
-	
+}
+function rollEventCard(message, user, eventSeries) {
+	let rarity = global.config.pullP.length;
+	let randNum = Math.random();
+	while (randNum > global.config.pullP[rarity-1] && rarity > 0) {
+		rarity--;
+	}
+	return new Promise((resolve, reject) => {
+		// Fetch a random card of that rarity.
+		refDB.find({rarity: rarity, pullable:true, series:eventSeries}, (err, docs) => {
+			if (err) {
+				reject(err)
+			} else if (docs.length == 0) {
+				reject("No pullable cards.");
+			} else {
+				cardDoc = docs[Math.floor(Math.random() * docs.length)]
+				cardDoc = createCardFromDoc(message, user, cardDoc)
+				resolve(cardDoc)
+			}
+		})
+	})
 }
 // callback: function(message, card_doc)
 function getCardfromID(message, card_id, callback) {
@@ -224,6 +250,7 @@ module.exports = {
 	database:db,
 	refDatabase:refDB,
 	rollCard:rollCard,
+	rollEventCard:rollEventCard,
 	getCardList:getCardList,
 	fuseCards: fuseCards,
 	getRefCard: getRefCard, 

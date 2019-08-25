@@ -1,9 +1,6 @@
 const Discord = require("discord.js")
 const utils = require("../utils/index.js")
-const events = require("events")
 const NeDB = require("nedb")
-const usermanager = new events();
-const fs = require("fs")
 
 // USERMANAGER.JS
 // manages updates to user data (userdata.db) via a NeDB database
@@ -34,18 +31,7 @@ function initUser(user) {
 	return doc;
 }
 
-// usermanager.on("saveRoles", (user) => {
-// 	// if (typeof user !== 'GuildMember') return console.log("attempted to save roles of non-guild member")
-// 	// //let users = NoSQL.load("./users.nosql")
-// 	// userObj = users.meta(user.id)
-// 	// if (!userObj) userObj = initUser(user)
-
-// 	// userObj.roles = user.roles
-// 	// //users.set(user.id, userObj)
-// })
-
 module.exports = {
-	events:usermanager,
 	database:db,
 	//initUser:initUser(user),
 

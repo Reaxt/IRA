@@ -1,7 +1,7 @@
 var utils = require("../utils/index.js")
 const Discord = require("discord.js")
 
-var shopPageLength = 10;
+//var shopPageLength = 10;
 var shopList;
 var numreactions = ["1⃣","2⃣","3⃣","4⃣","5⃣","6⃣","7⃣","8⃣","9⃣","🔟" ]
 
@@ -24,11 +24,14 @@ var abbyQuotes = [
     "HEAVEN GRAND ORDER, was that the one I played? Let's check it out.",
     "Remember to hit that subscribe button and ring the notification bell!",
     "She looked in my chest and she looked at a hundred diamonds...",
-	"Sorry, what was that? I couldn't hear you over the sound of the AbbyCoin in my pockets.",
-	"Ugh.. I don't want to do the dishes..",
-	"As your cards level up, they will gain one-of-a kind modifiers!",
-	"ID-tagged soldiers fighting with ID-tagged guns... good thing we don't sell those here!",
-	"'Funneling weapons'? How do you do that? Aren't guns too big to put in a funnel?"
+    "Sorry, what was that? I couldn't hear you over the sound of the AbbyCoin in my pockets.",
+    "Ugh.. I don't want to do the dishes..",
+    "As your cards level up, they will gain one-of-a kind modifiers!",
+    "ID-tagged soldiers fighting with ID-tagged guns... good thing we don't sell those here!",
+    "'Funneling weapons'? How do you do that? Aren't guns too big to put in a funnel?",
+    "Not everything that you make needs to be perfect! It can be relaxing to just practice without any expectations.",
+    "Don't worry if your work isn't where you want it to be - it's just another step towards getting better!",
+    "We all need a break sometimes! Living life is important for your art, too!"
 ]
 
 module.exports = {
@@ -75,27 +78,27 @@ module.exports = {
 
 
 var shopList = [
-	{
-		name:"Card Pull",
-		desc:"Get a random card! Don't be afraid, put your hand in!",
-		icon:"🗑️",
-		price:300,
-		func:function(message, doc){
-			global.cardmanager.rollCard(message, message.author, (message, user, cardDoc) => {
-				message.channel.startTyping()
-				let originalPwr = cardDoc.attack + cardDoc.defense
-				cardDoc.attack = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.attack)
-				cardDoc.defense = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.defense)
-				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
-				cardDoc.level = cardDoc.totalPwr / originalPwr
+	// {
+	// 	name:"Card Pull",
+	// 	desc:"Get a random card! Don't be afraid, put your hand in!",
+	// 	icon:"🗑️",
+	// 	price:300,
+	// 	func:function(message, doc){
+	// 		global.cardmanager.rollCard(message, message.author, (message, user, cardDoc) => {
+	// 			message.channel.startTyping()
+	// 			let originalPwr = cardDoc.attack + cardDoc.defense
+	// 			cardDoc.attack = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.attack)
+	// 			cardDoc.defense = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.defense)
+	// 			cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
+	// 			cardDoc.level = cardDoc.totalPwr / originalPwr
 
-				setTimeout(()=> {
-					message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
-					message.channel.stopTyping()
-				}, 1500)
-			})
-		}
-	},
+	// 			setTimeout(()=> {
+	// 				message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
+	// 				message.channel.stopTyping()
+	// 			}, 1500)
+	// 		})
+	// 	}
+	// },
 	{
 		name:"Gun",
 		desc:"Oh jeez, this thing looks dangerous.",
@@ -113,6 +116,30 @@ var shopList = [
 				message.channel.startTyping()
 				setTimeout(()=> {
 					message.channel.send(`Alright, **${message.author.username}**, here you go...\nYou have ${userDoc.gun} guns.`)
+					message.channel.stopTyping()
+				}, 500)
+				
+			}).catch(()=> {
+		  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+			})
+		}
+	},
+	{
+		name:"Ether Shard",
+		desc:"Exchanged for Event cards.",
+		icon:"🔹",
+		price:1000,
+		func:async function(message, doc){
+			global.usermanager.getUser(message, message.author).then(userDoc => {
+				if (!userDoc.eventCardCoins || isNaN(userDoc.eventCardCoins)) {
+					userDoc.eventCardCoins = 1
+					global.usermanager.setUser(message, message.author, userDoc)
+				} else {
+					global.usermanager.updateUser(message, message.author, {$inc:{eventCardCoins:1}})
+				}
+				message.channel.startTyping()
+				setTimeout(()=> {
+                    message.channel.send(`Alright, **${message.author.username}**, here you go! \nYou have ${userDoc.eventCardCoins} Ether Shards. Spend them at the !cardShop!`)
 					message.channel.stopTyping()
 				}, 500)
 				
