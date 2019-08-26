@@ -18,10 +18,11 @@ function sleep(ms) {
 function listCards(cards, embed, start, end) {
 	embed.fields = [];
 	for (let i = start; i < end; i++) {
+		let refCard = global.cardmanager.getRefCard(undefined, cards[i].name)
 		if (cards[i].favorite)
-			embed.addField("🌟 "+(i+1) +". "+ cards[i].displayName, `${rarities[cards[i].rarity]} ${Math.floor(cards[i].attack+cards[i].defense)}`)
+			embed.addField("🌟 "+(i+1) +". "+ cards[i].displayName, `${rarities[refCard.rarity]} ${Math.floor(cards[i].attack+cards[i].defense)}`)
 		else 
-			embed.addField((i+1) +". "+ cards[i].displayName, `${rarities[cards[i].rarity]} ${Math.floor(cards[i].attack+cards[i].defense)}`)
+			embed.addField((i+1) +". "+ cards[i].displayName, `${rarities[refCard.rarity]} ${Math.floor(cards[i].attack+cards[i].defense)}`)
 	}
 	embed.setFooter(`Page ${(start/10)+1}/${Math.ceil((cards.length/10))}`)
 	return embed

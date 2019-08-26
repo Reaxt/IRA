@@ -48,47 +48,48 @@ for (let i=0, len=refCards.length; i < len; i++) {
 }
 
 // The next three functions use various data to convert a template card into a unique instance card attached to a user.
-function createCardFromID(message, user, ref_id) {
-	let doc;
-	refDB.findOne({_id:ref_id}, function(err, foundDoc) {
-		if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
-		else doc = foundDoc
+
+function createCardFromName(message, user, refName) {
+	return new Promise((resolve, reject) => {
+		let doc;
+		refDB.findOne({name:refName}, function(err, foundDoc) {
+			if (err) reject(err)
+			else if (!foundDoc) reject("no doc")
+			else {
+				createCardFromDoc(message, user, foundDoc).then(newDoc => resolve(newDoc))
+				.catch(err => reject(err))
+			}
+		})
 	})
-	doc.owner = user.id
-	db.insert(doc, function(err, newDoc) {doc._id = newDoc._id});
-	return doc;
-}
-function createCardFromName(message, user, ref_name) {
-	let doc;
-	refDB.findOne({name:ref_name}, function(err, foundDoc) {
-		if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
-		else doc = foundDoc
-	})
-	doc.owner = user.id
-	db.insert(doc, function(err, newDoc) {doc._id = newDoc._id});
-	return doc;
 }
 function createCardFromDoc(message, user, doc) {
 	doc._id = undefined
 	doc.active = undefined
 	doc.pullable = undefined
 	doc.charOwner = undefined
-	doc.owner = user.id
+	doc.owner = user ? user.id : ""
 	doc.imgURL = undefined
 	doc.series = undefined
 	doc.event = undefined
 	doc.totalPwr = undefined
+	// doc.rarity = undefined  // needed for rarity sorting
+	doc.level = 1
 
-	db.insert(doc, function(err, newDoc) {
-		if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
-
-		if (!newDoc) {
-			message.channel.send({embed:utils.embed(`malfunction`,`Unknown error - New card was not created!`, "RED")})
+	return new Promise((resolve, reject) => {
+		if (!user) {
+			resolve(doc) // Generate a dummy card without actually adding it to the database
 		} else {
-			doc._id = newDoc._id
+			db.insert(doc, function(err, newDoc) {
+				if (err) reject(err)
+		
+				if (!newDoc) {
+					reject("unknown error")
+				} else {
+					resolve(newDoc)
+				}
+			});
 		}
-	});
-	return doc;
+	})
 }
 
 // Adds a randomly rolled card to a user.
@@ -109,9 +110,9 @@ function rollCard(message, user) {
 			} else if (docs.length == 0) {
 				reject("No pullable cards.");
 			} else {
-				cardDoc = docs[Math.floor(Math.random() * docs.length)]
-				cardDoc = createCardFromDoc(message, user, cardDoc)
-				resolve(cardDoc)
+				let cardDoc = docs[Math.floor(Math.random() * docs.length)]
+				cardDoc = createCardFromDoc(message, user, cardDoc).then(doc => resolve(doc))
+				.catch(err=> reject(err))
 			}
 		})
 	})
@@ -130,9 +131,9 @@ function rollEventCard(message, user, eventSeries) {
 			} else if (docs.length == 0) {
 				reject("No pullable cards.");
 			} else {
-				cardDoc = docs[Math.floor(Math.random() * docs.length)]
-				cardDoc = createCardFromDoc(message, user, cardDoc)
-				resolve(cardDoc)
+				let cardDoc = docs[Math.floor(Math.random() * docs.length)]
+				cardDoc = createCardFromDoc(message, user, cardDoc).then(doc => resolve(doc))
+				.catch(err=> reject(err))
 			}
 		})
 	})
@@ -176,6 +177,7 @@ function fuseCards(message, user, cardDoc, callback) {
 			cardDoc = doc;
 			if (!cardDoc.level) cardDoc.level = 1;
 			let initialLevel = cardDoc.level;
+			let genuine = cardDoc.genuine
 			db.find({name:cardDoc.name, owner:user.id, favorite:{$ne:true}}, (err, docs) => {
 				// Fusing a less powerful card with a more powerful card should not allow transferring power to a new set of adjectives.
 				// These parameters keep track of that.
@@ -196,6 +198,9 @@ function fuseCards(message, user, cardDoc, callback) {
 						additiveAttack += (docs[i].attack * docs[i].attack)
 						additiveDefense += (docs[i].defense * docs[i].defense)
 						additiveLevel += docs[i].level * docs[i].level
+						if (docs[i].genuine) {
+							genuine = true;
+						}
 						db.remove({_id:docs[i]._id}, {}, (err, numRemoved) => {
 							if (err || numRemoved === 0) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")}) 
 						}) 
@@ -208,6 +213,7 @@ function fuseCards(message, user, cardDoc, callback) {
 				cardDoc.attack = Math.sqrt((cardDoc.attack*cardDoc.attack) + additiveAttack)
 				cardDoc.defense = Math.sqrt((cardDoc.defense*cardDoc.defense) + additiveDefense)
 				cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
+				cardDoc.genuine = genuine;
 
 				for (let i = Math.floor(largestLevel); i < Math.floor(cardDoc.level); i++) {
 					if (i == 1 && Math.random() > 0.5) 
@@ -244,13 +250,23 @@ function unFavoriteCard(message, cardDoc) {
 			return message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")}) 
 	})
 }
-
+function updateCard(doc) {
+	return new Promise((resolve, reject) => {
+		db.update({_id:doc._id}, doc, {}, (err, numUpdated) => {
+			if (err) reject(err)
+			else if (numUpdated == 0) reject("No update")
+			else resolve(doc)
+		})
+	})
+}
 
 module.exports = {
 	database:db,
 	refDatabase:refDB,
 	rollCard:rollCard,
 	rollEventCard:rollEventCard,
+	updateCard: updateCard,
+	createCardFromName: createCardFromName,
 	getCardList:getCardList,
 	fuseCards: fuseCards,
 	getRefCard: getRefCard, 

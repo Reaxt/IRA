@@ -91,6 +91,7 @@ var shopList = [
 					cardDoc.defense = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.defense)
 					let totalPwr = cardDoc.attack + cardDoc.defense
 					cardDoc.level = totalPwr / originalPwr
+					global.cardmanager.updateCard(cardDoc).catch(err => reject(err))
 	
 					setTimeout(()=> {
 						message.channel.send(`**${message.member.displayName}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
@@ -121,6 +122,7 @@ for (let prop in eventTypes) {
 						cardDoc.defense = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.defense)
 						cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
 						cardDoc.level = cardDoc.totalPwr / originalPwr
+						global.cardmanager.updateCard(cardDoc).catch(err => reject(err))
 		
 						setTimeout(()=> {
 							message.channel.send(`**${message.member.displayName}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})

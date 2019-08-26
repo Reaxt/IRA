@@ -4,6 +4,7 @@ const Discord = require("discord.js")
 // stores the string conversions of each rarity level. starts at 0
 var rarities = ["", "★", "★★", "★★★", "★★★★", "★★★★★", "★★★★★★"]
 var favSymbol = "🌟"
+var genuineSymbol = "💠"
 module.exports = (cardDoc) => {
 	if (!cardDoc) throw err
 	let embed = new Discord.RichEmbed();
@@ -13,14 +14,16 @@ module.exports = (cardDoc) => {
 		embed.setTitle(favSymbol +" "+ cardDoc.displayName)
 	else 
 		embed.setTitle(cardDoc.displayName)
-	embed.setDescription(rarities[cardDoc.rarity] + " Lv. " + (Math.floor(cardDoc.level*100)/100))
+	embed.setDescription(rarities[refCard.rarity] + " Lv. " + (Math.floor(cardDoc.level*100)/100))
 	embed.setColor("#f759e8")
 	if (refCard)
 		embed.setImage(refCard.imgURL)
-	embed.addField("Series", refCard.series, inline=false)
+	embed.addField("Series", refCard.series + (cardDoc.genuine ? genuineSymbol : ""), inline=false)
 	embed.addField("Attack", Math.floor(cardDoc.attack), inline=true)
 	embed.addField("Defense", Math.floor(cardDoc.defense), inline=true)
-	let owner = client.users.get(cardDoc.owner)
-	embed.setFooter(owner.username, owner.avatarURL)
+	if (cardDoc.owner) {
+		let owner = client.users.get(cardDoc.owner)
+		embed.setFooter(owner.username, owner.avatarURL)
+	}
 	return embed
 }

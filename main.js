@@ -30,6 +30,7 @@ global.config = config;
 global.client = client;
 global.usermanager = require("./events/usermanager.js")
 global.cardmanager = require("./events/cardmanager.js")
+global.dropmanager = require("./events/dropmanager.js")
 //modules
 var general = require("./general/index.js")
 var utils = require("./utils/index.js")
@@ -60,6 +61,8 @@ function reload(arg, message) {
           global.usermanager = require("./events/usermanager.js")
           delete require.cache[require.resolve('./events/cardmanager.js')]
           global.cardmanager = require("./events/cardmanager.js")
+          delete require.cache[require.resolve('./events/dropmanager.js')]
+          global.dropmanager = require("./events/dropmanager.js")
           embed = utils.embed("happy", `Reloaded module ${arg}`)
           message.channel.send({embed})
           break;
@@ -148,6 +151,7 @@ client.on("ready", () => {
    fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
  global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
+ global.dropmanager.catchUp();
 
  if(global.pollobject.pollmessage != null) {
    client.guilds.get(config.guildid).channels.get(global.pollobject["pollchan"]).fetchMessage(global.pollobject.pollmessage)
@@ -274,7 +278,18 @@ client.on("messageReactionAdd", (reaction, user) =>{
       })
     })
   }
-
+})
+client.on("messageReactionAdd", (reaction, user) => {
+  if(user == client.user) return
+  global.dropmanager.getDrop(reaction.message).then(doc => {
+    if (reaction.emoji.name == doc.reaction) {
+      if (doc.endTime < new Date()) {
+        global.dropmanager.endDrop(doc)
+      } else {
+        global.dropmanager.claim(undefined, user, doc)
+      }
+    }
+  }).catch(err => {})
 })
 
 //LOGS OVER HERE
