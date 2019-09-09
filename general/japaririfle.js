@@ -36,7 +36,7 @@ module.exports = {
               if (targetMember.voiceChannel && targetMember.voiceChannel == message.member.voiceChannel) {
                 message.channel.send(`*You mercilessly gun down <@!${targetMember.id}> until the magazine is empty.*`)
                 voicekick(message, targetMember)
-                global.usermanager.updateUser(message, message.author, {$inc: {gun:-1}})
+                // global.usermanager.updateUser(message, message.author, {$inc: {gun:-1}})
               } else { // the instigator isn't in the same VC
                 message.channel.send(`*From this distance, you can't get a clear shot on **${targetMember.displayName}**.*`)
               }
