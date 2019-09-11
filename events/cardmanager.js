@@ -96,14 +96,8 @@ function createCardFromDoc(message, user, doc) {
 // message: origin message
 // user: user to add to
 function rollCard(message, user) {
-	// Roll the rarity of the card.
-	let rarity = global.config.pullP.length;
-	let randNum = Math.random();
-	while (randNum > global.config.pullP[rarity-1] && rarity > 0) {
-		rarity--;
-	}
-	return new Promise((resolve, reject) => {
-		// Fetch a random card of that rarity.
+	return new Promise(async function(resolve, reject) {
+		let rarity = await rollRarity({pullable:true, event:false});
 		refDB.find({rarity: rarity, pullable:true, event:false}, (err, docs) => {
 			if (err) {
 				reject(err)
@@ -118,13 +112,8 @@ function rollCard(message, user) {
 	})
 }
 function rollEventCard(message, user, eventSeries) {
-	let rarity = global.config.pullP.length;
-	let randNum = Math.random();
-	while (randNum > global.config.pullP[rarity-1] && rarity > 0) {
-		rarity--;
-	}
-	return new Promise((resolve, reject) => {
-		// Fetch a random card of that rarity.
+	return new Promise(async function(resolve, reject) {
+		let rarity = await rollRarity({pullable:true, series:eventSeries});
 		refDB.find({rarity: rarity, pullable:true, series:eventSeries}, (err, docs) => {
 			if (err) {
 				reject(err)
@@ -135,6 +124,33 @@ function rollEventCard(message, user, eventSeries) {
 				cardDoc = createCardFromDoc(message, user, cardDoc).then(doc => resolve(doc))
 				.catch(err=> reject(err))
 			}
+		})
+	})
+}
+
+async function rollRarity(searchOptions) {
+	let distr = global.config.pullP;
+	let rarity = distr.length;
+	let numPool = [];
+	while (rarity > 0) {
+		let valid = await probeRarity(searchOptions, rarity);
+		if (valid) {
+			for (let i = 0; i < distr[rarity]; i++) {
+				numPool.push(rarity)
+			}
+		}
+		rarity--;
+	}
+	return numPool[Math.floor(Math.random() * numPool.length)];
+}
+function probeRarity(searchOptions, rarity) {
+	return new Promise((resolve, reject) => {
+		let thisSearchOptions = JSON.parse(JSON.stringify(searchOptions)) // deep clone the object because we will modify it
+		thisSearchOptions["rarity"] = rarity
+		refDB.findOne(thisSearchOptions, (err, doc) => {
+			if (err) reject(err)
+			if (doc) resolve(true)
+			else resolve(false)
 		})
 	})
 }

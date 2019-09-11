@@ -128,13 +128,14 @@ var shopList = [
 		name:"Ether Shard",
 		desc:"Exchanged for Event cards.",
 		icon:"🔹",
-		price:1000,
+		price:99999,
 		func:async function(message, doc){
 			global.usermanager.getUser(message, message.author).then(userDoc => {
 				if (!userDoc.eventCardCoins || isNaN(userDoc.eventCardCoins)) {
 					userDoc.eventCardCoins = 1
 					global.usermanager.setUser(message, message.author, userDoc)
 				} else {
+					userDoc.eventCardCoins++;
 					global.usermanager.updateUser(message, message.author, {$inc:{eventCardCoins:1}})
 				}
 				message.channel.startTyping()

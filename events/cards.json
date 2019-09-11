@@ -41,7 +41,7 @@
     "totalPwr": 16000,
     "active": true,
     "pullable": true,
-    "series": "2",
+    "series": "3",
     "event": false
   },
   {
@@ -116,7 +116,7 @@
     "totalPwr": 7900,
     "active": true,
     "pullable": true,
-    "series": "1",
+    "series": "2",
     "event": false
   },
   {
@@ -146,7 +146,7 @@
     "totalPwr": 7200,
     "active": true,
     "pullable": true,
-    "series": "1",
+    "series": "2",
     "event": false
   },
   {
@@ -326,7 +326,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -341,7 +341,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -356,7 +356,7 @@
     "totalPwr": 5200,
     "active": true,
     "pullable": true,
-    "series": "1",
+    "series": "2",
     "event": false
   },
   {
@@ -386,7 +386,7 @@
     "totalPwr": 1200,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -401,7 +401,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -446,7 +446,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -461,7 +461,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -521,7 +521,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -551,7 +551,7 @@
     "totalPwr": 1100,
     "active": true,
     "pullable": true,
-    "series": "2",
+    "series": "3",
     "event": false
   },
   {
@@ -566,7 +566,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -581,7 +581,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -611,7 +611,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -626,7 +626,7 @@
     "totalPwr": 1100,
     "active": true,
     "pullable": true,
-    "series": "1",
+    "series": "2",
     "event": false
   },
   {
@@ -641,7 +641,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -656,7 +656,7 @@
     "totalPwr": 1100,
     "active": true,
     "pullable": true,
-    "series": "1",
+    "series": "2",
     "event": false
   },
   {
@@ -746,7 +746,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -761,7 +761,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -776,7 +776,7 @@
     "totalPwr": 600,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -791,7 +791,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -806,7 +806,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -821,7 +821,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -866,7 +866,7 @@
     "totalPwr": 300,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -881,7 +881,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -896,7 +896,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -911,7 +911,7 @@
     "totalPwr": 0,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -941,7 +941,7 @@
     "totalPwr": 101,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -956,7 +956,7 @@
     "totalPwr": 300,
     "active": false,
     "pullable": false,
-    "series": "3",
+    "series": "4",
     "event": false
   },
   {
@@ -986,7 +986,7 @@
     "totalPwr": 7500,
     "active": true,
     "pullable": true,
-    "series": "2",
+    "series": "3",
     "event": false
   },
   {
@@ -1001,7 +1001,7 @@
     "totalPwr": 600,
     "active": true,
     "pullable": true,
-    "series": "2",
+    "series": "3",
     "event": false
   },
   {
@@ -1016,7 +1016,7 @@
     "totalPwr": 1500,
     "active": true,
     "pullable": true,
-    "series": "2",
+    "series": "3",
     "event": false
   },
   {
@@ -1031,7 +1031,7 @@
     "totalPwr": 7000,
     "active": true,
     "pullable": true,
-    "series": "2",
+    "series": "3",
     "event": false
   },
   {
@@ -1043,24 +1043,39 @@
     "imgURL": "",
     "attack": null,
     "defense": null,
-    "totalPwr": null,
+    "totalPwr": 0,
     "active": null,
     "pullable": null,
     "series": "SCP",
-    "event": null
+    "event": false
+  },
+  {
+    "name": "Zunbby",
+    "displayName": "Zunbby",
+    "rarity": 5,
+    "notes": "Done",
+    "charOwner": "Server",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/620865002236149770/zunbby.png",
+    "attack": 5000,
+    "defense": 99,
+    "totalPwr": 5099,
+    "active": true,
+    "pullable": true,
+    "series": "ZUN",
+    "event": true
   },
   {
     "name": "NewCard6",
     "displayName": "Card 6",
     "rarity": 6,
-    "notes": "Temp",
+    "notes": "Dev Testing (Temp)",
     "charOwner": "None",
     "imgURL": "https://i.imgur.com/atCmpAi.png",
     "attack": 100,
     "defense": 100,
     "totalPwr": 200,
-    "active": true,
-    "pullable": true,
+    "active": false,
+    "pullable": false,
     "series": "Ocean",
     "event": true
   },
@@ -1074,8 +1089,8 @@
     "attack": 100,
     "defense": 100,
     "totalPwr": 200,
-    "active": true,
-    "pullable": true,
+    "active": false,
+    "pullable": false,
     "series": "Ocean",
     "event": true
   },
@@ -1083,14 +1098,14 @@
     "name": "NewCard1",
     "displayName": "Card 1",
     "rarity": 4,
-    "notes": "Temp",
+    "notes": "Dev Testing (Temp)",
     "charOwner": "None",
     "imgURL": "https://i.imgur.com/atCmpAi.png",
     "attack": 100,
     "defense": 100,
     "totalPwr": 200,
-    "active": true,
-    "pullable": true,
+    "active": false,
+    "pullable": false,
     "series": "Ocean",
     "event": true
   },
@@ -1104,8 +1119,8 @@
     "attack": 100,
     "defense": 100,
     "totalPwr": 200,
-    "active": true,
-    "pullable": true,
+    "active": false,
+    "pullable": false,
     "series": "Ocean",
     "event": true
   },
@@ -1113,14 +1128,14 @@
     "name": "NewCard3",
     "displayName": "Card 3",
     "rarity": 2,
-    "notes": "Temp",
+    "notes": "Dev Testing (Temp)",
     "charOwner": "None",
     "imgURL": "https://i.imgur.com/atCmpAi.png",
     "attack": 100,
     "defense": 100,
     "totalPwr": 200,
-    "active": true,
-    "pullable": true,
+    "active": false,
+    "pullable": false,
     "series": "Ocean",
     "event": true
   },
@@ -1134,8 +1149,8 @@
     "attack": 100,
     "defense": 100,
     "totalPwr": 200,
-    "active": true,
-    "pullable": true,
+    "active": false,
+    "pullable": false,
     "series": "Ocean",
     "event": true
   }
