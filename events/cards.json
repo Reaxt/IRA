@@ -477,7 +477,7 @@
     "active": false,
     "pullable": false,
     "series": "Ginafest",
-    "event": true
+    "event": false
   },
   {
     "name": "Shoelace",
@@ -492,7 +492,7 @@
     "active": false,
     "pullable": false,
     "series": "Ginafest",
-    "event": true
+    "event": false
   },
   {
     "name": "Peppers",
@@ -732,7 +732,7 @@
     "active": false,
     "pullable": false,
     "series": "SCP",
-    "event": true
+    "event": false
   },
   {
     "name": "King Bingus",
@@ -927,7 +927,7 @@
     "active": false,
     "pullable": false,
     "series": "SCP",
-    "event": true
+    "event": false
   },
   {
     "name": "Futaba Gaming!!",
@@ -1065,93 +1065,48 @@
     "event": true
   },
   {
-    "name": "NewCard6",
-    "displayName": "Card 6",
-    "rarity": 6,
-    "notes": "Dev Testing (Temp)",
-    "charOwner": "None",
-    "imgURL": "https://i.imgur.com/atCmpAi.png",
-    "attack": 100,
-    "defense": 100,
-    "totalPwr": 200,
-    "active": false,
-    "pullable": false,
-    "series": "Ocean",
-    "event": true
-  },
-  {
-    "name": "NewCard5",
-    "displayName": "Card 5",
+    "name": "SummerAbby",
+    "displayName": "Summer Abby",
     "rarity": 5,
-    "notes": "Dev Testing (Temp)",
-    "charOwner": "None",
-    "imgURL": "https://i.imgur.com/atCmpAi.png",
-    "attack": 100,
-    "defense": 100,
-    "totalPwr": 200,
-    "active": false,
-    "pullable": false,
-    "series": "Ocean",
+    "notes": "Done",
+    "charOwner": "Server",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/624482163223429130/Summer_Abby_fucker.png",
+    "attack": 2500,
+    "defense": 3500,
+    "totalPwr": 6000,
+    "active": true,
+    "pullable": true,
+    "series": "Summer",
     "event": true
   },
   {
-    "name": "NewCard1",
-    "displayName": "Card 1",
+    "name": "SummerInsanity",
+    "displayName": "Swimmer Insanity",
     "rarity": 4,
-    "notes": "Dev Testing (Temp)",
-    "charOwner": "None",
-    "imgURL": "https://i.imgur.com/atCmpAi.png",
-    "attack": 100,
+    "notes": "Done",
+    "charOwner": "Dosh",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/624482195536347156/summer_insanity_fucker.png",
+    "attack": 2000,
     "defense": 100,
-    "totalPwr": 200,
-    "active": false,
-    "pullable": false,
-    "series": "Ocean",
+    "totalPwr": 2100,
+    "active": true,
+    "pullable": true,
+    "series": "Summer",
     "event": true
   },
   {
-    "name": "NewCard2",
-    "displayName": "Card 2",
-    "rarity": 3,
-    "notes": "Dev Testing (Temp)",
-    "charOwner": "None",
-    "imgURL": "https://i.imgur.com/atCmpAi.png",
-    "attack": 100,
-    "defense": 100,
-    "totalPwr": 200,
-    "active": false,
-    "pullable": false,
-    "series": "Ocean",
-    "event": true
-  },
-  {
-    "name": "NewCard3",
-    "displayName": "Card 3",
-    "rarity": 2,
-    "notes": "Dev Testing (Temp)",
-    "charOwner": "None",
-    "imgURL": "https://i.imgur.com/atCmpAi.png",
-    "attack": 100,
-    "defense": 100,
-    "totalPwr": 200,
-    "active": false,
-    "pullable": false,
-    "series": "Ocean",
-    "event": true
-  },
-  {
-    "name": "NewCard4",
-    "displayName": "Card 4",
-    "rarity": 1,
-    "notes": "Dev Testing (Temp)",
-    "charOwner": "None",
-    "imgURL": "https://i.imgur.com/atCmpAi.png",
-    "attack": 100,
-    "defense": 100,
-    "totalPwr": 200,
-    "active": false,
-    "pullable": false,
-    "series": "Ocean",
+    "name": "SummerMakoPating",
+    "displayName": "Mako & Pating",
+    "rarity": 4,
+    "notes": "Done",
+    "charOwner": "Bolty",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/624482230697197578/Mako__Pating_fucker.png",
+    "attack": 1500,
+    "defense": 2000,
+    "totalPwr": 3500,
+    "active": true,
+    "pullable": true,
+    "series": "Summer",
     "event": true
   }
  ]

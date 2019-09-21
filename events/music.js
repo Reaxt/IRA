@@ -12,6 +12,10 @@ global.playing = false
 music.on("play", (message) =>{
   global.voteusers = []
   global.votes = 0
+  if (!message.client.voiceConnections.first()) {
+    return
+  }
+
   if(message.client.voiceConnections.first().speaking) {
     message.client.voiceConnections.first().dispatcher.end('skip')
     global.queue.shift()

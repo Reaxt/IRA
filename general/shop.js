@@ -128,7 +128,7 @@ var shopList = [
 		name:"Ether Shard",
 		desc:"Exchanged for Event cards.",
 		icon:"🔹",
-		price:99999,
+		price:4000,
 		func:async function(message, doc){
 			global.usermanager.getUser(message, message.author).then(userDoc => {
 				if (!userDoc.eventCardCoins || isNaN(userDoc.eventCardCoins)) {

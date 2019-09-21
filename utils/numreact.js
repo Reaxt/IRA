@@ -3,9 +3,9 @@ function numreact (message1, i, pollamount) {
   if (i >= pollamount) return;
 
   setTimeout(function () {
-
-    message1.react(numreactions[i]).then(numreact(message1, ++i, pollamount)).catch((err) => {console.log(err)})
-
+    if (message1 && !message1.deleted) {
+      message1.react(numreactions[i]).then(numreact(message1, ++i, pollamount)).catch((err) => {console.log(err)})
+    }
   }, 500);
 
 }
