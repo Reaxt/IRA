@@ -1,6 +1,6 @@
 {
   "name": "toaster",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "a discord bot created for Art Heaven",
   "main": "main.js",
   "directories": {

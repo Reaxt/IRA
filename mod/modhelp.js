@@ -56,7 +56,7 @@ module.exports = {
     .addField("**Mod Commands**", modcommands.join(""), true)
     .addField("**Bot Management Commands**", botcommands.join(""), true)
     .addField("**Shitpost Commands**(only in shitpost central or after hours)", shitpostcommands.join(""), true)
-    .setFooter("Created by Reaxt", client.users.get('163052863038291970').avatarURL )
+    .setFooter("Created by Reaxt and Jwapple", client.users.get('163052863038291970').avatarURL )
     message.author.send({embed}).then(() => {
       message.react("👌")
     });

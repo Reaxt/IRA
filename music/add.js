@@ -17,13 +17,13 @@ module.exports = {
   name:"!add",
   desc:"adds a song from youtube",
   music:true,
-  func:function(message){
+  func:async function(message){
     //if not in voiceChannel
 
     if(!message.member.voiceChannel) return message.channel.send({embed:utils.embed("sad", "Youre not in a voice channel")})
     if(!message.guild.me.voiceChannel) {
       try {
-        music.summon.func.call(this, message);
+        await music.summon.func.call(this, message);
       }catch(err) {
         var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
         message.channel.send({embed})

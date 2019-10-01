@@ -9,6 +9,6 @@ module.exports = {
     var voiceChannel = message.member.voiceChannel
     if(!voiceChannel) return message.channel.send({embed:utils.embed("sad", "Please join a voice channel first")})
     if(message.guild.me.voiceChannel) return message.channel.send({embed:utils.embed("sad", "I am already in a voice channel")})
-    voiceChannel.join()
+    return voiceChannel.join()
   }
 }
