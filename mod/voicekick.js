@@ -9,6 +9,8 @@ module.exports = {
       message.channel.guild.createChannel("LOWER THAN DIRT", "voice", null, "test").then(channel => {
         message.mentions.members.first().setVoiceChannel(channel).then( () => {
           channel.delete()
+        }).catch(err => {
+          channel.delete()
         })
       })
 

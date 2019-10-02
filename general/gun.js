@@ -2,6 +2,8 @@ function voicekick(message, targetMember) {
   message.channel.guild.createChannel("THE NETHER", "voice", null, "test").then(channel => {
     targetMember.setVoiceChannel(channel).then( () => {
       channel.delete()
+    }).catch(err => {
+      channel.delete()
     })
   })
 }
