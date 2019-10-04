@@ -40,7 +40,7 @@ function catchUp() {
 
             function checkIfEnded() {
                 setTimeout( () => {
-                    if (new Date() > doc.endTime) {
+                    if (new Date().getTime() > doc.endTime) {
                         endDrop(doc)
                     }
                 }, 1000)
