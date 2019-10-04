@@ -19,12 +19,12 @@ module.exports = {
       genuine = (things[3] && things[3] != "false") ? true : false
     }
 
-    let endTime = new Date(new Date() + Math.round(Number(things[2]))*hour)
+    let endTime = new Date(new Date().getTime() + Math.round(Number(things[2]))*hour)
     try {
       let doc = await global.cardmanager.createCardFromName(message, undefined, things[1])
       if (genuine) {
         doc.genuine = true
-      } //utils.cardEmbed(doc).setFooter(`This drop is valid for ${durationHrs} hours.`)
+      }
       let sentMsg = await message.channel.send(`Card drop! React with ${reaction} to claim the card below.`, {embed:utils.cardEmbed(doc).setFooter(`This drop is valid for ${things[2]} hours.`)});
       global.dropmanager.createDrop(message, sentMsg, endTime.getTime(), reaction, things[1], genuine);
       sentMsg.react(reaction);

@@ -27,6 +27,7 @@ global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 global.streamoptions = {volume:0.25, bitrate:192000}
 global.blacklist = [];
 global.config = config;
+global.config.version = version;
 global.client = client;
 global.usermanager = require("./events/usermanager.js")
 global.cardmanager = require("./events/cardmanager.js")
@@ -283,7 +284,7 @@ client.on("messageReactionAdd", (reaction, user) => {
   if(user == client.user) return
   global.dropmanager.getDrop(reaction.message).then(doc => {
     if (reaction.emoji.name == doc.reaction) {
-      if (doc.endTime < new Date()) {
+      if (doc.endTime < new Date().getTime()) {
         global.dropmanager.endDrop(doc)
       } else {
         global.dropmanager.claim(undefined, user, doc)
