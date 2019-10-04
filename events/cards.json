@@ -1099,7 +1099,7 @@
     "displayName": "Mako & Pating",
     "rarity": 4,
     "notes": "Done",
-    "charOwner": "Bolty",
+    "charOwner": "Bolty & Dosh",
     "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/625096443786559488/Mako__Pating_fucker.png",
     "attack": 1500,
     "defense": 2000,
@@ -1108,5 +1108,20 @@
     "pullable": true,
     "series": "Summer",
     "event": true
+  },
+  {
+    "name": "JokerAbby",
+    "displayName": "Joker Abby",
+    "rarity": 5,
+    "notes": "Done",
+    "charOwner": "Server",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/629744916372783124/Alter_Ego_Abby_fucker.png",
+    "attack": 4000,
+    "defense": 2000,
+    "totalPwr": 6000,
+    "active": true,
+    "pullable": false,
+    "series": "4",
+    "event": false
   }
  ]
