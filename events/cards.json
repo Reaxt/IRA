@@ -1120,7 +1120,7 @@
     "defense": 2000,
     "totalPwr": 6000,
     "active": true,
-    "pullable": false,
+    "pullable": true,
     "series": "4",
     "event": false
   }
