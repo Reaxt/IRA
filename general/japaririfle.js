@@ -1,6 +1,10 @@
 var userId = "210958110473322496" // urotsuki
 var targetId = "158442085622611968" // ember
 
+var readyTime = new Date().getTime()
+var minute = 60 * 1000
+var cooldown = minute * 0 // right now its disabled eh
+
 function voicekick(message, targetMember) {
   message.channel.guild.createChannel("THE NETHER", "voice", null, "test").then(channel => {
     targetMember.setVoiceChannel(channel).then( () => {
@@ -17,6 +21,9 @@ module.exports = {
 
     if (message.member.id != userId) return message.channel.send(`This weapon is ID-locked.`)
 
+    let deltaTime = readyTime - new Date().getTime()
+    if (deltaTime > 0) return message.channel.send(`This weapon needs time to be repaired. It will be ready in \`${Math.ceil(10*deltaTime/minute)/10}\` minutes.`)
+
     let mention = message.content.split(" ")[1]
     if (mention && mention.startsWith("<@") && mention.endsWith(">")) {
 
@@ -28,6 +35,7 @@ module.exports = {
           if (message.member.voiceChannel) {
             voicekick(message, message.member)
           }
+          readyTime = new Date().getTime() + cooldown
           return message.channel.send(`The gun explodes in your hands, knocking you down.`)
         
         // target exists within voice channel
