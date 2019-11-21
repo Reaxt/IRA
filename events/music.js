@@ -48,8 +48,7 @@ music.on("play", (message) =>{
     }), global.streamoptions)
   } 
   else { // A direct link to a audio file. Precursor to SoundCloud functionality.
-      let footer = global.queue[0]["url"]
-      message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\``, undefined, global.queue[0].url)})
+      message.channel.send({embed:utils.embed("happy", `Now playing [${global.queue[0]["info"]}](${global.queue[0].url}) queued by \`${global.queue[0]["user"].username}\``, undefined, undefined)})
       dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url, (error, response) => {
         if (error || !response) {
           message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})

@@ -18,17 +18,17 @@ module.exports = {
       if(footer === null) footer = element["url"]
       let second = played[1]
       if(second < 10) second = "0" + played[1].toString()
-      message.channel.send({embed:utils.embed("happy", `\`Playing ${element["info"]}\` \`${played[0]}:${second}/${element.minutes}:${element.seconds}\` queued by \`${element["user"].username}\``, undefined, `https://youtu.be/${footer}`)})
+      message.channel.send({embed:utils.embed("happy", `Playing \`${element["info"]}\` \`${played[0]}:${second}/${element.minutes}:${element.seconds}\` queued by \`${element["user"].username}\``, undefined, `https://youtu.be/${footer}`)})
     } 
     else if (element.type == "soundcloud") {
       var seconds = (message.guild.voiceConnection.dispatcher.time / 1000).toFixed(0)
       let played = utils.tomins(seconds)
       let second = played[1]
       if(second < 10) second = "0" + played[1].toString()
-      message.channel.send({embed:utils.embed("happy", `\`Playing ${element["info"]}\` \`${played[0]}:${second}/${element.minutes}:${element.seconds}\` queued by \`${element["user"].username}\``, undefined, element.permalink_url)})
+      message.channel.send({embed:utils.embed("happy", `Playing \`${element["info"]}\` \`${played[0]}:${second}/${element.minutes}:${element.seconds}\` queued by \`${element["user"].username}\``, undefined, element.permalink_url)})
     } 
     else { // because direct currently does not support track length
-      message.channel.send({embed:utils.embed("happy", `\`Playing ${element["info"]}\` queued by \`${element["user"].username}\``, undefined, element.url)})
+      message.channel.send({embed:utils.embed("happy", `Playing [${element["info"]}](${element["url"]}) queued by \`${element["user"].username}\``, undefined, undefined)})
     }
   }
 }
