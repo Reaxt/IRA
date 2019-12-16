@@ -37,7 +37,7 @@ module.exports = (expression, content, color, footer) => {
   if(color != undefined || color === "default") {
     Ecolor = color
   }
-  let result = new Discord.RichEmbed().setTitle("Placeholder").setColor(Ecolor).setThumbnail(url).setDescription(content)
+  let result = new Discord.RichEmbed().setTitle("Io").setColor(Ecolor).setThumbnail(url).setDescription(content)
 
   if(footer != undefined) {
     result.setFooter(footer)
