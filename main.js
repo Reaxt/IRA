@@ -165,6 +165,10 @@ client.on("ready", () => {
 // COMMAND HANDLING PT 1
 // lookupCommand(message, command): searches command lists and returns the corresponding function if it exists. 
 function lookupCommand(message, command) {
+  if (! config.owners.includes(message.author.id)) {
+    return
+  }
+
       if(general.commandList.includes(command)) {
         return general[command].func
       }
