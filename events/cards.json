@@ -1123,5 +1123,20 @@
     "pullable": true,
     "series": "4",
     "event": false
+  },
+  {
+    "name": "SoulOS",
+    "displayName": "Soul OS",
+    "rarity": 4,
+    "notes": "Done",
+    "charOwner": "Server",
+    "imgURL": "https://cdn.discordapp.com/attachments/357705463514660868/657088611769909258/SoulOS_fucker.png",
+    "attack": 2000,
+    "defense": 2000,
+    "totalPwr": 4000,
+    "active": true,
+    "pullable": true,
+    "series": "4",
+    "event": false
   }
  ]

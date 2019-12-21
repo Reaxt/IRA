@@ -1,4 +1,4 @@
-# Abby (formerly IRA)
+# Io (formerly IRA, Toaster)
 A discord bot made for the art heaven server
 ## Making simple commands easily
 
