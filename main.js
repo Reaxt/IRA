@@ -25,6 +25,7 @@ global.votes = 0
 global.voteusers = []
 global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
 global.streamoptions = {volume:0.5, bitrate:192000}
+global.defaultVolume = 0.5
 global.blacklist = [];
 global.config = config;
 global.config.version = version;
