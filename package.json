@@ -28,6 +28,7 @@
     "nodemailer-smtp-transport": "^2.7.2",
     "owo.js": "^1.0.2",
     "package.json": "^2.0.1",
+    "pkg.json": "^2.0.7",
     "png-file-stream": "^1.2.1",
     "request": "^2.81.0",
     "sentencer": "^0.2.0",
@@ -36,7 +37,7 @@
     "superagent": "^5.1.0",
     "uws": "^100.0.1",
     "youtube-search": "^1.1.4",
-    "ytdl-core": "^0.29.5"
+    "ytdl-core": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {
