@@ -148,7 +148,7 @@ function evalcmd(message) {
 //READY EVENT
 client.on("ready", () => {
  if(JSON.parse(fs.readFileSync("./shutdownstatus.json")).shutdown === false){
-    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...")})} else {
+    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...", undefined, `Version ${version}`)})} else {
    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${version} today.`)})
    fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
  }
@@ -297,7 +297,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 //LOGS OVER HERE
 //log error function
 function logerr(err) {
-  client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", `Something's wrong with my logs. Know someone who can see what's up? \`\`\`${err}\`\`\``)})
+  client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", `Something's wrong with my logs... \`\`\`${err}\`\`\``)})
 }
 //Log events
 client.on("messageDelete", (message) => {

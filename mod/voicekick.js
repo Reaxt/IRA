@@ -6,16 +6,15 @@ module.exports = {
 
     let mention = message.content.split(" ")[1]
     if (mention.startsWith("<@") && mention.endsWith(">")) {
-      message.channel.guild.createChannel("LOWER THAN DIRT", "voice", null, "test").then(channel => {
-        message.mentions.members.first().setVoiceChannel(channel).then( () => {
-          channel.delete()
-        }).catch(err => {
-          channel.delete()
-        })
-      })
+      if (message.mentions.members.first().voiceChannel) {
+        message.mentions.members.first().setVoiceChannel(null)
+      } else {
+        message.channel.send({embed:utils.embed("sad", "They're not in a voice channel right now...")})
+      }
+      
 
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "Please mention a user")})
+      message.channel.send({embed:utils.embed("malfunction", "Uh, who was that? Could you mention them again?")})
     }
   }
 }
