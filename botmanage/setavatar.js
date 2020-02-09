@@ -1,4 +1,4 @@
-const Discord = require("Discord.js");
+const Discord = require("discord.js");
 module.exports = {
   name:"!setAvatar",
   desc:"Changes my avatar",
