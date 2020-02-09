@@ -28,13 +28,9 @@ To run the bot on your own build to test stuff or just mess around, follow these
 ### Installing Prerequisites
 First make sure to install nodejs, (newest version, around 8.0)
 Packages require that node-gyp is functional on your machine. On windows, that means you will need to run `npm install --global --production windows-build-tools`
-The live version uses Yarn to build the packages. 
+Install required dependencies via npm and the package.json by executing this in the directory
 ```
-yarn install
-```
-You can also install required dependencies via npm and the package.json by executing this in the directory
-```
-npm install package.json
+npm install
 ```
 
 ### Set up cfg.json
@@ -51,6 +47,7 @@ Replace ytkey with a youtube api key
 
 
 ## Credits
+Io character by Jwapple
 
 Abby character made by [Doshmobile](http://doshmobile.tumblr.com/)
 
