@@ -36,7 +36,7 @@
     "superagent": "^5.2.2",
     "uws": "^100.0.1",
     "youtube-search": "^1.1.4",
-    "ytdl-core": "^1.0.9"
+    "ytdl-core": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
