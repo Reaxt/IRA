@@ -13,7 +13,7 @@ const symbols = {
 // ether 🔹
 
 var shopQuotes = [
-	"Clockwork Cogs ⚙️ can be earned through event participation and the Shop. Careful - they'll expire at the end of the event!",
+	"Clockwork Cogs ⚙️ can be earned through event participation. Careful - they'll expire at the end of the event!",
 	"Why do I suddenly want so many Cogs ⚙️? It's a secret!"
 ]
 
