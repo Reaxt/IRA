@@ -8,8 +8,14 @@ const numreactions = ["1⃣","2⃣","3⃣","4⃣","5⃣","6⃣","7⃣","8⃣","9
 
 const symbols = {
     "coins":"",
-    "eventCardCoins":"🔹"
+    "eventCardCoins":"⚙️"
 }
+// ether 🔹
+
+var shopQuotes = [
+	"Clockwork Cogs ⚙️ can be earned through event participation and the Shop. Careful - they'll expire at the end of the event!",
+	"Why do I suddenly want so many Cogs ⚙️? It's a secret!"
+]
 
 const eventTypes = JSON.parse(fs.readFileSync("./events/eventTypes.json"))
 
@@ -47,11 +53,11 @@ module.exports = {
 
   	let shopEmbed = new Discord.RichEmbed().setTitle("Heaven Grand Order").setColor("#ff2ecb")
   	global.usermanager.getUser(message, message.author).then(userDoc => {
-  		shopEmbed.setDescription(`${message.author.username}, you have ${userDoc.coins} AbbyCoin and ${userDoc.eventCardCoins?userDoc.eventCardCoins:0}🔹`)
+  		shopEmbed.setDescription(`${message.author.username}, you have ${userDoc.coins} AbbyCoin and ${userDoc.eventCardCoins?userDoc.eventCardCoins:0}${symbols.eventCardCoins}`)
   		for (let i = 0; i < shopList.length; i++) {
 	  		shopEmbed.addField(`${(i+1)}. **${shopList[i].name}**`,`${shopList[i].price}${symbols[shopList[i].currency]}`, true)
 	  	}
-	  	shopEmbed.setFooter("Ether Shards🔹 can be earned by participating in active events. Careful - they'll expire at the end of the event!")
+	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)])
 
 
 		message.channel.send({embed:shopEmbed}).then(sentMsg => {

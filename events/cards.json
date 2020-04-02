@@ -1138,5 +1138,35 @@
     "pullable": true,
     "series": "4",
     "event": false
+  },
+  {
+    "name": "pika",
+    "displayName": "Pika",
+    "rarity": 4,
+    "notes": "",
+    "charOwner": "Pikabots",
+    "imgURL": "",
+    "attack": 2000,
+    "defense": 2000,
+    "totalPwr": 4000,
+    "active": false,
+    "pullable": false,
+    "series": "5",
+    "event": false
+  },
+  {
+    "name": "Ratvar",
+    "displayName": "Ratvar",
+    "rarity": 5,
+    "notes": "Done",
+    "charOwner": "Server",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/694912599036395590/20200401_091335.png",
+    "attack": 10000,
+    "defense": 10000,
+    "totalPwr": 20000,
+    "active": true,
+    "pullable": true,
+    "series": "SS13",
+    "event": true
   }
  ]
