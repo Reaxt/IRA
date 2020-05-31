@@ -38,8 +38,12 @@ module.exports = {
       var target = message.attachments.first().url
       type = "direct"
     } else {
-      target = message.content.split(" ")[1]
-      type = utils.getaudiotype(target)
+      target = message.content.split(" ")[1
+      if (target && target.length > 0) {
+      	type = utils.getaudiotype(target)
+      } else {
+	return
+      }
     }
 
     //case 1: use youtube
