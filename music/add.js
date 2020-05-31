@@ -38,7 +38,7 @@ module.exports = {
       var target = message.attachments.first().url
       type = "direct"
     } else {
-      target = message.content.split(" ")[1
+      target = message.content.split(" ")
       if (target && target.length > 0) {
       	type = utils.getaudiotype(target)
       } else {
