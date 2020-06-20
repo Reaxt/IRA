@@ -3,6 +3,7 @@ const utils = require("../utils/index.js")
 const events = require("events")
 const ytdl = require('ytdl-core');
 const request = require('request');
+const http = require('http');
 var config = JSON.parse(require("fs").readFileSync("./cfg.json"));
 
 var music = new events();
@@ -12,18 +13,18 @@ global.playing = false
 music.on("play", (message) =>{
   global.voteusers = []
   global.votes = 0
-  if (!message.client.voiceConnections.first()) {
+  if (!message.guild.voice.connection) {
     return
   }
 
-  if(message.client.voiceConnections.first().speaking) {
-    message.client.voiceConnections.first().dispatcher.end('skip')
+  if(message.guild.voice.connection.dispatcher) {
+    message.guild.voice.connection.dispatcher.end('skip')
     global.queue.shift()
   }
 
   if(global.queue.length === 0) {
     message.channel.send({embed:utils.embed("happy", `Thanks for listening! I'm off.`)})
-    message.client.voiceConnections.first().disconnect()
+    message.guild.voice.channel.leave()
     global.playing = false
     global.streamoptions.volume = global.defaultVolume;
     return
@@ -34,7 +35,7 @@ music.on("play", (message) =>{
     let footer = ytID(global.queue[0]["url"])
     if(footer === null) footer = global.queue[0]["url"]
     message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
-    dispatcher = message.client.voiceConnections.first().playStream(ytdl(global.queue[0]["url"], {filter: 'audioonly'}, (error, response) => {
+    dispatcher = message.guild.voice.connection.play(ytdl(global.queue[0]["url"], {filter: 'audioonly', quality: 'highestaudio'}, (error, response) => {
       if (error || !response) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
         dispatcher.end();
@@ -43,7 +44,7 @@ music.on("play", (message) =>{
   } 
   else if (global.queue[0].type == "soundcloud") {
     message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
-    dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url+"?client_id="+config.scid, (error, response) => {
+    dispatcher = message.guild.voice.connection.play(request(global.queue[0].url+"?client_id="+config.scid, (error, response) => {
       if (error || !response) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
         dispatcher.end();
@@ -55,15 +56,10 @@ music.on("play", (message) =>{
   } 
   else { // A direct link to a audio file. Precursor to SoundCloud functionality.
       message.channel.send({embed:utils.embed("happy", `Now playing [${global.queue[0]["info"]}](${global.queue[0].url}) queued by \`${global.queue[0]["user"].username}\``, undefined, undefined)})
-      dispatcher = message.client.voiceConnections.first().playStream(request(global.queue[0].url, (error, response) => {
-        if (error || !response) {
-          message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
-          dispatcher.end();
-        } else if (/4\d\d/.test(response.statusCode) === true) { //idk what that regex expression or precicely what response.statusCode are. credit to https://github.com/boblauer/url-exists
-          message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
-          dispatcher.end();
-        }
-      }), global.streamoptions)
+      directstreamoptions = global.streamoptions;
+      directstreamoptions.type = "unknown";
+
+      dispatcher = message.guild.voice.connection.play(global.queue[0].url, directstreamoptions)
   }
   global.playing = true
   dispatcher.on("debug", info => {
@@ -72,7 +68,7 @@ music.on("play", (message) =>{
   dispatcher.on("error", info => {
     console.log({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${info}\`\`\``,"RED")});
   })
-  dispatcher.on("end", reason => {
+  dispatcher.on("finish", reason => {
     console.log("neat")
     global.queue.shift()
 
@@ -93,8 +89,8 @@ music.on("end", (message) => {
   }
 })
 music.on("skip", (message) => {
-  if (message.client.voiceConnections.first().dispatcher){
-    message.client.voiceConnections.first().dispatcher.end()
+  if (message.guild.voice?.connection?.dispatcher){
+    message.guild.voice.connection.dispatcher.end()
   } else {
     console.log("not neat")
     global.queue.shift()
@@ -106,9 +102,9 @@ music.on("skip", (message) => {
 })
 music.on("setVolume", (message) => {
   global.streamoptions.volume = message.content.split(" ")[1]
-  if (message.client.voiceConnections.first().dispatcher)
+  if (message.guild.voice.connection?.dispatcher)
     try {
-      message.client.voiceConnections.first().dispatcher.setVolume(message.content.split(" ")[1]);
+      message.guild.voice.connection.dispatcher.setVolume(message.content.split(" ")[1]);
     } catch (err) {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
     }
@@ -120,7 +116,7 @@ module.exports.refresh = (message) => {
   global.voteusers = []
   global.votes = []
   global.playing = false
-  if(message.client.voiceConnections.first() != undefined) {
+  if(message.guild.voice.connection != undefined) {
     try{music.emit("play", message)}  catch(err) {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
     }}

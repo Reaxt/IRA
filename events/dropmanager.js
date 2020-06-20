@@ -46,31 +46,36 @@ function catchUp() {
                 }, 1000)
             }
             console.log(`Catching up for drop ${doc.cardName}`)
-            try {
-                global.client.channels.get(doc.channelId).fetchMessage(doc.messageId).then(dropMessage => {
-                    let reaction = dropMessage.reactions.get(doc.reaction)
-                    if (reaction) {
-                        reaction.fetchUsers().then(users => {
-                            
-                            users.delete(global.client.user.id)
-                            users.sweep(user => doc.claimedUsers.includes(user.id))
-                            users.forEach((user, userId)=> {
-                                claim(undefined, user, doc).catch(err => console.log(`Error claiming ${doc.cardName} for ${userId}: \n${err}`))
-                            })
-                            checkIfEnded();
-                        })
-                    } else {
-                        console.log(`Failed to catch-up claims on card drop ${doc.channelId}/${doc.messageId}!`)
-                        checkIfEnded();
-                    }
-                }).catch(err => {
+
+            async function dropCatchUp() {
+                let msgChannel = await global.client.channels.resolve(doc.channelId)
+                if (!msgChannel) {
                     logs.error(`Failed to find drop event ${doc.channelId}/${doc.messageId} for card ${doc.cardName}! \nFull error:\n${err}`)
                     checkIfEnded();
-                })
-            } catch(err) {
-                logs.error(`Failed to find drop event ${doc.channelId}/${doc.messageId} for card ${doc.cardName}! \nFull error:\n${err}`)
-                checkIfEnded();
+                }
+                let msg = await msgChannel.messages.resolve(doc.messageId)
+                if (!msg) {
+                    logs.error(`Failed to find drop event ${doc.channelId}/${doc.messageId} for card ${doc.cardName}! \nFull error:\n${err}`)
+                    checkIfEnded();
+                }
+                let reaction = msg.reactions.cache.get(doc.reaction)
+                if (reaction) {
+                    reaction.users.fetch().then(users => {
+                        
+                        users.delete(global.client.user.id)
+                        users.sweep(user => doc.claimedUsers.includes(user.id))
+                        users.forEach((user, userId)=> {
+                            claim(undefined, user, doc).catch(err => console.log(`Error claiming ${doc.cardName} for ${userId}: \n${err}`))
+                        })
+                        checkIfEnded();
+                    })
+                } else {
+                    console.log(`Failed to catch-up claims on card drop ${doc.channelId}/${doc.messageId}!`)
+                    checkIfEnded();
+                }
+
             }
+            dropCatchUp();
         }
     })
 }

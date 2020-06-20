@@ -7,11 +7,11 @@ module.exports = {
   desc:"Checks for a stuck song and skips if appropriate",
   music:true,
   func:function(message){
-    if(!message.guild.voiceConnection) {
+    if(!message.guild.voice.connection) {
       message.channel.send({embed: utils.embed("sad", "I'm not playing anything.")})
       return;
     }
-  	if(message.guild.voiceConnection.speaking) {
+  	if(message.guild.voice.connection.speaking) {
     	message.channel.send({embed: utils.embed("sad", "I don't see anything wrong from my end.")})
   		return;
   	}

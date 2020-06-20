@@ -3,6 +3,7 @@ const Discord = require("discord.js")
 
 //var shopPageLength = 10;
 var shopList;
+var shopMap = {};
 var numreactions = ["1⃣","2⃣","3⃣","4⃣","5⃣","6⃣","7⃣","8⃣","9⃣","🔟" ]
 
 var abbyQuotes = [
@@ -40,12 +41,17 @@ module.exports = {
   desc:"Opens the shop! Redeem your AbbyCoin for great prizes.",
 
   func:function(message){
-  	let arg = message.content.split(" ")[1]
-  	if (arg && typeof parseInt(arg) === 'number' && arg <= shopList.length && arg > 0) {
-  		return global.usermanager.buyItem(message, message.author, shopList[arg-1].price, shopList[arg-1].func)
-  	}
+  	let arg = message.content.substr(6);
+  	if (arg) {
+		if (typeof parseInt(arg) === 'number' && arg <= shopList.length && arg > 0) {
+			return global.usermanager.buyItem(message, message.author, shopList[arg-1].price, shopList[arg-1].func)
+		} else 
+		if (shopMap[arg.toLowerCase()]) {
+			return global.usermanager.buyItem(message, message.author, shopMap[arg.toLowerCase()].price, shopMap[arg.toLowerCase()].func)
+		}
+  	} 
 
-  	let shopEmbed = new Discord.RichEmbed().setTitle("Abby's Alley").setColor("#ff2ecb")
+  	let shopEmbed = new Discord.MessageEmbed().setTitle("Abby's Alley").setColor("#ff2ecb")
   	global.usermanager.getCoins(message, message.author).then(coins => {
   		shopEmbed.setDescription(`${message.author.username}, you have ${coins} AbbyCoin!`)
   		for (let i = 0; i < shopList.length; i++) {
@@ -79,29 +85,9 @@ module.exports = {
 
 
 var shopList = [
-	// {
-	// 	name:"Card Pull",
-	// 	desc:"Get a random card! Don't be afraid, put your hand in!",
-	// 	icon:"🗑️",
-	// 	price:300,
-	// 	func:function(message, doc){
-	// 		global.cardmanager.rollCard(message, message.author, (message, user, cardDoc) => {
-	// 			message.channel.startTyping()
-	// 			let originalPwr = cardDoc.attack + cardDoc.defense
-	// 			cardDoc.attack = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.attack)
-	// 			cardDoc.defense = Math.floor((1.2 + (Math.random()*0.8)) * cardDoc.defense)
-	// 			cardDoc.totalPwr = cardDoc.attack + cardDoc.defense
-	// 			cardDoc.level = cardDoc.totalPwr / originalPwr
-
-	// 			setTimeout(()=> {
-	// 				message.channel.send(`**${user.username}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
-	// 				message.channel.stopTyping()
-	// 			}, 1500)
-	// 		})
-	// 	}
-	// },
 	{
 		name:"Gun",
+		aliases:["gun"],
 		desc:"Oh jeez, this thing looks dangerous.",
 		icon:"🔫",
 		price:500,
@@ -151,3 +137,10 @@ var shopList = [
 	// 	}
 	// }
 ]
+
+// auto fill aliases to map
+for (let i = 0; i < shopList.length; i++) {
+	for (let j = 0; j < shopList[i].aliases.length; j++) {
+		shopMap[shopList[i].aliases[j].toLowerCase()] = shopList[i];
+	}
+}

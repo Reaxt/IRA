@@ -17,7 +17,7 @@ poll.on("react", (reaction, user) => {
         console.log(users)
         if(reaction.emoji.name === r.emoji.name) return console.log("yay")
         if(users.has(user.id)) {
-          r.remove(user)
+          r.users.remove(user)
           console.log("it had")
         }
       })

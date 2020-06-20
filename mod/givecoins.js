@@ -6,7 +6,7 @@ module.exports = {
   desc:"money money money (place monetary amount after mentions)",
   mod:true,
   func:function(message){
-    if (message.mentions.users) {
+    if (message.mentions.users.first()) {
       let amount = message.content.split(" ");
       amount = amount[amount.length-1]
       if (isNaN(amount)) return message.channel.send({embed:utils.embed("sad","Couldn't get a number input out of that.")})

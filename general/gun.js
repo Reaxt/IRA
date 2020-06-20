@@ -1,5 +1,5 @@
 function voicekick(message, targetMember) {
-  targetMember.setVoiceChannel(null)
+  targetMember.voice.setChannel(null)
 }
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
         // Targeting Abby emits a special response.
         } else if (targetMember.id == global.config.abbyId) {
           message.channel.send("*The moment you fire, you are sprawled on the floor with a bullet in your back.*")
-          if (message.member.voiceChannel) {
+          if (message.member.voice.channel) {
             voicekick(message, message.member)
           }
           global.usermanager.updateUser(message, message.author, {$inc: {gun:-1}})
@@ -38,14 +38,14 @@ module.exports = {
         } else if (targetMember.id == message.author.id) {
           message.channel.send(`*You mercilessly gun down... yourself.. until the magazine is empty. Now where did that get you?*`)
           global.usermanager.updateUser(message, message.author, {$inc: {gun:-1}})
-          if (targetMember.voiceChannel) {
+          if (targetMember.voice.channel) {
             voicekick(message, targetMember)
           }
 
         // target exists within voice channel
-        } else if (targetMember.voiceChannel) {
+        } else if (targetMember.voice.channel) {
               // in same VC: act normally
-              if (targetMember.voiceChannel && targetMember.voiceChannel == message.member.voiceChannel) {
+              if (targetMember.voice.channel && targetMember.voice.channel == message.member.voice.channel) {
                 message.channel.send(`*You mercilessly gun down <@!${targetMember.id}> until the magazine is empty.*`)
                 voicekick(message, targetMember)
                 global.usermanager.updateUser(message, message.author, {$inc: {gun:-1}})

@@ -6,7 +6,7 @@ module.exports = {
   desc:"oh god mom please dont take my vbucks",
   mod:true,
   func:function(message){
-    if (message.mentions.members) {
+    if (message.mentions.members.first()) {
       let amount = message.content.split(" ")[2];
       if (isNaN(amount)) return message.channel.send({embed:utils.embed("sad","Couldn't get a number input out of that.")})
       message.mentions.members.forEach(user => {

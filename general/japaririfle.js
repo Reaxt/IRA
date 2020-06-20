@@ -6,11 +6,7 @@ var minute = 60 * 1000
 var cooldown = minute * 0 // right now its disabled eh
 
 function voicekick(message, targetMember) {
-  message.channel.guild.createChannel("THE NETHER", "voice", null, "test").then(channel => {
-    targetMember.setVoiceChannel(channel).then( () => {
-      channel.delete()
-    })
-  })
+  targetMember.voice.setChannel(null)
 }
 
 module.exports = {
@@ -32,16 +28,16 @@ module.exports = {
       if (targetMember.id == targetId) {
         // backfire chance
         if (Math.random() < 0.25) {
-          if (message.member.voiceChannel) {
+          if (message.member.voice.channel) {
             voicekick(message, message.member)
           }
           readyTime = new Date().getTime() + cooldown
           return message.channel.send(`The gun explodes in your hands, knocking you down.`)
         
         // target exists within voice channel
-        } else if (targetMember.voiceChannel) {
+        } else if (targetMember.voice.channel) {
               // in same VC: act normally
-              if (targetMember.voiceChannel && targetMember.voiceChannel == message.member.voiceChannel) {
+              if (targetMember.voice.channel && targetMember.voice.channel == message.member.voice.channel) {
                 message.channel.send(`*You mercilessly gun down <@!${targetMember.id}> until the magazine is empty.*`)
                 voicekick(message, targetMember)
                 // global.usermanager.updateUser(message, message.author, {$inc: {gun:-1}})

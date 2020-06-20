@@ -11,8 +11,8 @@ module.exports = {
       let targetMember = message.mentions.members.first()
       global.usermanager.getRoles(message, targetMember).then(roles => {
         for(let i = 0; i < roles.length; i++) {
-          targetMember.addRole(roles[i]).catch(err => {
-            let failedRole = message.guild.roles.get(roles[i])
+          targetMember.roles.add(roles[i]).catch(err => {
+            let failedRole = message.guild.roles.cache.get(roles[i])
             if (failedRole)
               message.channel.send(`Failed adding role \`${failedRole.name}\`: \`${err}\``)
             else 

@@ -4,7 +4,7 @@ module.exports = {
   name:"!ping",
   desc:"Pings the bot",
   func:function(message){
-  var content = utils.embed("happy", `Pong! That took \`${this.ping} ms!\``)
+  var content = utils.embed("happy", `Pong! That took \`${global.client.ws.ping} ms!\``)
     message.channel.send({embed: content})
   }
 }

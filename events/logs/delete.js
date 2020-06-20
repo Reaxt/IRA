@@ -5,11 +5,10 @@ module.exports = (message) => {
     if(message.author.id === "172002275412279296") return
     if(message.author === message.client.user) return
     if(message.channel.type === "dm") return
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
     .setTitle(`🗑Message by \`${message.author.username}#${message.author.discriminator} deleted`)
-    .setThumbnail(message.author.avatarURL)
     .setDescription(`Message content was \`${message.content}\``)
     .setColor(`RED`)
-    .setFooter(`#${message.channel.name}`)
-    message.client.guilds.get(config.guildid).channels.get(config.logs).send({embed})
+    .setFooter(`#${message.channel.name}`, message.author.avatarURL())
+    message.client.guilds.cache.get(config.guildid).channels.cache.get(config.logs).send({embed})
   }

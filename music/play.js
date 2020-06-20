@@ -9,9 +9,9 @@ module.exports = {
   hidden:true,
   func:function(message){
     if(global.queue.length === 0) return message.channel.send({embed:utils.embed("sad","Theres no songs in the queue, add one with !add")})
-    if(!message.guild.voiceConnection) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel, add me in with !summon")})
+    if(!message.guild.voice.connection) return message.channel.send({embed:utils.embed("sad","I am not in a voice channel, add me in with !summon")})
 
-    if(message.guild.voiceConnection.speaking || global.playing) return //message.channel.send({embed:utils.embed("angry", "Im already playing stuff")})
+    if(message.guild.voice.connection.dispatcher || global.playing) return //message.channel.send({embed:utils.embed("angry", "Im already playing stuff")})
     try {events.events.emit("play", message)} catch(err) {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
     }

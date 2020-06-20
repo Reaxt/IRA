@@ -5,9 +5,9 @@ const Discord = require("discord.js")
 var rarities = ["", "★", "★★", "★★★", "★★★★", "★★★★★", "★★★★★★"]
 var favSymbol = "🌟"
 var genuineSymbol = "💠"
-module.exports = (cardDoc) => {
+module.exports = function(cardDoc) {
 	if (!cardDoc) throw err
-	let embed = new Discord.RichEmbed();
+	let embed = new Discord.MessageEmbed();
 	let refCard = global.cardmanager.getRefCard(undefined, cardDoc.name)
 
 	if (cardDoc.favorite) 
@@ -22,8 +22,8 @@ module.exports = (cardDoc) => {
 	embed.addField("Attack", Math.floor(cardDoc.attack), inline=true)
 	embed.addField("Defense", Math.floor(cardDoc.defense), inline=true)
 	if (cardDoc.owner) {
-		let owner = client.users.get(cardDoc.owner)
-		embed.setFooter(owner.username, owner.avatarURL)
+		let owner = client.users.cache.get(cardDoc.owner)
+		embed.setFooter(owner.username, owner.avatarURL({dynamic:true}))
 	}
 	return embed
 }

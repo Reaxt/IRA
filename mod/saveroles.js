@@ -8,8 +8,13 @@ module.exports = {
   func:function(message){
     if (message.mentions.members && message.mentions.members.first()) {
       let targetMember = message.mentions.members.first()
-      global.usermanager.saveRoles(message, targetMember)
-      return message.channel.send({embed:utils.embed("happy",`Saved \`${targetMember.roles.size-1}\` roles to **${targetMember.displayName}**`)})
+      if (!targetMember.roles.cache) return message.channel.send("no roles found")
+      let roles = targetMember.roles.cache.filter(e => e.name != "@everyone").keyArray()
+      global.usermanager.saveRoles(message, targetMember, roles).then((doc) => {
+        message.channel.send({embed:utils.embed("happy",`Saved \`${roles.length}\` roles to **${targetMember.displayName}**`)})
+      }).catch((err) => {
+        message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+      })
     } else {
       message.channel.send({embed:utils.embed("malfunction", "Please mention a user")})
     }

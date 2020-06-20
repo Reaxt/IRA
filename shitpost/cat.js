@@ -11,7 +11,7 @@ module.exports = {
           	message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
         }
         try {
-        	 message.channel.send(new Discord.RichEmbed().setImage(JSON.parse(body)[0]));
+        	 message.channel.send(new Discord.MessageEmbed().setImage(JSON.parse(body)[0]));
         } catch (err) {
         	 message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
         }

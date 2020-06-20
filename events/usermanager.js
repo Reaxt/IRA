@@ -123,15 +123,15 @@ module.exports = {
 			})
 		})
 	},
-	saveRoles:function(message, member) {
-		if (!member.roles) return message.channel.send("no roles found")
-		db.findOne({id:member.user.id}, function(err, doc) {
-			if (!doc) doc = initUser(member.user)
-
-			doc.roles = member.roles.filter(e => e.name != "@everyone").keyArray()
-			db.update({id:member.user.id}, {$set:{roles: doc.roles}}, function(err, doc) {
-				if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
-			});
+	saveRoles:function(message, member, roles) {
+		return new Promise((resolve, reject) => {
+			db.findOne({id:member.user.id}, function(err, doc) {
+				if (!doc) doc = initUser(member.user)
+				db.update({id:member.user.id, multi:false}, {$set:{roles: roles}}, function(err, numAffected,  newDoc) {
+					if (err) reject(err);
+					else resolve(newDoc);
+				});
+			})
 		})
 	},
 	getRoles:function(message, member) {

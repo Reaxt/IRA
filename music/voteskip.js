@@ -7,10 +7,10 @@ module.exports = {
   desc:"Votes to skip the current song",
   mod:true,
   func:function(message){
-    if(!message.client.voiceConnections.first()) return message.channel.send({embed:utils.embed("sad", `Sorry, im not in a voice channel.`)})
-    if(message.member.voiceChannelID != message.guild.me.voiceChannelID) return message.channel.send({embed:utils.embed("sad", "Youre not in the same voice channel as me.")})
-    if(!message.client.voiceConnections.first().dispatcher) return message.channel.send({embed:utils.embed("sad", "Sorry, im not playing anything right now")})
-    let needed = Math.ceil(message.member.voiceChannel.members.size / 2)
+    if(!message.guild.voice.channel) return message.channel.send({embed:utils.embed("sad", `Sorry, im not in a voice channel.`)})
+    if(message.member.voice.channelID != message.guild.me.voice.channelID) return message.channel.send({embed:utils.embed("sad", "Youre not in the same voice channel as me.")})
+    if(!message.guild.voice.connection.dispatcher) return message.channel.send({embed:utils.embed("sad", "Sorry, im not playing anything right now")})
+    let needed = Math.ceil(message.guild.voice.channel.members.size / 2)
 
     let notskipped = true
     if(!global.voteusers.includes(message.author.id)) {

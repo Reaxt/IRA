@@ -43,7 +43,7 @@ async function cardDisplayReactions (message, sentMsg, cardEmbed, cardDoc) {
 				sentMsg.edit("`----Fusing----`")
 				let oldLevel = cardDoc.level;
 				global.cardmanager.fuseCards(message, message.author, cardDoc, (fusedCard, numFused) => {
-					setTimeout(() => {
+					setTimeout(async function() {
 						sentMsg.edit(`Fuse result! ${numFused} card(s) consumed. ${Math.floor(fusedCard.level)-Math.floor(oldLevel)} level(s) gained.`, {embed:utils.cardEmbed(fusedCard)})
 					}, 1500)
 				})
@@ -93,7 +93,7 @@ module.exports = {
 
 		let user = message.author
 
-		listEmbed = new Discord.RichEmbed()
+		listEmbed = new Discord.MessageEmbed()
 		listEmbed.setAuthor(`${user.username}'s Cards`, user.avatarURL)
 		listEmbed.setDescription("Enter the number of a card to view it.")
 		listEmbed.setColor("#f759e8")
@@ -116,42 +116,37 @@ module.exports = {
 
 			listCards(cards, listEmbed, i, Math.min(i+10, cards.length))
 			message.channel.send({embed:listEmbed}).then(function(sentMsg) {
-				// reaction collection
+				
+				// listen for arrow reactions
+				let collector = sentMsg.createReactionCollector(
+					(reaction, user) =>  (arrowreactions.includes(reaction.emoji.name)) && user.id === message.author.id,  {time:60000}
+				)
+				collector.on('collect', r => {
+
+					setTimeout( () => r.users.remove(user), 100)
+
+					if (r.emoji.name == arrowreactions[0] && i >= 10) {
+						i -= 10
+						sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
+					}
+					if (r.emoji.name == arrowreactions[1] && i < cards.length-10) {
+						i += 10
+						sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
+					}
+					let num = numreactions.indexOf(r.emoji.name)
+					if (num != -1 && num < cards.length-i) {
+						let cardEmbed = utils.cardEmbed(cards[i+num])
+						collector.stop("accept")
+						sentMsg.delete()
+						message.channel.send({embed:cardEmbed}).then((cardMsg) => {
+							cardDisplayReactions(message, cardMsg, cardEmbed, cards[i+num])
+						})
+					}		
+				})
+				// send arrow buttons
 				sentMsg.react(arrowreactions[0])
 				setTimeout(function() {
 					sentMsg.react(arrowreactions[1])
-
-
-			    	//utils.numreact(sentMsg, 0, numreactions.length)
-
-					let collector = sentMsg.createReactionCollector(
-						(reaction, user) =>  (arrowreactions.includes(reaction.emoji.name) || numreactions.includes(reaction.emoji.name)) && user.id === message.author.id,  {time:60000}
-					)
-					collector.on('collect', r => {
-
-					    setTimeout( () => r.remove(user), 100)
-
-						if (r.emoji.name == arrowreactions[0] && i >= 10) {
-							i -= 10
-							sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
-						}
-						if (r.emoji.name == arrowreactions[1] && i < cards.length-10) {
-							i += 10
-							sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
-						}
-						let num = numreactions.indexOf(r.emoji.name)
-						if (num != -1 && num < cards.length-i) {
-							let cardEmbed = utils.cardEmbed(cards[i+num])
-							collector.stop("accept")
-							sentMsg.delete()
-							message.channel.send({embed:cardEmbed}).then((cardMsg) => {
-								cardDisplayReactions(message, cardMsg, cardEmbed, cards[i+num])
-							})
-						}		
-					})
-
-					
-
 				}, 500)
 
 
@@ -160,7 +155,7 @@ module.exports = {
 				// If another !cards: stop this listener (another will take over)
 				let filter = (m) => m.author.id == message.author.id && (!isNaN(parseInt(m.content)) || m.content.startsWith(global.config.prefix))
 				let textCollector = sentMsg.channel.createMessageCollector(filter, {time:60000})
-				textCollector.on('collect', msg => {
+				textCollector.on('collect', async function (msg) {
 
 					if (msg.content.startsWith(global.config.prefix)) {
 						textCollector.stop("override")

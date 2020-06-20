@@ -1,6 +1,7 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const fs = require('fs');
+const fsPromises = fs.promises
 const eventEmitter = require('events');
 const { version } = require('./package.json');
 // CONFIG DETERMINATION (reads different files with 'live' or 'dev' command line param)
@@ -19,6 +20,8 @@ if (process.argv.length > 2) {
 const ira = new eventEmitter()
 //local VARIABLES
 var limitusers = []
+var defaultGuild
+var logChannel
 //GLOBAL VARIABLES
 global.queue = []
 global.votes = 0
@@ -33,6 +36,8 @@ global.client = client;
 global.usermanager = require("./events/usermanager.js")
 global.cardmanager = require("./events/cardmanager.js")
 global.dropmanager = require("./events/dropmanager.js")
+global.defautlGuild;
+global.logChannel;
 //modules
 var general = require("./general/index.js")
 var utils = require("./utils/index.js")
@@ -47,7 +52,8 @@ var poll = require("./events/poll.js")
 function shutdown(message) {
   message.channel.send({embed:utils.embed("happy", "Good night!")}).then( function() {
     fs.writeFileSync("./shutdownstatus.json", `{"shutdown":true}`)
-    client.destroy().then((function() {process.exit()}))
+    client.destroy()
+    process.exit()
   });
 }
 function reload(arg, message) {
@@ -142,26 +148,48 @@ function evalcmd(message) {
     if(evalresponse === undefined) {return message.channel.send("```undefined```")} 
     else if (evalresponse === null) {message.channel.send("```null```")} 
     else {
-      message.channel.sendMessage({embed:utils.embed("happy", `Eval response:\`\`\`${evalresponse.toString()}\`\`\``)})
+      message.channel.send({embed:utils.embed("happy", `Eval response:\`\`\`${evalresponse.toString()}\`\`\``)})
     }
 }
 //READY EVENT
-client.on("ready", () => {
- if(JSON.parse(fs.readFileSync("./shutdownstatus.json")).shutdown === false){
-    client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...", undefined, `Version ${version}`)})} else {
-   client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${version} today.`)})
-   fs.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
- }
- global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
- global.dropmanager.catchUp();
+client.on("ready", async function() {
+  defaultGuild = await client.guilds.resolve(config.guildid)
+  global.defaultGuild = defaultGuild
+  logChannel = undefined
+  if (defaultGuild) {
+    logChannel = defaultGuild.channels.resolve(config.logs)
+    global.logChannel = logChannel
+    if (!logChannel) {
+      console.log("log channel missing")
+    }
+  } else {
+    console.log("default guild missing")
+  }
 
- if(global.pollobject.pollmessage != null) {
-   client.guilds.get(config.guildid).channels.get(global.pollobject["pollchan"]).fetchMessage(global.pollobject.pollmessage)
- }
- if(client.guilds.get(config.guildid).me.voiceChannel) {
-   
-   client.guilds.get(config.guildid).me.voiceChannel.leave()
- }
+  let shutdownstatus = await fsPromises.readFile("./shutdownstatus.json");
+  if (JSON.parse(shutdownstatus).shutdown == false) {
+    if (logChannel) {
+      logChannel.send(null,{embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...", undefined, `Version ${version}`)})
+    }
+    
+  } else {
+    logChannel.send(null,{embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${version} today.`)})
+  }
+  fsPromises.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
+
+  global.pollobject = JSON.parse(fs.readFileSync("./poll.json"))
+  global.dropmanager.catchUp();
+
+  if (defaultGuild) {
+    if (global.pollobject.pollmessage != null) {
+      pollChan = await defaultGuild.channels.resolve(global.pollobject["pollchan"])
+      pollChan.messages.resolve(global.pollobject.pollmessage)
+    }
+    if (defaultGuild.me.voice.channel) {
+      defaultGuild.me.voice.kick("Cleaning up crashed voice connection")
+    }
+  }
+
 })
 // COMMAND HANDLING PT 1
 // lookupCommand(message, command): searches command lists and returns the corresponding function if it exists. 
@@ -178,20 +206,20 @@ function lookupCommand(message, command) {
       }
       else if (dj.commandList.includes(command)) { // these commands must check for permissions. currently these are hard-coded and do not respond to the perms specified within the module index.js
         if (!message.guild) return;
-        if (message.member.roles.has(config.djrole) || message.member.roles.has(config.modrole) || config.owners.includes(message.author.id))
+        if (message.member.roles.cache.has(config.djrole) || message.member.roles.cache.has(config.modrole) || config.owners.includes(message.author.id))
           return dj[command].func;
         else return;
       }
       else if(mod.commandList.includes(command)) {
         if (!message.guild) return;
-        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole)) {
+        if(config.owners.includes(message.author.id) || message.member.roles.cache.has(config.modrole)) {
           return mod[command].func;
         } else return;
 
       }
       else if(botmanage.commandList.includes(command)) {
         if (!message.guild && !config.owners.includes(message.author.id)) return;
-        if(config.owners.includes(message.author.id) || message.member.roles.has(config.modrole) ) {
+        if(config.owners.includes(message.author.id) || message.member.roles.cache.has(config.modrole) ) {
           return botmanage[command].func;
         } else return;
       }
@@ -206,7 +234,7 @@ client.on("message", message => {
     if(client.user.id == message.author.id) return
 
     // if bot is mentioned, forward it to owner
-    if(message.isMentioned(client.user)) {
+    if(message.mentions.has(client.user, options={"ignoreRoles":true, "ignoreEveryone":true})) {
       utils.messageOwner.func("I've been messaged: "+message.url);
     }
 
@@ -275,7 +303,7 @@ client.on("messageReactionAdd", (reaction, user) =>{
       r.fetchUsers().then(users => {
         if(reaction.emoji.name === r.emoji.name) return
         if(users.has(user.id)) {
-          r.remove(user)
+          r.users.remove(user)
         }
       })
     })
@@ -297,7 +325,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 //LOGS OVER HERE
 //log error function
 function logerr(err) {
-  client.guilds.get(config.guildid).channels.get(config.heartbeat).send({embed:utils.embed("malfunction", `Something's wrong with my logs... \`\`\`${err}\`\`\``)})
+  logChannel.send({embed:utils.embed("malfunction", `Something's wrong with my logs... \`\`\`${err}\`\`\``)})
 }
 //Log events
 client.on("messageDelete", (message) => {

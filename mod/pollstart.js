@@ -10,7 +10,7 @@ module.exports = {
     let things = message.content.split(" ")
     if(parseInt(things[2]) > 10) return(message.channel.send({embed:utils.embed("malfunction", `Please choose a number below 10`)}))
     if(!things[2]) return(message.channel.send({embed:utils.embed("malfunction", "Please choose a number")}))
-    message.channel.fetchMessage(things[1]).then(message => {
+    message.channel.messages.fetch(things[1]).then(message => {
       global.pollobject.pollamount = parseInt(things[2])
        let i = 0
        utils.numreact(message, i, global.pollobject.pollamount)

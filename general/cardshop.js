@@ -4,6 +4,7 @@ const fs = require("fs")
 
 // var shopPageLength = 10;
 var shopList;
+var shopMap = {};
 const numreactions = ["1⃣","2⃣","3⃣","4⃣","5⃣","6⃣","7⃣","8⃣","9⃣","🔟" ]
 
 const symbols = {
@@ -46,12 +47,17 @@ module.exports = {
   desc:"Buy cards here!",
 
   func:function(message){
-  	let arg = message.content.split(" ")[1]
-  	if (arg && typeof parseInt(arg) === 'number' && arg <= shopList.length && arg > 0) {
-  		return buyItem(message, message.author, shopList[arg-1])
-  	}
+	let arg = message.content.substr(10);
+	if (arg) {
+	  if (typeof parseInt(arg) === 'number' && arg <= shopList.length && arg > 0) {
+		  return global.usermanager.buyItem(message, message.author, shopList[arg-1].price, shopList[arg-1].func)
+	  } else 
+	  if (shopMap[arg.toLowerCase()]) {
+		  return global.usermanager.buyItem(message, message.author, shopMap[arg.toLowerCase()].price, shopMap[arg.toLowerCase()].func)
+	  }
+	} 
 
-  	let shopEmbed = new Discord.RichEmbed().setTitle("Heaven Grand Order").setColor("#ff2ecb")
+  	let shopEmbed = new Discord.MessageEmbed().setTitle("Heaven Grand Order").setColor("#ff2ecb")
   	global.usermanager.getUser(message, message.author).then(userDoc => {
   		shopEmbed.setDescription(`${message.author.username}, you have ${userDoc.coins} AbbyCoin and ${userDoc.eventCardCoins?userDoc.eventCardCoins:0}${symbols.eventCardCoins}`)
   		for (let i = 0; i < shopList.length; i++) {
@@ -84,7 +90,8 @@ module.exports = {
 
 var shopList = [
 	{
-        name:"Base",
+		name:"Base",
+		aliases:["base"],
         desc:"The main pool of cards.",
         price:300,
         currency:"coins",
@@ -116,6 +123,7 @@ for (let prop in eventTypes) {
 	if(eventTypes.hasOwnProperty(prop) ) {
 		shopList.push({
 			name:prop,
+			aliases:[prop.toLowerCase()],
 			desc:"",
 			price:eventTypes[prop],
 			currency:"eventCardCoins",
@@ -142,4 +150,11 @@ for (let prop in eventTypes) {
 			}
 		})
 	} 
+}
+
+// auto fill aliases to map
+for (let i = 0; i < shopList.length; i++) {
+	for (let j = 0; j < shopList[i].aliases.length; j++) {
+		shopMap[shopList[i].aliases[j].toLowerCase()] = shopList[i];
+	}
 }
