@@ -18,7 +18,7 @@ module.exports = {
       if(footer === null) footer = element["url"]
       let second = played[1]
       if(second < 10) second = "0" + played[1].toString()
-      message.channel.send({embed:utils.embed("happy", `Playing \`${element["info"]}\` \`${played[0]}:${second}/${element.minutes}:${element.seconds}\` queued by \`${element["user"].username}\``, undefined, `[https://youtu.be/${footer}](https://youtu.be/${footer})`)})
+      message.channel.send({embed:utils.embed("happy", `Playing \`${element["info"]}\` \`${played[0]}:${second}/${element.minutes}:${element.seconds}\` queued by \`${element["user"].username}\``, undefined, `https://youtu.be/${footer}`)})
     } 
     else if (element.type == "soundcloud") {
       var seconds = (message.guild.voice.connection.dispatcher.streamTime / 1000).toFixed(0)
