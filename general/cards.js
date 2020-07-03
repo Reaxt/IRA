@@ -39,7 +39,7 @@ async function cardDisplayReactions (message, sentMsg, cardEmbed, cardDoc) {
 		if (fuseConfirmState === true) {
 			if (r.emoji.name == confirmEmote) {
 				collector.stop("accept")
-				sentMsg.clearReactions()
+				sentMsg.reactions.removeAll()
 				sentMsg.edit("`----Fusing----`")
 				let oldLevel = cardDoc.level;
 				global.cardmanager.fuseCards(message, message.author, cardDoc, (fusedCard, numFused) => {
