@@ -16,11 +16,10 @@ module.exports = {
   		return;
   	}
     try {
-      music.events.emit("skip", message);
+      music.events.emit("play", message);
       message.channel.send({embed: utils.embed("happy", "Seemed like something was off, I hope that took care of it!")})
     } catch(err) {
       message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
     }
-
   }
 }

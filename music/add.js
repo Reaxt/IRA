@@ -89,7 +89,14 @@ module.exports = {
                     let time = utils.tomins(info.length_seconds)
                     let seconds = time[1] 
                     if(seconds < 9) seconds = "0" + time[1].toString()
-                    global.queue.push({"url":results[numreactions.indexOf(r.emoji.name)].id, "info":results[numreactions.indexOf(r.emoji.name)].title, "user":message.author, "minutes":time[0], "seconds":seconds, "type":"youtube"})
+                    global.queue.push({
+                        "url":results[numreactions.indexOf(r.emoji.name)].id, 
+                        "info":results[numreactions.indexOf(r.emoji.name)].title, 
+                        "user":message.author, 
+                        "minutes":time[0], 
+                        "seconds":seconds, 
+                        "startTime":0,
+                        "type":"youtube"})
                     message.channel.send({embed:utils.embed("happy", `queued \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
                     setTimeout(function () {
                       music.play.func(message)
@@ -107,7 +114,15 @@ module.exports = {
           let time = utils.tomins(info.length_seconds)
           let seconds = time[1]
           if(seconds < 10) seconds = "0" + time[1].toString()
-          global.queue.push({"url":message.content.split(" ")[1], "info":info.title, "user":message.author, "time":info.length_seconds, "minutes":time[0], "seconds":seconds, "type":"youtube"})
+          global.queue.push({
+              "url":message.content.split(" ")[1], 
+              "info":info.title, 
+              "user":message.author, 
+              "time":info.length_seconds, 
+              "minutes":time[0], 
+              "seconds":seconds, 
+              "startTime":0, 
+              "type":"youtube"})
           message.channel.send({embed:utils.embed("happy", `queued \`${info.title}\``)})
           setTimeout(function () {
             music.play.func(message)
@@ -134,7 +149,16 @@ module.exports = {
         let time = utils.tomins(length_seconds)
         time[1] = (time[1] < 10 ) ? "0" + time[1].toString() : time[1].toString();
         //enqueue
-        global.queue.push({"url":track.stream_url, "info":track.title, "user":message.author, "time":length_seconds, "minutes":time[0], "seconds":time[1], "permalink_url":track.permalink_url, "type":"soundcloud"}) 
+        global.queue.push({
+            "url":track.stream_url, 
+            "info":track.title, 
+            "user":message.author, 
+            "time":length_seconds, 
+            "minutes":time[0], 
+            "seconds":time[1], 
+            "startTime":0,
+            "permalink_url":track.permalink_url, 
+            "type":"soundcloud"}) 
         message.channel.send({embed:utils.embed("happy", `queued \`${track.title}\``)})
         setTimeout(function () {
           music.play.func(message)
@@ -163,7 +187,12 @@ module.exports = {
             dispatcher.end();
           } else {
             var info = target.split('/').pop()
-            global.queue.push({"url":target, "info":info, "user":message.author, "type":"direct"})
+            global.queue.push({
+                "url":target, 
+                "info":info, 
+                "user":message.author, 
+                "startTime":0,
+                "type":"direct"})
             message.channel.send({embed:utils.embed("happy", `queued \`${info}\``)})
             setTimeout(function () {
               music.play.func(message)
