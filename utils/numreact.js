@@ -4,7 +4,7 @@ function numreact (message1, i, pollamount) {
 
   setTimeout(function () {
     if (message1 && !message1.deleted) {
-      message1.react(numreactions[i]).then(numreact(message1, ++i, pollamount)).catch((err) => {console.log(err)})
+      message1.react(numreactions[i]).then(numreact(message1, ++i, pollamount)).catch((err) => {})
     }
   }, 500);
 
