@@ -17,6 +17,7 @@ var searchopts = {
   key: config.ytkey,
   type: 'video'
 };
+var hogqueuethreshold = 10;
 module.exports = {
   name:"!add",
   desc:"adds a song from youtube",
@@ -51,7 +52,7 @@ module.exports = {
         message.channel.send({embed})
       }
     }
-    else if(message.member.voice.channel =! message.guild.me.voice.channel) return message.channel.send({embed:utils.embed("sad", "Youre not in the same voice channel as me")})
+    else if(message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed:utils.embed("sad", "Youre not in the same voice channel as me")})
 
     //case 1: use youtube
     if (type === "youtube" || type === "search") {
@@ -60,7 +61,7 @@ module.exports = {
         var result = global.queue.filter(function( obj ) {
           return obj.user.id == message.author.id;
         });
-        if(result.length === 3) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
+        if(result.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
         let time = utils.tomins(info.player_response.videoDetails.lengthSeconds)
         let seconds = time[1]
         if(seconds < 10) seconds = "0" + time[1].toString()
@@ -101,7 +102,7 @@ module.exports = {
                 var result = global.queue.filter(function( obj ) {
                   return obj.user.id == message.author.id;
                 });
-                if(result.length === 10) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
+                if(result.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
                 var info = await ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id);
                 let time = utils.tomins(info.player_response.videoDetails.lengthSeconds)
                 let seconds = time[1] 
@@ -139,7 +140,7 @@ module.exports = {
         var result = global.queue.filter(function( obj ) {
           return obj.user.id == message.author.id;
         });
-        if(result.length === 10) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
+        if(result.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
         //duration conversion (ms to min:sec)
         let length_seconds = Math.floor(track.duration/1000)
         let time = utils.tomins(length_seconds)
@@ -166,7 +167,7 @@ module.exports = {
       var prevQueues = global.queue.filter(function( obj ) {
         return obj.user.id == message.author.id;
       });
-      if(prevQueues.length === 10) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
+      if(prevQueues.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("sad", "Don't hog the queue, please!")})
 
       let url = target;
 
