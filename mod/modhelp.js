@@ -18,7 +18,7 @@ function filterItems(items) {
 module.exports = {
   name:"!modhelp",
   desc:"Lists all commands",
-  func:function(message){
+  func:async function(message){
   let client = this
   let gencommands = []
   let musiccommands = []
@@ -46,6 +46,7 @@ module.exports = {
     filterItems(items)
     botcommands = items.map(element => utils.elementToStringMod(element, botmanage))
     
+    let avatarURL = await client.users.fetch('163052863038291970').avatarURL;
     let embed = new Discord.MessageEmbed()
     .setTitle(`Here's what I can do! ${config.version}`)
     .setColor("#f759e8")
@@ -56,7 +57,7 @@ module.exports = {
     .addField("**Mod Commands**", modcommands.join(""), true)
     .addField("**Bot Management Commands**", botcommands.join(""), true)
     .addField("**Shitpost Commands**(only in shitpost central or after hours)", shitpostcommands.join(""), true)
-    .setFooter("Created by Reaxt and Jwapple", client.users.cache.get('163052863038291970').avatarURL )
+    .setFooter("Created by Reaxt and Jwapple", avatarURL);
     message.author.send({embed}).then(() => {
       message.react("👌")
     });

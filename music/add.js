@@ -196,7 +196,7 @@ module.exports = {
             }, 500);
           }
         } catch (error) {
-          console.log(error.response.body);
+          console.log(error);
           message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
         }
       })();

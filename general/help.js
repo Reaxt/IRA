@@ -9,7 +9,7 @@ var dj = require("../dj/index.js")
 module.exports = {
   name:"!help",
   desc:"Lists my commands",
-  func:function(message){
+  func:async function(message){
     let client = this
     let gencommands = []
     let musiccommands = []
@@ -38,7 +38,7 @@ module.exports = {
       filterItems(items)
       shitpostcommands = items.map(element => utils.elementToString(element, shitpost))
 
-
+      let avatarURL = await client.users.fetch('163052863038291970').avatarURL;
       let embed = new Discord.MessageEmbed()
       .setTitle(`Here's what I can do! ${config.version}`)
       .setColor("#f759e8")
@@ -47,7 +47,7 @@ module.exports = {
       .addField("**Music Commands**", musiccommands.join(""), true)
       .addField("**DJ Commands** (requires DJ role)", djcommands.join(""), true)
       .addField("**Shitpost Commands**", shitpostcommands.join(""), true)
-      .setFooter("Created by Reaxt and Jwapple", client.users.cache.get('163052863038291970').avatarURL )
+      .setFooter("Created by Reaxt and Jwapple", avatarURL );
       message.author.send({embed}).then(() => {
         message.react("👌")
       });
