@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "7.1.6",
+  "version": "7.1.7",
   "description": "a discord bot created for Art Heaven",
   "main": "main.js",
   "directories": {
@@ -37,8 +37,8 @@
     "sqlite3": "^4.2.0",
     "superagent": "^5.3.1",
     "uws": "^100.0.1",
-    "youtube-search": "^1.1.4",
-    "ytdl-core": "^4.4.3"
+    "youtube-search": "^1.1.6",
+    "ytdl-core": "^4.5.0"
   },
   "devDependencies": {},
   "scripts": {
