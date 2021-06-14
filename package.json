@@ -12,7 +12,7 @@
     "cancercase": "^1.0.3",
     "cron": "^1.7.1",
     "discord.js": "^12.5.1",
-    "eris": "^0.10.0",
+    "eris": "^0.15.1",
     "erlpack": "^0.1.2",
     "fluent-ffmpeg": "^2.1.0",
     "get-urls": "^9.2.1",
@@ -24,7 +24,7 @@
     "node-cron": "^2.0.3",
     "node-schedule": "^1.3.2",
     "nodejs": "^0.0.0",
-    "nodemailer": "^6.4.13",
+    "nodemailer": "^6.6.1",
     "nodemailer-smtp-transport": "^2.7.2",
     "owo.js": "^1.0.2",
     "pkg.json": "^2.0.8",
@@ -35,7 +35,7 @@
     "superagent": "^5.3.1",
     "uws": "^100.0.1",
     "youtube-search": "^1.1.6",
-    "ytdl-core": "^4.5.0"
+    "ytdl-core": "^4.8.2"
   },
   "devDependencies": {},
   "scripts": {
