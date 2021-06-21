@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "7.1.7",
+  "version": "7.1.8",
   "description": "a discord bot created for Art Heaven",
   "main": "main.js",
   "directories": {
@@ -9,15 +9,13 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "bulma": "^0.7.5",
-    "cancercase": "^1.0.3",
     "cron": "^1.7.1",
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.3",
     "eris": "^0.15.1",
     "erlpack": "^0.1.2",
     "fluent-ffmpeg": "^2.1.0",
     "get-urls": "^9.2.1",
     "get-youtube-id": "^1.0.1",
-    "gifencoder": "^2.0.1",
     "got": "^11.7.0",
     "html-entities": "^1.3.1",
     "nedb": "^1.8.0",
@@ -26,8 +24,6 @@
     "nodejs": "^0.0.0",
     "nodemailer": "^6.6.1",
     "nodemailer-smtp-transport": "^2.7.2",
-    "owo.js": "^1.0.2",
-    "pkg.json": "^2.0.8",
     "request": "^2.88.2",
     "sentencer": "^0.2.1",
     "snekfetch": "^4.0.4",

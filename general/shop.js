@@ -111,31 +111,32 @@ var shopList = [
 			})
 		}
 	},
-	// {
-	// 	name:"Clockwork Cog",
-	// 	desc:"Ancient technology which can be exchanged for Clockwork cards.",
-	// 	icon:"⚙️",
-	// 	price:999999,
-	// 	func:async function(message, doc){
-	// 		global.usermanager.getUser(message, message.author).then(userDoc => {
-	// 			if (!userDoc.eventCardCoins || isNaN(userDoc.eventCardCoins)) {
-	// 				userDoc.eventCardCoins = 1
-	// 				global.usermanager.setUser(message, message.author, userDoc)
-	// 			} else {
-	// 				userDoc.eventCardCoins++;
-	// 				global.usermanager.updateUser(message, message.author, {$inc:{eventCardCoins:1}})
-	// 			}
-	// 			message.channel.startTyping()
-	// 			setTimeout(()=> {
-    //                 message.channel.send(`Alright, **${message.author.username}**, here you go! \nYou have ${userDoc.eventCardCoins} Clockwork Cogs. Spend them at the !cardShop!`)
-	// 				message.channel.stopTyping()
-	// 			}, 500)
+	{
+		name:"Ether Shard",
+		aliases:["ether", "shard"],
+		desc:"Crystallized Ether. Can be exchanged for event cards.",
+		icon:"🔹",
+		price:2500,
+		func:async function(message, doc){
+			global.usermanager.getUser(message, message.author).then(userDoc => {
+				if (!userDoc.eventCardCoins || isNaN(userDoc.eventCardCoins)) {
+					userDoc.eventCardCoins = 1
+					global.usermanager.setUser(message, message.author, userDoc)
+				} else {
+					userDoc.eventCardCoins++;
+					global.usermanager.updateUser(message, message.author, {$inc:{eventCardCoins:1}})
+				}
+				message.channel.startTyping()
+				setTimeout(()=> {
+                    message.channel.send(`Alright, **${message.author.username}**, here you go! \nYou have ${userDoc.eventCardCoins} Ether Shards. Spend them at the !cardShop!`)
+					message.channel.stopTyping()
+				}, 500)
 				
-	// 		}).catch(()=> {
-	// 	  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
-	// 		})
-	// 	}
-	// }
+			}).catch(()=> {
+		  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+			})
+		}
+	}
 ]
 
 // auto fill aliases to map

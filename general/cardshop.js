@@ -9,13 +9,16 @@ const numreactions = ["1⃣","2⃣","3⃣","4⃣","5⃣","6⃣","7⃣","8⃣","9
 
 const symbols = {
     "coins":"",
-    "eventCardCoins":"⚙️"
+    "eventCardCoins":"🔹"
 }
 // ether 🔹
+// cogs ⚙️
 
 var shopQuotes = [
-	"Clockwork Cogs ⚙️ can be earned through event participation. Careful - they'll expire at the end of the event!",
-	"Why do I suddenly want so many Cogs ⚙️? It's a secret!"
+	"Ether Shards 🔹 can be purchased in the shop. Careful - they'll expire at the end of the event!",
+	"Crystallized Ether is rare. I'd love to have some as a snack sometime...",
+	"Remember, this isn't gambling! You're spending money for randomized rewards with no monetary value.",
+	"I love capitalism."
 ]
 
 const eventTypes = JSON.parse(fs.readFileSync("./events/eventTypes.json"))
@@ -63,7 +66,7 @@ module.exports = {
   		for (let i = 0; i < shopList.length; i++) {
 	  		shopEmbed.addField(`${(i+1)}. **${shopList[i].name}**`,`${shopList[i].price}${symbols[shopList[i].currency]}`, true)
 	  	}
-	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)])
+	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)], "https://cdn.discordapp.com/attachments/604088023478567053/637787209721708554/happy.png")
 
 
 		message.channel.send({embed:shopEmbed}).then(sentMsg => {

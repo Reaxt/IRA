@@ -535,7 +535,7 @@
     "defense": 800,
     "totalPwr": 1500,
     "active": true,
-    "pullable": true,
+    "pullable": false,
     "series": "1",
     "event": false
   },
@@ -690,11 +690,11 @@
     "event": false
   },
   {
-    "name": "Frog",
-    "displayName": "Frog",
+    "name": "",
+    "displayName": "",
     "rarity": 3,
     "notes": "",
-    "charOwner": "Jolly",
+    "charOwner": "OPEN",
     "imgURL": "",
     "attack": null,
     "defense": null,
@@ -784,7 +784,7 @@
     "displayName": "",
     "rarity": 2,
     "notes": "",
-    "charOwner": "Tiny",
+    "charOwner": "OPEN",
     "imgURL": "",
     "attack": null,
     "defense": null,
@@ -1121,8 +1121,8 @@
     "totalPwr": 6000,
     "active": true,
     "pullable": true,
-    "series": "4",
-    "event": false
+    "series": "JOKER",
+    "event": true
   },
   {
     "name": "SoulOS",
