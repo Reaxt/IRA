@@ -51,8 +51,6 @@ Io character by Jwapple
 
 Abby character made by [Doshmobile](http://doshmobile.tumblr.com/)
 
-IRA character made by [Tyler Copley](https://twitter.com/divineluke)
-
 Created by Reaxt
 Supported by Jwapple
-Hosted thanks to Urotsuki
+Special thanks to Urotsuki
