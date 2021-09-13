@@ -51,6 +51,6 @@ Io character by Jwapple
 
 Abby character made by [Doshmobile](http://doshmobile.tumblr.com/)
 
-Created by Reaxt
-Supported by Jwapple
-Special thanks to Urotsuki
+Created by Reaxt  
+Supported by Jwapple  
+Special thanks to Urotsuki  
