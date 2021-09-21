@@ -14,7 +14,7 @@ module.exports = {
   }
 }
 ```
-Command filenames must be all lowercase.
+Command filenames must be all lowercase, regardless of how your command name is capitalized by default. (All commands are non-case-sensitive, the name field just determines how it shows up in !help)
 
 Different expressions (First argument) are happy, sad, angry, malfunction
 
