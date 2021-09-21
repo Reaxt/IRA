@@ -45,7 +45,8 @@ Replace ytkey with a youtube api key
 (ratelimit is in milliseconds)
 
 ## Maintenance
-If the bot has issues playing from Youtube, it is likely due to an outdated `ytdl-core` package. Bring the bot offline, run `npm upgrade ytdl-core`, and restart the bot.
+If the bot has issues playing from Youtube, it is likely due to an outdated `ytdl-core` package. Bring the bot offline, run `npm upgrade ytdl-core`, and restart the bot.  
+Every few months you should back up userdata.db and carddata.db.
 
 ## Credits
 Io character by Jwapple
