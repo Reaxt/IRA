@@ -2,12 +2,7 @@
 A discord bot made for the art heaven server
 ## Making simple commands easily
 
-~~### Updating index.js and command layout~~
-
-~~First, make sure to have your command added in the index.js in the folder you wish to have the command, (See shitpost index.js for a good example)~~  
-This process is now automated. Note that the filenames of commands must be in all lowercase due to input parsing.
-
-Second, make the new command file as whatever you refered to it in index.js, and use this layout
+Make a new command file and use this layout
 ```
 const Discord = require("discord.js")
 var utils = require("../utils/index.js")
@@ -19,6 +14,7 @@ module.exports = {
   }
 }
 ```
+Command filenames must be all lowercase.
 
 Different expressions (First argument) are happy, sad, angry, malfunction
 
