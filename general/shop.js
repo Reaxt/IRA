@@ -76,7 +76,7 @@ module.exports = {
 			})
 	  	})
   	}).catch(err => {
-  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
   	})
   	
   }
@@ -107,7 +107,7 @@ var shopList = [
 				}, 500)
 				
 			}).catch(()=> {
-		  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+		  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			})
 		}
 	},
@@ -133,7 +133,7 @@ var shopList = [
 				}, 500)
 				
 			}).catch(()=> {
-		  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+		  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			})
 		}
 	}

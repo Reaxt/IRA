@@ -14,18 +14,18 @@ module.exports = {
           targetMember.roles.add(roles[i]).catch(err => {
             let failedRole = message.guild.roles.cache.get(roles[i])
             if (failedRole)
-              message.channel.send(`Failed adding role \`${failedRole.name}\`: \`${err}\``)
+              message.channel.send(`FAILED TO ADD ROLE \`${failedRole.name}\`: \`${err}\``)
             else 
-              message.channel.send(`Failed adding unknown role: \`${err}\``)
+              message.channel.send(`FAILED TO ADD AN UNKNOWN ROLE: \`${err}\``)
           })
         }
-        message.channel.send({embed:utils.embed("happy",`Attempted to restore \`${roles.length}\` roles to **${targetMember.displayName}**`)})
+        message.channel.send({embed:utils.embed("happy",`ATTEMPTED TO RESTORE \`${roles.length}\` ROLES TO **${targetMember.displayName}**`)})
       }).catch(err => {
-        message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
       })
       
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "Please mention a user")})
+      message.channel.send({embed:utils.embed("malfunction", "YOU NEED TO MENTION A USER")})
     }
   }
 }

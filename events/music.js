@@ -33,7 +33,7 @@ music.on("play", (message) =>{
     message.channel.send({embed:utils.embed("track_played", `NOW PLAYING \`${global.queue[0]["info"]}\` QUEUED BY \`${global.queue[0]["user"].username}\` WITH A LENGTH OF \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
     dispatcher = message.guild.voice.connection.play(ytdl(global.queue[0]["url"], {filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25, begin:global.queue[0].startTime}, (error, response) => {
       if (error || !response) {
-        message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
+        message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${error}\`\`\``,"RED")})
         dispatcher.end();
       } 
     }), global.streamoptions)

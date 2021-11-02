@@ -21,7 +21,7 @@ module.exports = {
     		content = message.content.substring(message.content.indexOf(" "))
 
     	} else{
-    		return message.channel.send({embed:utils.embed("malfunction", "Invalid Channel")})
+    		return message.channel.send({embed:utils.embed("malfunction", "NOT A REAL CHANNEL")})
 
     	}
     }
@@ -38,15 +38,15 @@ module.exports = {
 			if (message.attachments && message.attachments.size > 0) {
 				const attachment = new Attachment(message.attachments.first().url)
 				targetChannel.send(content, attachment).catch(err => {
-					message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
 				})
 			} else {
 				targetChannel.send(content).catch(err => {
-					message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
 				})
 			}
 		} else {
-			message.channel.send({embed:utils.embed("malfunction", "Not a text channel")})
+			message.channel.send({embed:utils.embed("malfunction", "A *TEXT* CHANNEL")})
 		}
 		targetChannel.stopTyping();
     }, 700)

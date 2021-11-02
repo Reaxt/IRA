@@ -29,7 +29,7 @@ module.exports = {
 			global.usermanager.setUser(message, message.author, userDoc).then(() => {
 				message.channel.send({embed:utils.embed("happy", `**${message.author.username}** took out a loan of ${amount} AbbyCoin!`)})
 			}).catch(err => {
-				message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			})
 			
 		} else {

@@ -133,7 +133,7 @@ function reload(arg, message) {
       }
      else {message.channel.send({embed:utils.embed("malfunction", "You dont have permission for this command")})}
   } catch (err) {
-    message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+    message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
   }
 }
 //EVAL FUNC
@@ -262,7 +262,7 @@ client.on("message", message => {
         func.call(client, message)
         ira.emit("ratelimit", message.author)
       }catch(err) {
-        var embed = utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")
+        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")
         message.channel.send({embed})
       }
     }

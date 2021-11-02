@@ -30,10 +30,10 @@ function buyItem(message, user, shopItem) {
 				shopItem.func(message).catch(err=>{
 					// refund on error
 					global.usermanager.updateUser(message, user, {$inc: {[shopItem.currency]:shopItem.price}})
-					message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+					message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 				})
 			}).catch(err => {
-				message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			})
 
 
@@ -41,7 +41,7 @@ function buyItem(message, user, shopItem) {
             message.channel.send({embed:utils.embed('angry', "You don't have the funds for that.")})
         }
     }).catch(err => {
-        message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
     })
 }
 
@@ -85,7 +85,7 @@ module.exports = {
 			})
 	  	})
   	}).catch(err => {
-  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
   	})
   	
   }
