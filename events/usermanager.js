@@ -81,7 +81,7 @@ module.exports = {
 			if (!doc) {
 				doc = initUser(user);
 			}
-			if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+			if (err) message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			else callback(doc.coins);
 		})
 	},
@@ -100,7 +100,7 @@ module.exports = {
 				if (!doc) {
 					doc = initUser(user);
 				}
-				if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+				if (err) message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 				resolve(doc);
 			})
 		})
@@ -148,8 +148,8 @@ module.exports = {
 	// callback: function(message, user, Collection<roles>)
 	fetchRoles:function(message, member, callback) {
 		db.findOne({id:member.user.id}, function(err, doc) {
-			if (!doc) return message.channel.send({embed:utils.embed(`malfunction`,`${member.user.username} isn't in my systems.`, "RED")})
-			if (!doc.roles) return message.channel.send({embed:utils.embed(`malfunction`,`I don't have anything on file for ${member.user.username}.`, "RED")})
+			if (!doc) return message.channel.send({embed:utils.embed(`malfunction`,`I DON'T KNOW ANYONE NAMED ${member.user.username}`, "RED")})
+			if (!doc.roles) return message.channel.send({embed:utils.embed(`malfunction`,`THERE ISN'T ANYTHING IN MY DATABANKS FOR ${member.user.username}.`, "RED")})
 			callback(message, member, doc.roles);
 		})
 	},
@@ -159,7 +159,7 @@ module.exports = {
 			if (!doc) {
 				doc = initUser(user);
 			}
-			if (err) message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+			if (err) message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			else {
 				if (price > doc.coins) {
 					message.channel.send({embed:utils.embed('angry', "You don't have the funds for that. Take out a loan?")})

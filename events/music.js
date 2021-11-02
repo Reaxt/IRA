@@ -19,7 +19,7 @@ music.on("play", (message) =>{
 
   // if we've finished the queue, disconnect
   if(global.queue.length === 0) {
-    message.channel.send({embed:utils.embed("happy", `Thanks for listening! I'm off.`)})
+    message.channel.send({embed:utils.embed("happy", `OK I'M DONE BYE`)})
     message.guild.voice.channel.leave()
     global.playing = false
     global.streamoptions.volume = global.defaultVolume;
@@ -30,7 +30,7 @@ music.on("play", (message) =>{
   if (global.queue[0].type == "youtube") {
     let footer = ytID(global.queue[0]["url"])
     if(footer === null) footer = global.queue[0]["url"]
-    message.channel.send({embed:utils.embed("track_played", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
+    message.channel.send({embed:utils.embed("track_played", `NOW PLAYING \`${global.queue[0]["info"]}\` QUEUED BY \`${global.queue[0]["user"].username}\` WITH A LENGTH OF \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
     dispatcher = message.guild.voice.connection.play(ytdl(global.queue[0]["url"], {filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25, begin:global.queue[0].startTime}, (error, response) => {
       if (error || !response) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
@@ -39,19 +39,19 @@ music.on("play", (message) =>{
     }), global.streamoptions)
   } 
   else if (global.queue[0].type == "soundcloud") {
-    message.channel.send({embed:utils.embed("track_played", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
+    message.channel.send({embed:utils.embed("track_played", `NOW PLAYING \`${global.queue[0]["info"]}\` QUEUED BY \`${global.queue[0]["user"].username}\` WITH A LENGTH OF \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
     dispatcher = message.guild.voice.connection.play(request(global.queue[0].url+"?client_id="+config.scid, (error, response) => {
       if (error || !response) {
-        message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
+        message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${error}\`\`\``,"RED")})
         dispatcher.end();
       } else if (/4\d\d/.test(response.statusCode) === true) {
-        message.channel.send({embed:utils.embed("sad", "Hey, I can't find this thing.. Are you sure that's the right link?","RED")})
+        message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","RED")})
         dispatcher.end();
       }
     }), global.streamoptions)
   } 
   else { // A direct link to a audio file. Precursor to SoundCloud functionality.
-      message.channel.send({embed:utils.embed("track_played", `Now playing [${global.queue[0]["info"]}](${global.queue[0].url}) queued by \`${global.queue[0]["user"].username}\``, undefined, undefined)})
+      message.channel.send({embed:utils.embed("track_played", `NOW PLAYING [${global.queue[0]["info"]}](${global.queue[0].url}) QUEUED BY \`${global.queue[0]["user"].username}\``, undefined, undefined)})
       directstreamoptions = global.streamoptions;
       directstreamoptions.type = "unknown";
 
@@ -64,7 +64,7 @@ music.on("play", (message) =>{
     console.log(`Debug from stream dispatcher: ${info}`);
   })
   dispatcher.on("error", info => {
-    console.log({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${info}\`\`\``,"RED")});
+    console.log({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${info}\`\`\``,"RED")});
     global.playing = false
   })
   dispatcher.on("finish", reason => {
@@ -74,7 +74,7 @@ music.on("play", (message) =>{
     // play next song
   	setTimeout(function() {
       try{music.emit("play", message)}  catch(err) {
-        message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+        message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
       } 
     }, 1000)
   })
@@ -84,7 +84,7 @@ music.on("end", (message) => {
   global.votes = 0
   global.queue = []
   try{music.emit("play", message)}  catch(err) {
-    message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+    message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
   }
 })
 music.on("skip", (message) => {
@@ -95,7 +95,7 @@ music.on("skip", (message) => {
     global.queue.shift()
     
     try{music.emit("play", message)}  catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
     }
   }
 })
@@ -104,7 +104,7 @@ music.on("debugFix", (message) => {
     global.queue[0].startTime = message.guild.voice.connection.dispatcher.streamTime
   }
   try{music.emit("play", message)}  catch(err) {
-    message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+    message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
   }
 })
 music.on("setVolume", (message) => {
@@ -113,7 +113,7 @@ music.on("setVolume", (message) => {
     try {
       message.guild.voice.connection.dispatcher.setVolume(message.content.split(" ")[1]);
     } catch (err) {
-      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
     }
 })
 
@@ -125,7 +125,7 @@ module.exports.refresh = (message) => {
   global.playing = false
   if(message.guild.voice.connection != undefined) {
     try{music.emit("play", message)}  catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``,"RED")})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
     }}
   music = null
   music = new events()
