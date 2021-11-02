@@ -43,7 +43,7 @@ module.exports = {
     }
 
     // initiate the connection
-    if(!message.member.voice.channel) return message.channel.send({embed:utils.embed("sad", "Youre not in a voice channel")})
+    if(!message.member.voice.channel) return message.channel.send({embed:utils.embed("sad", "You\'re not in a voice channel")})
     if(!message.guild.me.voice.channel) {
       try {
         await music.summon.func.call(this, message);
@@ -52,7 +52,7 @@ module.exports = {
         message.channel.send({embed})
       }
     }
-    else if(message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed:utils.embed("sad", "Youre not in the same voice channel as me")})
+    else if(message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed:utils.embed("sad", "You\'re not in the same voice channel as me")})
 
     //case 1: use youtube
     if (type === "youtube" || type === "search") {

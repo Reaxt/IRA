@@ -30,7 +30,7 @@ music.on("play", (message) =>{
   if (global.queue[0].type == "youtube") {
     let footer = ytID(global.queue[0]["url"])
     if(footer === null) footer = global.queue[0]["url"]
-    message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
+    message.channel.send({embed:utils.embed("track_played", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, `https://youtu.be/${footer}`)})
     dispatcher = message.guild.voice.connection.play(ytdl(global.queue[0]["url"], {filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1 << 25, begin:global.queue[0].startTime}, (error, response) => {
       if (error || !response) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
@@ -39,7 +39,7 @@ music.on("play", (message) =>{
     }), global.streamoptions)
   } 
   else if (global.queue[0].type == "soundcloud") {
-    message.channel.send({embed:utils.embed("happy", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
+    message.channel.send({embed:utils.embed("track_played", `Now playing \`${global.queue[0]["info"]}\` queued by \`${global.queue[0]["user"].username}\` with a length of \`${global.queue[0]["minutes"]}:${global.queue[0]["seconds"]}\` `, undefined, global.queue[0].permalink_url)})
     dispatcher = message.guild.voice.connection.play(request(global.queue[0].url+"?client_id="+config.scid, (error, response) => {
       if (error || !response) {
         message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${error}\`\`\``,"RED")})
@@ -51,7 +51,7 @@ music.on("play", (message) =>{
     }), global.streamoptions)
   } 
   else { // A direct link to a audio file. Precursor to SoundCloud functionality.
-      message.channel.send({embed:utils.embed("happy", `Now playing [${global.queue[0]["info"]}](${global.queue[0].url}) queued by \`${global.queue[0]["user"].username}\``, undefined, undefined)})
+      message.channel.send({embed:utils.embed("track_played", `Now playing [${global.queue[0]["info"]}](${global.queue[0].url}) queued by \`${global.queue[0]["user"].username}\``, undefined, undefined)})
       directstreamoptions = global.streamoptions;
       directstreamoptions.type = "unknown";
 
