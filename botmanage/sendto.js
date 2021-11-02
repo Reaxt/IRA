@@ -46,7 +46,7 @@ module.exports = {
 				})
 			}
 		} else {
-			message.channel.send({embed:utils.embed("malfunction", "A *TEXT* CHANNEL")})
+			message.channel.send({embed:utils.embed("malfunction", "IT HAS TO BE A *TEXT* CHANNEL")})
 		}
 		targetChannel.stopTyping();
     }, 700)
