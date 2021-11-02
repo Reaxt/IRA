@@ -12,7 +12,7 @@ module.exports = (expression, content, color, footer) => {
       break;
     case "malfunction":
       url = "https://cdn.discordapp.com/attachments/512493868839731201/905107401261322290/sandalerror2x.gif"
-      Ecolor = "#0827F5"; // Same blue screen as she gets
+      Ecolor = "RED";
       break;
     case "angry":
       url = "https://cdn.discordapp.com/attachments/512493868839731201/905113756495908914/sandaldoxx2x.gif"
