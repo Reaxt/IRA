@@ -74,7 +74,7 @@ module.exports = {
             "seconds":seconds, 
             "startTime":0, 
             "type":"youtube"})
-        message.channel.send({embed:utils.embed("happy", `QUEUED \`${info.player_response.videoDetails.title}\``)})
+        message.channel.send({embed:utils.embed("track_played", `QUEUED \`${info.player_response.videoDetails.title}\``)})
         setTimeout(function () {
           music.play.func(message)
         }, 500);
@@ -115,7 +115,7 @@ module.exports = {
                     "seconds":seconds, 
                     "startTime":0,
                     "type":"youtube"})
-                message.channel.send({embed:utils.embed("happy", `QUEUED \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
+                message.channel.send({embed:utils.embed("track_played", `QUEUED \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
                 setTimeout(function () {
                   music.play.func(message)
                 }, 500);
@@ -156,7 +156,7 @@ module.exports = {
             "startTime":0,
             "permalink_url":track.permalink_url, 
             "type":"soundcloud"}) 
-        message.channel.send({embed:utils.embed("happy", `QUEUED \`${track.title}\``)})
+        message.channel.send({embed:utils.embed("track_played", `QUEUED \`${track.title}\``)})
         setTimeout(function () {
           music.play.func(message)
         }, 500);
@@ -190,7 +190,7 @@ module.exports = {
                 "user":message.author, 
                 "startTime":0,
                 "type":"direct"})
-            message.channel.send({embed:utils.embed("happy", `QUEUED \`${info}\``)})
+            message.channel.send({embed:utils.embed("track_played", `QUEUED \`${info}\``)})
             setTimeout(function () {
               music.play.func(message)
             }, 500);
