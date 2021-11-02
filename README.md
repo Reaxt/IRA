@@ -1,4 +1,4 @@
-# Io (formerly IRA, Toaster)
+# S4N-D4L (formerly IRA, Toaster, IO)
 A discord bot made for the art heaven server
 ## Making simple commands easily
 
@@ -45,7 +45,7 @@ If the bot has issues playing from Youtube, it is likely due to an outdated `ytd
 Every few months you should back up userdata.db and carddata.db.
 
 ## Credits
-Io character by Jwapple
+S4N-D4L character by doshMobile
 
 Abby character made by [Doshmobile](http://doshmobile.tumblr.com/)
 
