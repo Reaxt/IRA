@@ -7,7 +7,7 @@ module.exports = (expression, content, color, footer) => {
     case "happy":
       url = "https://cdn.discordapp.com/attachments/512493868839731201/905100842460401724/sandalidle2x.gif"
       break;
-    case "sad":
+    case "sad": // Not actually sad, just easier not to change the ID.
       url = "https://cdn.discordapp.com/attachments/512493868839731201/905111817586614292/sandalwhat2x.gif"
       break;
     case "malfunction":
