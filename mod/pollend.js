@@ -15,7 +15,7 @@ module.exports = {
     }
     let pollmessage = await channel.messages.fetch(pollobject.pollmessage)
     if (!pollmessage) {
-      return message.channel.send({embed:utils.embed("malfunction", `POLL MESSAGEMISSING`, "RED")})
+      return message.channel.send({embed:utils.embed("malfunction", `POLL MESSAGE MISSING`, "RED")})
     }
 
     let pollsresults = pollmessage.reactions.map(r => `${r.emoji.name} HAS ${r.count - 1} REACTIONS \n`)
