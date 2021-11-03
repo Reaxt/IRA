@@ -1,21 +1,24 @@
 const Discord = require("discord.js")
 module.exports = (expression, content, color, footer) => {
   var url = null
-  var Ecolor = "#f759e8"
+  var Ecolor = "#dfb413"
 
   switch(expression) {
     case "happy":
-      url = "https://cdn.discordapp.com/attachments/604088023478567053/637787209721708554/happy.png"
+      url = "https://cdn.discordapp.com/attachments/512493868839731201/905100842460401724/sandalidle2x.gif"
       break;
-    case "sad":
-      url = "https://cdn.discordapp.com/attachments/604088023478567053/637787206538494002/sad.png"
+    case "sad": // Not actually sad, just easier not to change the ID.
+      url = "https://cdn.discordapp.com/attachments/512493868839731201/905111817586614292/sandalwhat2x.gif"
       break;
     case "malfunction":
-      url = "https://cdn.discordapp.com/attachments/604088023478567053/637787204420108307/malfunction.png"
+      url = "https://cdn.discordapp.com/attachments/512493868839731201/905107401261322290/sandalerror2x.gif"
       Ecolor = "RED";
       break;
     case "angry":
-      url = "https://cdn.discordapp.com/attachments/604088023478567053/637787208132198410/angry.png"
+      url = "https://cdn.discordapp.com/attachments/512493868839731201/905113756495908914/sandaldoxx2x.gif"
+      break;
+    case "track_played":
+      url = "https://cdn.discordapp.com/attachments/512493868839731201/905104449633132554/sandalnowplaying2x.gif"
       break;
     case "abbyHappy":
       url = "https://cdn.discordapp.com/attachments/203334579166117888/528414646034628625/abbyhappy.png"
@@ -37,7 +40,7 @@ module.exports = (expression, content, color, footer) => {
   if(color != undefined || color === "default") {
     Ecolor = color
   }
-  let result = new Discord.MessageEmbed().setTitle("Io").setColor(Ecolor).setThumbnail(url).setDescription(content)
+  let result = new Discord.MessageEmbed().setTitle("S4N-D4L").setColor(Ecolor).setThumbnail(url).setDescription(content)
 
   if(footer != undefined) {
     result.setFooter(footer)

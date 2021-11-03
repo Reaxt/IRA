@@ -15,25 +15,27 @@ var abbyQuotes = [
     "Sorry, we don't accept Robux!",
     "Please help me get rid of these guns. I don't know what to do with them.",
     "AbbyCoin is verified and backed by a gold standard! Where is the gold stored? Uhh.. Sorry, if anyone found the drawer I'd be in big trouble.",
-    "Io keeps telling me that I should sell 'leet pictures'. What are those?",
-    "Maybe I did recognize the bodies in the water.. Ah, sorry, huh? What was I talking about?",
+    "S4N-D4L keeps telling me that I should sell 'leet pictures'. What are those?",
+    "Maybe I did recognize the bodies in the water... Ah, sorry, huh? What was I talking about?",
     "Saving up is for losers! Getting rich is my job, not yours!",
     "FLASH SALE! Everything's 0% off!",
     "All our cards are organically sourced!",
     "Has someone been eating my fruit snacks?",
-    "Someone came by yesterday asking for rent. Io, do you know what that is?",
+    "Someone came by yesterday asking for rent. S4N-D4L, do you know what that is?",
     "HEAVEN GRAND ORDER, was that the one I played? Let's check it out.",
     "Remember to hit that subscribe button and ring the notification bell!",
     "She looked in my chest and she looked at a hundred diamonds...",
     "Sorry, what was that? I couldn't hear you over the sound of the AbbyCoin in my pockets.",
-    "Ugh.. I don't want to do the dishes..",
+    "Ugh... I don't want to do the dishes...",
     "As your cards level up, they will gain one-of-a kind modifiers!",
     "ID-tagged soldiers fighting with ID-tagged guns... good thing we don't sell those here!",
     "'Funneling weapons'? How do you do that? Aren't guns too big to put in a funnel?",
     "Not everything that you make needs to be perfect! It can be relaxing to just practice without any expectations.",
     "Don't worry if your work isn't where you want it to be - it's just another step towards getting better!",
 	"We all need a break sometimes! Living life is important for your art, too!",
-	"Io, please, just one more cinnamon roll.."
+	"S4N-D4L, please, just one more cinnamon roll.",
+	"Sorry, we don't give credit! Come back when you're a little... Mmmmmmmmmmm richer!",
+	"Lamp oil, rope, and/or bombs sold seperately."
 ]
 
 module.exports = {
@@ -76,7 +78,7 @@ module.exports = {
 			})
 	  	})
   	}).catch(err => {
-  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
   	})
   	
   }
@@ -107,7 +109,7 @@ var shopList = [
 				}, 500)
 				
 			}).catch(()=> {
-		  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+		  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			})
 		}
 	},
@@ -133,7 +135,7 @@ var shopList = [
 				}, 500)
 				
 			}).catch(()=> {
-		  		message.channel.send({embed:utils.embed(`malfunction`,`Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+		  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
 			})
 		}
 	}

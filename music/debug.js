@@ -8,18 +8,18 @@ module.exports = {
   music:true,
   func:function(message){
     if(!message.guild.voice.connection) {
-      message.channel.send({embed: utils.embed("sad", "I'm not playing anything.")})
+      message.channel.send({embed: utils.embed("sad", "NOTHING'S PLAYING")})
       return;
     }
   	if(message.guild.voice.connection.speaking) {
-    	message.channel.send({embed: utils.embed("sad", "I don't see anything wrong from my end.")})
+    	message.channel.send({embed: utils.embed("sad", "WHAT DO YOU MEAN SOMETHING'S WRONG EVERYTHING LOOKS FINE TO ME")})
   		return;
   	}
     try {
       music.events.emit("play", message);
-      message.channel.send({embed: utils.embed("happy", "Seemed like something was off, I hope that took care of it!")})
+      message.channel.send({embed: utils.embed("happy", "OH YEA THAT'S PRETTY WEIRD I THINK I FIXED IT THOUGH")})
     } catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``)})
     }
   }
 }

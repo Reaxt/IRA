@@ -56,7 +56,7 @@ module.exports = {
     .addField("**DJ Commands** (requires DJ role)", djcommands.join(""), true)
     .addField("**Mod Commands**", modcommands.join(""), true)
     .addField("**Bot Management Commands**", botcommands.join(""), true)
-    .addField("**Shitpost Commands**(only in shitpost central or after hours)", shitpostcommands.join(""), true)
+    .addField("**Shitpost Commands**(only in shitpost central)", shitpostcommands.join(""), true)
     .setFooter("Created by Reaxt and Jwapple", avatarURL);
     message.author.send({embed}).then(() => {
       message.react("👌")
@@ -64,7 +64,7 @@ module.exports = {
 
 
   } catch (err) {
-    message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``, "RED")})
+    message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
   }
 
 

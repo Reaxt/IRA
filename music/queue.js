@@ -5,10 +5,10 @@ module.exports = {
   desc:"lists the queue",
   music:true,
   func:function(message){
-    if(global.queue.length === 0) return message.channel.send({embed:utils.embed("sad","Nothings in the queue, add some with !add")})
+    if(global.queue.length === 0) return message.channel.send({embed:utils.embed("sad","THERE'S NOTHING TO PLAY ADD SOMETHING WITH `command[!add]`")})
     aamessage = []
     global.queue.forEach(function(element) {
-    aamessage.push(`\`${global.queue.indexOf(element)} ${element["info"]}\` Queued by \`${element["user"].username}\` \n`)
+    aamessage.push(`\`${global.queue.indexOf(element)} ${element["info"]}\` QUEUED BY \`${element["user"].username}\` \n`)
     })
     message.channel.send({embed:utils.embed("happy",(aamessage.join("")))})
 

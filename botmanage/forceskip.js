@@ -9,7 +9,7 @@ module.exports = {
   music:true,
   func:function(message){
     try {music.events.emit("skip", message)} catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `Something went wrong! \`\`\`${err}\`\`\``)})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``)})
     }
   }
 }

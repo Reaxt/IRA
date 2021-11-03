@@ -9,6 +9,6 @@ module.exports = {
   	else
   		global.client.user.setAvatar(message.content.split(" ")[1]);
 
-    message.channel.send("Alright, I'll put this on!");
+    message.channel.send("OK I GUESS I'LL WEAR THAT");
   }
 }
