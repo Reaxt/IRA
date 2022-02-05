@@ -47,7 +47,7 @@ module.exports = {
       .addField("**Music Commands**", musiccommands.join(""), true)
       .addField("**DJ Commands** (requires DJ role)", djcommands.join(""), true)
       .addField("**Shitpost Commands**", shitpostcommands.join(""), true)
-      .setFooter("Created by Reaxt and Jwapple", avatarURL );
+      .setFooter("Created by Reaxt, Et al.", avatarURL );
       message.author.send({embed}).then(() => {
         message.react("👌")
       });
