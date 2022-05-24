@@ -45,9 +45,8 @@ If the bot has issues playing from Youtube, it is likely due to an outdated `ytd
 Every few months you should back up userdata.db and carddata.db.
 
 ## Credits
-S4N-D4L character by doshMobile
 
-Abby character made by [Doshmobile](http://doshmobile.tumblr.com/)
+S4N-D4L & Abby characters made by [Doshmobile](http://doshmobile.tumblr.com/)
 
 Created by Reaxt  
 Supported by Jwapple  
