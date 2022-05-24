@@ -534,7 +534,7 @@
     "attack": 700,
     "defense": 800,
     "totalPwr": 1500,
-    "active": true,
+    "active": false,
     "pullable": false,
     "series": "1",
     "event": false

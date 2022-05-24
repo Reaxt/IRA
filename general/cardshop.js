@@ -66,7 +66,7 @@ module.exports = {
   		for (let i = 0; i < shopList.length; i++) {
 	  		shopEmbed.addField(`${(i+1)}. **${shopList[i].name}**`,`${shopList[i].price}${symbols[shopList[i].currency]}`, true)
 	  	}
-	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)], "https://cdn.discordapp.com/attachments/604088023478567053/637787209721708554/happy.png")
+	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)], "https://cdn.discordapp.com/attachments/512493868839731201/978463721875705966/unknown.png")
 
 
 		message.channel.send({embed:shopEmbed}).then(sentMsg => {
