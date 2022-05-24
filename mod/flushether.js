@@ -36,8 +36,7 @@ module.exports = {
                         }
                         db.update({_id:doc._id}, doc);
                     }
-                    console.log("parsed " + docs.length + " users")
-                    console.log("complete")
+                    sentMsg.edit({embed:utils.embed(`happy`,`\`parsed ${docs.length} users\``)})
                 })
             } catch(err) {
                 sentMsg.edit({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})

@@ -14,7 +14,7 @@ module.exports = {
     if(!things[1]) return(message.channel.send({embed:utils.embed("malfunction", "`Usage: !cardClean <cardName>`")}))
     var db = new NeDB({filename: './carddata.db'})
     var archdb = new NeDB({filename: './carddata_archive.db'})
-    let sentMsg = await message.channel.send({embed:utils.embed("sad", `YOU SURE YOU WANNA DELETE ${things[1]} FROM EVERYONE'S INVENTORIES? YOU CAN'T UNDO THIS.`)});
+    let sentMsg = await message.channel.send({embed:utils.embed("sad", `YOU SURE YOU WANNA DELETE \`${things[1]}\` FROM EVERYONE'S INVENTORIES? YOU CAN'T UNDO THIS.`)});
     sentMsg.react(confirmEmote)
     sentMsg.react(cancelEmote)
     let collector = sentMsg.createReactionCollector(
@@ -45,7 +45,7 @@ module.exports = {
                             db.remove({_id:doc._id});
                         }
                     }
-                    sentMsg.edit({embed:utils.embed(`happy`, `PARSED ${docs.length} CARDS AND REMOVED ${count}`)})
+                    sentMsg.edit({embed:utils.embed(`happy`, `\`parsed ${docs.length} cards and removed ${count}\``)})
                 })
             } catch(err) {
                 sentMsg.edit({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
@@ -53,7 +53,7 @@ module.exports = {
         } else if (r.emoji.name == cancelEmote) {
             collector.stop()
 			sentMsg.reactions.removeAll()
-			sentMsg.edit({embed:utils.embed(`happy`,`${things[1]} DELETION CANCELLED.`)})
+			sentMsg.edit({embed:utils.embed(`happy`,`\`${things[1]} deletion cancelled.\``)})
 		}
     })
     }
