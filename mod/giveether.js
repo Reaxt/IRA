@@ -9,7 +9,7 @@ module.exports = {
     if (message.mentions.users.first()) {
       let amount = message.content.split(" ");
       amount = amount[amount.length-1]
-      if (isNaN(amount)) return message.channel.send({embed:utils.embed("sad","Couldn't get a number input out of that.")})
+      if (isNaN(amount)) return message.channel.send({embed:utils.embed("sad","I COULDN'T GET A NUMBER INPUT FROM THAT.")})
       amount = Math.floor(Number(amount))
       message.mentions.users.forEach(user => {
         global.usermanager.updateUser(message, user, {$inc: {eventCardCoins:amount}}).catch(err => {
@@ -17,14 +17,14 @@ module.exports = {
         })
       })
       if (message.mentions.users.size == 0) {
-        return message.channel.send({embed:utils.embed("sad",`You need to mention someone.`)})
+        return message.channel.send({embed:utils.embed("sad",`YOU GOTTA MENTION SOMEONE`)})
       } else if (message.mentions.users.size == 1) {
-        return message.channel.send({embed:utils.embed("happy",`Gave ${amount}🔹 to ${message.mentions.users.first()}!`)})
+        return message.channel.send({embed:utils.embed("happy",`GAVE ${amount}🔹 TO ${message.mentions.users.first()}!`)})
       } else {
-        return message.channel.send({embed:utils.embed("happy",`Gave ${amount}🔹 to ${message.mentions.users.size} members!`)})
+        return message.channel.send({embed:utils.embed("happy",`GAVE ${amount}🔹 TO ${message.mentions.users.size} MEMBERS!`)})
       }
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "You need to mention someone.")})
+      message.channel.send({embed:utils.embed("malfunction", "YOU GOTTA MENTION SOMEONE")})
     }
   }
 }

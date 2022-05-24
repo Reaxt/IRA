@@ -18,9 +18,9 @@ module.exports = {
         expr = "happy"
 
       if (!userDoc.gun)
-        message.channel.send({embed: utils.embed("happy", `You don't have any guns. Pick one up from the shop?`)})
+        message.channel.send({embed: utils.embed("sad", `YOU GOT NO STRAP. GO BUY ONE FROM THE SHOP!`)})
       else
-        message.channel.send({embed: utils.embed(expr, `You've got \`${userDoc.gun}\` gun${userDoc.gun > 1 ? "s" : ""}.`)});
+        message.channel.send({embed: utils.embed(expr, `YOU'VE GOT \`${userDoc.gun}\` GUN${userDoc.gun > 1 ? "S" : ""}.`)});
     });
   }
 }

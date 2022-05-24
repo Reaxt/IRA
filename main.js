@@ -127,11 +127,11 @@ function reload(arg, message) {
           message.channel.send({embed:utils.embed("happy", `Reloaded module ${arg}`)})
           break;
         default:
-            message.channel.send({embed:utils.embed("malfunction", "Invalid Option")})
+            message.channel.send({embed:utils.embed("malfunction", "`Invalid Option`")})
           }
 
       }
-     else {message.channel.send({embed:utils.embed("malfunction", "You dont have permission for this command")})}
+     else {message.channel.send({embed:utils.embed("malfunction", "`You dont have permission for this command`")})}
   } catch (err) {
     message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
   }
@@ -169,11 +169,11 @@ client.on("ready", async function() {
   let shutdownstatus = await fsPromises.readFile("./shutdownstatus.json");
   if (JSON.parse(shutdownstatus).shutdown == false) {
     if (logChannel) {
-      logChannel.send(null,{embed:utils.embed("malfunction", "Ouch.. Did something happen? I don't think I was supposed to go out there...", undefined, `Version ${version}`)})
+      logChannel.send(null,{embed:utils.embed("malfunction", "I DON'T THINK I PROPERLY SHUT DOWN THERE!", undefined, `Version ${version}`)})
     }
     
   } else {
-    logChannel.send(null,{embed:utils.embed("happy", `Good morning! Let's see.. I'm on version ${version} today.`)})
+    logChannel.send(null,{embed:utils.embed("happy", `HEY THERE! I'M RUNNIN' ON VERSION ${version} TODAY.`)})
   }
   fsPromises.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
 
@@ -253,7 +253,7 @@ client.on("message", message => {
     
     var func = lookupCommand(message, command); 
     if (func) {
-      if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `Wait up, I don't want to trip any breakers.`)}).then((message) => {
+      if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `CALM DOWN, I'M GONNA TRIP A BREAKER!`)}).then((message) => {
         setTimeout(function() {
           message.delete()
         }, config.ratelimitmessage)
@@ -325,7 +325,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 //LOGS OVER HERE
 //log error function
 function logerr(err) {
-  logChannel.send({embed:utils.embed("malfunction", `Something's wrong with my logs... \`\`\`${err}\`\`\``)})
+  logChannel.send({embed:utils.embed("malfunction", `ERROR IN MY LOGS \`\`\`${err}\`\`\``)})
 }
 //Log events
 client.on("messageDelete", (message) => {

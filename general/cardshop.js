@@ -38,7 +38,7 @@ function buyItem(message, user, shopItem) {
 
 
         } else {
-            message.channel.send({embed:utils.embed('angry', "You don't have the funds for that.")})
+            message.channel.send({embed:utils.embed('angry', "YOU'RE TOO BROKE FOR THAT.")})
         }
     }).catch(err => {
         message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})

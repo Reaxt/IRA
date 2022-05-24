@@ -14,7 +14,7 @@ module.exports = {
     // things[2]: the duration in hours
     // things[3]: genuine true/false
     let genuine;
-    if(!things[2] || isNaN(things[2])) return(message.channel.send({embed:utils.embed("malfunction", "Usage: !cardDrop <cardName> <durationHrs> <genuine[optional]>")}))
+    if(!things[2] || isNaN(things[2])) return(message.channel.send({embed:utils.embed("malfunction", "`Usage: !cardDrop <cardName> <durationHrs> <genuine[optional]>`")}))
     if(things.length == 4) {
       genuine = (things[3] && things[3] != "false") ? true : false
     }
