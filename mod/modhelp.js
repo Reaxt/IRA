@@ -48,7 +48,7 @@ module.exports = {
     
     let avatarURL = await client.users.fetch('163052863038291970').avatarURL;
     let embed = new Discord.MessageEmbed()
-    .setTitle(`Here's what I can do! ${config.version}`)
+    .setTitle(`ALRIGHT BOSS HERE'S YOUR OPTIONS ${config.version}`)
     .setColor("#f759e8")
     .setThumbnail(client.user.avatarURL)
     .addField("**General Commands**", gencommands.join(""), true)
@@ -57,7 +57,7 @@ module.exports = {
     .addField("**Mod Commands**", modcommands.join(""), true)
     .addField("**Bot Management Commands**", botcommands.join(""), true)
     .addField("**Shitpost Commands**(only in shitpost central)", shitpostcommands.join(""), true)
-    .setFooter("Created by Reaxt and Jwapple", avatarURL);
+    .setFooter("Created by Reaxt, Et al.", avatarURL);
     message.author.send({embed}).then(() => {
       message.react("👌")
     });

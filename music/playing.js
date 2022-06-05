@@ -7,8 +7,8 @@ module.exports = {
   desc:"Checks the current playing song and time left",
   music:true,
   func:function(message, music){
-    if(!message.guild.me.voice?.channel) return message.channel.send({embed:utils.embed("sad","I'M NOT THERE LET ME IN WITH `command[!summon]`")})
-    if(queue.length === 0) return message.channel.send({embed:utils.embed("sad","THERE'S NOTHING LEFT TO PLAY ADD SOMETHING WITH `command[!add]`")})
+    if(!message.guild.me.voice?.channel) return message.channel.send({embed:utils.embed("sad","I'M NOT THERE LET ME IN WITH COMMAND[`!summon`]")})
+    if(queue.length === 0) return message.channel.send({embed:utils.embed("sad","THERE'S NOTHING LEFT TO PLAY ADD SOMETHING WITH COMMAND[`!add`]")})
     if(!message.guild.voice?.connection?.dispatcher) return message.channel.send({embed:utils.embed("angry", "AT LEAST LET ME PLAY SOMETHING FIRST")})
     var element = global.queue[0];
     if (element.type == "youtube") {

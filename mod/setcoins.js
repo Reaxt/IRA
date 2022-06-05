@@ -8,13 +8,13 @@ module.exports = {
   func:function(message){
     if (message.mentions.members.first()) {
       let amount = message.content.split(" ")[2];
-      if (isNaN(amount)) return message.channel.send({embed:utils.embed("sad","Couldn't get a number input out of that.")})
+      if (isNaN(amount)) return message.channel.send({embed:utils.embed("sad","COULD YOU SPEAK UP I COULDN'T GET A NUMBER INPUT FROM THAT")})
       message.mentions.members.forEach(user => {
         global.usermanager.setCoins(message, user, parseFloat(amount))
       })
-      return message.channel.send({embed:utils.embed("happy",`Set ${amount} AbbyCoin to ${message.mentions.members.size} members!`)})
+      return message.channel.send({embed:utils.embed("happy",`SET ${amount} ABBYCOIN FOR ${message.mentions.members.size} MEMBERS`)})
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "Please mention a user")})
+      message.channel.send({embed:utils.embed("malfunction", "YOU GOTTA MENTION A USER")})
     }
   }
 }

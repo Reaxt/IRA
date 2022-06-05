@@ -100,7 +100,7 @@ module.exports = {
 
 		cardList = global.cardmanager.getCardList(message, message.author, sort).then(cards => {
 			if (cards.length == 0) 
-				return message.channel.send({embed:utils.embed('sad', "You haven't acquired any cards yet. Go to the shop to get some!")})
+				return message.channel.send({embed:utils.embed('sad', "YOU HAVE NO CARDS IDIOT GO TO THE SHOP")})
 
 
 			// number of the first card in display list
@@ -169,7 +169,7 @@ module.exports = {
 								cardDisplayReactions(message, cardMsg, cardEmbed, cards[num-1])
 							})
 						} else {
-							message.channel.send({embed:utils.embed("sad", "That input is out of bounds.")})
+							message.channel.send({embed:utils.embed("sad", "BUDDY THAT INPUT'S `out of bounds.`")})
 						}
 					}
 
