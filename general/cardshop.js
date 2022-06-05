@@ -38,7 +38,7 @@ function buyItem(message, user, shopItem) {
 
 
         } else {
-            message.channel.send({embed:utils.embed('angry', "YOU'RE TOO BROKE FOR THAT.")})
+            message.channel.send({embed:utils.embed('angry', "YOU'RE TOO BROKE TO GAMBLE ON CARDBOARD")})
         }
     }).catch(err => {
         message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})

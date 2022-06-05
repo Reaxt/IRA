@@ -48,7 +48,7 @@ module.exports = {
     
     let avatarURL = await client.users.fetch('163052863038291970').avatarURL;
     let embed = new Discord.MessageEmbed()
-    .setTitle(`FOR YOU I CAN DO SOMETHING SPECIAL! ${config.version}`)
+    .setTitle(`ALRIGHT BOSS HERE'S YOUR OPTIONS ${config.version}`)
     .setColor("#f759e8")
     .setThumbnail(client.user.avatarURL)
     .addField("**General Commands**", gencommands.join(""), true)

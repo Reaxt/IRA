@@ -169,11 +169,11 @@ client.on("ready", async function() {
   let shutdownstatus = await fsPromises.readFile("./shutdownstatus.json");
   if (JSON.parse(shutdownstatus).shutdown == false) {
     if (logChannel) {
-      logChannel.send(null,{embed:utils.embed("malfunction", "I DON'T THINK I PROPERLY SHUT DOWN THERE!", undefined, `Version ${version}`)})
+      logChannel.send(null,{embed:utils.embed("malfunction", "OKAY I DON'T THINK I SHUT DOWN PROPERLY THERE", undefined, `Version ${version}`)})
     }
     
   } else {
-    logChannel.send(null,{embed:utils.embed("happy", `HEY THERE! I'M RUNNIN' ON VERSION ${version} TODAY.`)})
+    logChannel.send(null,{embed:utils.embed("happy", `HEY IDIOTS I'M RUNNIN' ON VERSION ${version} TODAY`)})
   }
   fsPromises.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
 
@@ -253,7 +253,7 @@ client.on("message", message => {
     
     var func = lookupCommand(message, command); 
     if (func) {
-      if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `CALM DOWN, I'M GONNA TRIP A BREAKER!`)}).then((message) => {
+      if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `SLOW DOWN I'M GONNA TRIP A BREAKER!`)}).then((message) => {
         setTimeout(function() {
           message.delete()
         }, config.ratelimitmessage)
@@ -325,7 +325,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 //LOGS OVER HERE
 //log error function
 function logerr(err) {
-  logChannel.send({embed:utils.embed("malfunction", `ERROR IN MY LOGS \`\`\`${err}\`\`\``)})
+  logChannel.send({embed:utils.embed("malfunction", `OH BOY ERROR IN MY LOGS \`\`\`${err}\`\`\``)})
 }
 //Log events
 client.on("messageDelete", (message) => {

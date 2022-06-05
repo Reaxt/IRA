@@ -11,7 +11,7 @@ module.exports = {
     if (message.mentions.members.first()) user = message.mentions.members.first() 
 
     global.usermanager.getUser(message, user).then( function(userDoc) {
-      message.channel.send({embed: utils.embed("happy", `YOU'VE GOT \`${userDoc.coins}\` ABBYCOIN! (NET WORTH: \`${userDoc.coins - userDoc.debt}\`)`)});
+      message.channel.send({embed: utils.embed("happy", `YOU'VE GOT LIKE \`${userDoc.coins}\` ABBYCOIN I THINK (AND YOUR NET WORTH IS: \`${userDoc.coins - userDoc.debt}\`)`)});
     });
   }
 }

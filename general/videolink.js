@@ -5,7 +5,7 @@ module.exports = {
   desc:"Gets a screenshare video link for your voice channel.",
   func:function(message){
   	var voiceChannel = message.member.voice.channel
-    if(!voiceChannel) return message.channel.send({embed:utils.embed("sad", "GOTTA BE IN A VOICE CHANNEL FOR THAT!")})
+    if(!voiceChannel) return message.channel.send({embed:utils.embed("sad", "BUDDY YOU GOTTA BE IN A VOICE CHANNEL FOR THAT!")})
 
     // stuff for updating the url in #voice-chat description
     var urlString = "https://discordapp.com/channels/"+message.guild.id+"/"+message.member.voice.channelID+"/"
