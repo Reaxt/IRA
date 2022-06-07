@@ -1,4 +1,4 @@
-var userId = "210958110473322496" // urotsuki
+/*var userId = "210958110473322496" // urotsuki
 var targetId = "158442085622611968" // ember
 
 var readyTime = new Date().getTime()
@@ -59,3 +59,4 @@ module.exports = {
     }
   }
 }
+*/
