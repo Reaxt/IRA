@@ -58,7 +58,7 @@ function catchUp() {
                     logs.error(`Failed to find drop event ${doc.channelId}/${doc.messageId} for card ${doc.cardName}! \nFull error:\n${err}`)
                     checkIfEnded();
                 }
-                let reaction = msg.reactions.cache.get(doc.reaction)
+                let reaction = msg?.reactions.cache.get(doc.reaction)
                 if (reaction) {
                     reaction.users.fetch().then(users => {
                         
