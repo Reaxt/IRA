@@ -7,8 +7,8 @@ const cards = JSON.parse(fs.readFileSync("./events/cards.json"))
 const ITEMS_PER_PAGE = 10
 
 module.exports = {
-  name: "!cardClean",
-  desc: "Deletes a specific card from everyone's inventories.",
+  name: "!updateCard",
+  desc: "Updates a specific card in everyone's inventories in relation to its status in `cards.json`. WHEN EDITING CARDS, DO NOT EDIT THE [name] SECTION.",
   mod: true,
   func: async function (message) {
     const cardPages = Math.ceil(cards.length / ITEMS_PER_PAGE)
@@ -53,7 +53,7 @@ module.exports = {
             console.log("Failed to load carddata! Err: " + err);
           }
         });
-        sentMsg.edit({ embed: utils.embed(`happy`, `YOU SELECTED A CARD WITH INDEX \`${selectedCardIndex + 1}\`: \`${selectedCard.displayName}\` - ARE YOU SURE YOU WANT ME TO DESTROY ALL COPIES OF THIS CARD`) });
+        sentMsg.edit({ embed: utils.embed(`happy`, `YOU SELECTED A CARD WITH INDEX \`${selectedCardIndex + 1}\`: \`${selectedCard.displayName}\` - ARE YOU SURE YOU WANT TO UPDATE IT FOR EVERYONE`) });
         // Confirmation step
         await sentMsg.react("✅");
         await sentMsg.react("❌");
@@ -63,12 +63,12 @@ module.exports = {
           await reaction.users.remove(user.id);
           if (reaction.emoji.name === "✅") {
             try {
-              // Delete all instances of the selected card in the database
-              db.remove({ name: selectedCard.name }, { multi: true }, function (err, numReplaced) {
+              // Update all instances of the selected card in the database
+              db.update({ name: selectedCard.name }, { $set: { displayName: selectedCard.displayName, image: selectedCard.image, description: selectedCard.description, rarity: selectedCard.rarity } }, { multi: true }, function (err, numReplaced) {
                 if (err) {
-                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
+                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE UPDATING THE CARD: \`\`\`${err}\`\`\``, "RED") })
                 } else {
-                  sentMsg.edit({ embed: utils.embed(`happy`, `DELETED \`${numReplaced}\` COPIES OF THE \`${selectedCard.displayName}\` CARD`) });
+                  sentMsg.edit({ embed: utils.embed(`happy`, `UPDATED \`${numReplaced}\` CARDS WITH THE NEW INFO FOR \`${selectedCard.displayName}\``) })
                   db.persistence.compactDatafile()
                   sentMsg.reactions.removeAll();
                 }
@@ -77,7 +77,7 @@ module.exports = {
               sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
             }
           } else {
-            sentMsg.edit({ embed: utils.embed(`angry`, `DELETION CANCELLED`) });
+            sentMsg.edit({ embed: utils.embed(`sad`, `OK THANKS FOR WASTING MY TIME`) });
           }
         });
       } catch (err) {
