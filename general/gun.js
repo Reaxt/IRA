@@ -1,5 +1,5 @@
 function voicekick(message, targetMember) {
-  targetMember.voice.setChannel(null)
+  targetMember.voice.disconnect("shot to death")
 }
 
 module.exports = {
