@@ -11,11 +11,11 @@ module.exports = {
     pollobject = JSON.parse(fs.readFileSync("./poll.json"))
     let channel = await message.channel.guild.channels.fetch(pollobject.pollchan)
     if (!channel) {
-      return message.channel.send({embed:utils.embed("malfunction", `POLL MESSAGE MISSING`, "RED")})
+      return message.channel.send({embed:utils.embed("malfunction", `POLL MESSAGE MISSING`, "Red")})
     }
     let pollmessage = await channel.messages.fetch(pollobject.pollmessage)
     if (!pollmessage) {
-      return message.channel.send({embed:utils.embed("malfunction", `POLL MESSAGE MISSING`, "RED")})
+      return message.channel.send({embed:utils.embed("malfunction", `POLL MESSAGE MISSING`, "Red")})
     }
 
     let pollsresults = pollmessage.reactions.map(r => `${r.emoji.name} HAS ${r.count - 1} REACTIONS \n`)

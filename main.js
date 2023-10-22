@@ -1,5 +1,15 @@
 const Discord = require("discord.js")
-const client = new Discord.Client()
+const myIntents = new Discord.IntentsBitField();
+myIntents.add(
+  Discord.IntentsBitField.Flags.Guilds,
+  Discord.IntentsBitField.Flags.GuildMessages,
+  Discord.IntentsBitField.Flags.GuildMessageReactions,
+  Discord.IntentsBitField.Flags.MessageContent,
+  Discord.IntentsBitField.Flags.DirectMessageReactions,
+  Discord.IntentsBitField.Flags.DirectMessages,
+  Discord.IntentsBitField.Flags.GuildModeration
+);
+const client = new Discord.Client({ intents: myIntents })
 const fs = require('fs');
 const fsPromises = fs.promises
 const eventEmitter = require('events');
@@ -133,7 +143,7 @@ function reload(arg, message) {
       }
      else {message.channel.send({embed:utils.embed("malfunction", "`You dont have permission for this command`")})}
   } catch (err) {
-    message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+    message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
   }
 }
 //EVAL FUNC
@@ -262,7 +272,7 @@ client.on("message", message => {
         func.call(client, message)
         ira.emit("ratelimit", message.author)
       }catch(err) {
-        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")
+        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")
         message.channel.send({embed})
       }
     }
@@ -270,14 +280,18 @@ client.on("message", message => {
     utils.messageOwner.func({embed:utils.embed(
       `malfunction`, 
       `Unhandled error due to \`${message.content}\`! \`\`\`${err}\`\`\` ${message.url}`, 
-      "RED", 
+      "Red", 
     )});
   }
 })
 
 client.on('error', (error) => {
+    var myError = error.error;
+    if(myError === undefined) {
+      myError = error
+    }
 		console.log("Unhandled Error!")
-		console.log(error.error)
+		console.log(myError)
 })
 //BOT HANDLER EVENTS
 ira.on("ratelimit", (user) => {
@@ -327,6 +341,7 @@ client.on("messageReactionAdd", (reaction, user) => {
 function logerr(err) {
   logChannel.send({embed:utils.embed("malfunction", `OH BOY ERROR IN MY LOGS \`\`\`${err}\`\`\``)})
 }
+
 //Log events
 client.on("messageDelete", (message) => {
   try {logs.mdelete(message)}catch(err){logerr(err)}

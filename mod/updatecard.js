@@ -66,7 +66,7 @@ module.exports = {
               // Update all instances of the selected card in the database
               db.update({ name: selectedCard.name }, { $set: { displayName: selectedCard.displayName, image: selectedCard.image, description: selectedCard.description, rarity: selectedCard.rarity } }, { multi: true }, function (err, numReplaced) {
                 if (err) {
-                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE UPDATING THE CARD: \`\`\`${err}\`\`\``, "RED") })
+                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE UPDATING THE CARD: \`\`\`${err}\`\`\``, "Red") })
                 } else {
                   sentMsg.edit({ embed: utils.embed(`happy`, `UPDATED \`${numReplaced}\` CARDS WITH THE NEW INFO FOR \`${selectedCard.displayName}\``) })
                   db.persistence.compactDatafile()
@@ -74,7 +74,7 @@ module.exports = {
                 }
               });
             } catch (err) {
-              sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
+              sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red") });
             }
           } else {
             sentMsg.edit({ embed: utils.embed(`sad`, `OK THANKS FOR WASTING MY TIME`) });
@@ -84,7 +84,7 @@ module.exports = {
         if (err instanceof Discord.Collection) {
           sentMsg.edit({ embed: utils.embed(`angry`, `REQUEST EXPIRED`), content: null });
         } else {
-          sentMsg.edit({ embed: utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED") });
+          sentMsg.edit({ embed: utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red") });
         }
         await sentMsg.reactions.removeAll();
       }

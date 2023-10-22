@@ -38,11 +38,11 @@ module.exports = {
 			if (message.attachments && message.attachments.size > 0) {
 				const attachment = new Attachment(message.attachments.first().url)
 				targetChannel.send(content, attachment).catch(err => {
-					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
+					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
 				})
 			} else {
 				targetChannel.send(content).catch(err => {
-					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
+					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
 				})
 			}
 		} else {

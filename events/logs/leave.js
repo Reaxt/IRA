@@ -5,7 +5,7 @@ module.exports = (member) => {
 
     let embed = new Discord.MessageEmbed()
     .setTitle(`📤Member ${member.user.username} has left, or been kicked from the server`)
-    .setColor("RED")
+    .setColor("Red")
     .setThumbnail(member.user.avatarURL())
     member.client.guilds.cache.get(config.guildid).channels.cache.get(config.logs).send({embed})
   }

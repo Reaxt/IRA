@@ -53,7 +53,7 @@ module.exports = {
       });
 
     } catch (err) {
-      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
     }
 
   }

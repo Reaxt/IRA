@@ -61,7 +61,7 @@ async function cardDisplayReactions (message, sentMsg, cardEmbed, cardDoc) {
 			sentMsg.edit("You have unfavorited this card. It may be consumed in fusion.", {embed:utils.cardEmbed(cardDoc)})
 		} else if (r.emoji.name == fuseEmote) {
 			sentMsg.edit("You have selected the option to FUSE. Warning- this will consume any duplicate cards of this type that you have not favorited! Confirm?", {embed:utils.cardEmbed(cardDoc)}).catch((err) => {
-				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")}) 
+				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")}) 
 			})
 			fuseConfirmState = true;
 			sentMsg.react(confirmEmote).then(
@@ -184,7 +184,7 @@ module.exports = {
 				
 			})
 		}).catch(err => {
-			message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")}) 
+			message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")}) 
 		})
 	}
 }

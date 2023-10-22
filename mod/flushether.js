@@ -39,7 +39,7 @@ module.exports = {
                     sentMsg.edit({embed:utils.embed(`happy`,`\`parsed ${docs.length} users\``)})
                 })
             } catch(err) {
-                sentMsg.edit({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+                sentMsg.edit({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
                 }
         } else if (r.emoji.name == cancelEmote) {
             collector.stop()

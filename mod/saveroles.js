@@ -13,7 +13,7 @@ module.exports = {
       global.usermanager.saveRoles(message, targetMember, roles).then((doc) => {
         message.channel.send({embed:utils.embed("happy",`OK I SAVED \`${roles.length}\` ROLES TO **${targetMember.displayName}**`)})
       }).catch((err) => {
-        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
       })
     } else {
       message.channel.send({embed:utils.embed("malfunction", "YOU NEED TO MENTION A USER")})

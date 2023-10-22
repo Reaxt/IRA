@@ -13,7 +13,7 @@ module.exports = {
 
     if(message.guild.voice.connection.dispatcher || global.playing) return //message.channel.send({embed:utils.embed("angry", "Im already playing stuff")})
     try {events.events.emit("play", message)} catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
+      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
     }
 
   }

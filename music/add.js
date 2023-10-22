@@ -48,7 +48,7 @@ module.exports = {
       try {
         await music.summon.func.call(this, message);
       }catch(err) {
-        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")
+        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")
         message.channel.send({embed})
       }
     }
@@ -80,7 +80,7 @@ module.exports = {
         }, 500);
       } catch (err) {
         search(message.content.slice(5), searchopts, function(err, results) {
-          if(err) return message.channel.send({embed:utils.embed("malfunction",`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"RED")})
+          if(err) return message.channel.send({embed:utils.embed("malfunction",`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
           if(results.length === 0) return message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`NO RESULTS FOUND.\`\`\``)})
           
           results = results.map((r) => {
@@ -130,13 +130,13 @@ module.exports = {
     else if (type == "soundcloud") {
       request(`http://api.soundcloud.com/resolve?url=${target}&client_id=${config.scid}`, (error, response, body) => {
         if (error) { //request error case
-          message.channel.send({embed:utils.embed("malfunction", `WHAT THE HELL KIND OF GYM MUSIC IS THIS \`\`\`${error}\`\`\``,"RED")})
+          message.channel.send({embed:utils.embed("malfunction", `WHAT THE HELL KIND OF GYM MUSIC IS THIS \`\`\`${error}\`\`\``,"Red")})
         }
         if (!body) {
-          return message.channel.send({embed:utils.embed("sad","WHAT THE HELL KIND OF GYM MUSIC IS THIS","RED")});
+          return message.channel.send({embed:utils.embed("sad","WHAT THE HELL KIND OF GYM MUSIC IS THIS","Red")});
         }
         track = JSON.parse(body);
-        if (track.kind === "playlist") return message.channel.send({embed:utils.embed("sad","PLAYLISTS AREN'T DONE YET COME BACK WHEN THEY'RE FINISHED","RED")});
+        if (track.kind === "playlist") return message.channel.send({embed:utils.embed("sad","PLAYLISTS AREN'T DONE YET COME BACK WHEN THEY'RE FINISHED","Red")});
         var result = global.queue.filter(function( obj ) {
           return obj.user.id == message.author.id;
         });
@@ -177,10 +177,10 @@ module.exports = {
           let statusCode = res.statusCode;
           let contentType = res.headers['content-type'];
           if (/4\d\d/.test(statusCode) === true) { // checks 4xx status code
-            message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","RED")})
+            message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","Red")})
             dispatcher.end();
           } else if (!/^video\/*/.test(contentType) && !/^audio\/*/.test(contentType) ) {
-            message.channel.send({embed:utils.embed("sad", "ONLY SEND ME RAW VIDEO AND AUDIO FILES ALL THIS OTHER STUFF MAKES MY CIRCUITS WOOZY","RED")})
+            message.channel.send({embed:utils.embed("sad", "ONLY SEND ME RAW VIDEO AND AUDIO FILES ALL THIS OTHER STUFF MAKES MY CIRCUITS WOOZY","Red")})
             dispatcher.end();
           } else {
             var info = target.split('/').pop()
@@ -197,7 +197,7 @@ module.exports = {
           }
         } catch (error) {
           console.log(error);
-          message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","RED")})
+          message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","Red")})
         }
       })();
       

@@ -12,7 +12,7 @@ module.exports = (expression, content, color, footer) => {
       break;
     case "malfunction":
       url = "https://cdn.discordapp.com/attachments/512493868839731201/905107401261322290/sandalerror2x.gif"
-      Ecolor = "RED";
+      Ecolor = "Red";
       break;
     case "angry":
       url = "https://cdn.discordapp.com/attachments/512493868839731201/905113756495908914/sandaldoxx2x.gif"
@@ -28,7 +28,7 @@ module.exports = (expression, content, color, footer) => {
       break;
     case "abbyMalfunction":
       url = "https://cdn.discordapp.com/attachments/203334579166117888/528414647573938186/abbymalfunction.png"
-      Ecolor = "RED";
+      Ecolor = "Red";
       break;
     case "abbyAngry":
       url = "https://cdn.discordapp.com/attachments/203334579166117888/528414643962642465/abbyangry.png"
@@ -40,7 +40,7 @@ module.exports = (expression, content, color, footer) => {
   if(color != undefined || color === "default") {
     Ecolor = color
   }
-  let result = new Discord.MessageEmbed().setTitle("S4N-D4L").setColor(Ecolor).setThumbnail(url).setDescription(content)
+  let result = new Discord.EmbedBuilder().setTitle("S4N-D4L").setColor(Ecolor).setThumbnail(url).setDescription(content)
 
   if(footer != undefined) {
     result.setFooter(footer)

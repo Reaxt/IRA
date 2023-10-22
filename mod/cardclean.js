@@ -66,7 +66,7 @@ module.exports = {
               // Delete all instances of the selected card in the database
               db.remove({ name: selectedCard.name }, { multi: true }, function (err, numReplaced) {
                 if (err) {
-                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
+                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red") });
                 } else {
                   sentMsg.edit({ embed: utils.embed(`happy`, `DELETED \`${numReplaced}\` COPIES OF THE \`${selectedCard.displayName}\` CARD`) });
                   db.persistence.compactDatafile()
@@ -74,7 +74,7 @@ module.exports = {
                 }
               });
             } catch (err) {
-              sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
+              sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red") });
             }
           } else {
             sentMsg.edit({ embed: utils.embed(`angry`, `DELETION CANCELLED`) });
@@ -84,7 +84,7 @@ module.exports = {
         if (err instanceof Discord.Collection) {
           sentMsg.edit({ embed: utils.embed(`angry`, `REQUEST EXPIRED`), content: null });
         } else {
-          sentMsg.edit({ embed: utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED") });
+          sentMsg.edit({ embed: utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red") });
         }
         await sentMsg.reactions.removeAll();
       }
