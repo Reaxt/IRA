@@ -6,6 +6,6 @@ module.exports = {
   shitpost:true,
   hidden:true,
   func:function(message){
-    message.channel.send({embed:utils.embed("happy", `Nothing Beats Tux Pain! Tux Paint is the worlds most technically advanced art program on earth! With every single feature you could possibly need! Download it now! http://www.tuxpaint.org/download/`)})
+    message.channel.send({embeds:[utils.embed("happy", `Nothing Beats Tux Pain! Tux Paint is the worlds most technically advanced art program on earth! With every single feature you could possibly need! Download it now! http://www.tuxpaint.org/download/`)]})
   }
 }

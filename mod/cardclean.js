@@ -53,7 +53,7 @@ module.exports = {
             console.log("Failed to load carddata! Err: " + err);
           }
         });
-        sentMsg.edit({ embed: utils.embed(`happy`, `YOU SELECTED A CARD WITH INDEX \`${selectedCardIndex + 1}\`: \`${selectedCard.displayName}\` - ARE YOU SURE YOU WANT ME TO DESTROY ALL COPIES OF THIS CARD`) });
+        sentMsg.edit({ embeds: [utils.embed(`happy`, `YOU SELECTED A CARD WITH INDEX \`${selectedCardIndex + 1}\`: \`${selectedCard.displayName}\` - ARE YOU SURE YOU WANT ME TO DESTROY ALL COPIES OF THIS CARD`) ]});
         // Confirmation step
         await sentMsg.react("✅");
         await sentMsg.react("❌");
@@ -66,25 +66,25 @@ module.exports = {
               // Delete all instances of the selected card in the database
               db.remove({ name: selectedCard.name }, { multi: true }, function (err, numReplaced) {
                 if (err) {
-                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
+                  sentMsg.edit({ embeds: [utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red")] });
                 } else {
-                  sentMsg.edit({ embed: utils.embed(`happy`, `DELETED \`${numReplaced}\` COPIES OF THE \`${selectedCard.displayName}\` CARD`) });
+                  sentMsg.edit({ embeds: [utils.embed(`happy`, `DELETED \`${numReplaced}\` COPIES OF THE \`${selectedCard.displayName}\` CARD`)] });
                   db.persistence.compactDatafile()
                   sentMsg.reactions.removeAll();
                 }
               });
             } catch (err) {
-              sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "RED") });
+              sentMsg.edit({ embeds: [utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red")] });
             }
           } else {
-            sentMsg.edit({ embed: utils.embed(`angry`, `DELETION CANCELLED`) });
+            sentMsg.edit({ embeds: [utils.embed(`angry`, `DELETION CANCELLED`)] });
           }
         });
       } catch (err) {
         if (err instanceof Discord.Collection) {
-          sentMsg.edit({ embed: utils.embed(`angry`, `REQUEST EXPIRED`), content: null });
+          sentMsg.edit({ embeds: [utils.embed(`angry`, `REQUEST EXPIRED`)], content: null });
         } else {
-          sentMsg.edit({ embed: utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED") });
+          sentMsg.edit({ embeds: [utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")] });
         }
         await sentMsg.reactions.removeAll();
       }

@@ -44,24 +44,24 @@ async function cardDisplayReactions (message, sentMsg, cardEmbed, cardDoc) {
 				let oldLevel = cardDoc.level;
 				global.cardmanager.fuseCards(message, message.author, cardDoc, (fusedCard, numFused) => {
 					setTimeout(async function() {
-						sentMsg.edit(`Fuse result! ${numFused} card(s) consumed. ${Math.floor(fusedCard.level)-Math.floor(oldLevel)} level(s) gained.`, {embed:utils.cardEmbed(fusedCard)})
+						sentMsg.edit(`Fuse result! ${numFused} card(s) consumed. ${Math.floor(fusedCard.level)-Math.floor(oldLevel)} level(s) gained.`, {embeds:[utils.cardEmbed(fusedCard)]})
 					}, 1500)
 				})
 			} else if (r.emoji.name == cancelEmote) {
 				fuseConfirmState == false;
-				sentMsg.edit("Fuse cancelled.", {embed:utils.cardEmbed(cardDoc)})
+				sentMsg.edit("Fuse cancelled.", {embeds:[utils.cardEmbed(cardDoc)]})
 			}
 		} else if (r.emoji.name == favEmote) {
 			global.cardmanager.favoriteCard(sentMsg, cardDoc)
 			cardDoc.favorite = true;
-			sentMsg.edit("You have just favorited this card. It will not be consumed for fusion.", {embed:utils.cardEmbed(cardDoc)})
+			sentMsg.edit("You have just favorited this card. It will not be consumed for fusion.", {embeds:[utils.cardEmbed(cardDoc)]})
 		} else if (r.emoji.name == unFavEmote) {
 			global.cardmanager.unFavoriteCard(sentMsg, cardDoc)
 			cardDoc.favorite = false;
-			sentMsg.edit("You have unfavorited this card. It may be consumed in fusion.", {embed:utils.cardEmbed(cardDoc)})
+			sentMsg.edit("You have unfavorited this card. It may be consumed in fusion.", {embeds:[utils.cardEmbed(cardDoc)]})
 		} else if (r.emoji.name == fuseEmote) {
-			sentMsg.edit("You have selected the option to FUSE. Warning- this will consume any duplicate cards of this type that you have not favorited! Confirm?", {embed:utils.cardEmbed(cardDoc)}).catch((err) => {
-				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")}) 
+			sentMsg.edit("You have selected the option to FUSE. Warning- this will consume any duplicate cards of this type that you have not favorited! Confirm?", {embeds:[utils.cardEmbed(cardDoc)]}).catch((err) => {
+				message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]}) 
 			})
 			fuseConfirmState = true;
 			sentMsg.react(confirmEmote).then(
@@ -100,7 +100,7 @@ module.exports = {
 
 		cardList = global.cardmanager.getCardList(message, message.author, sort).then(cards => {
 			if (cards.length == 0) 
-				return message.channel.send({embed:utils.embed('sad', "YOU HAVE NO CARDS IDIOT GO TO THE SHOP")})
+				return message.channel.send({embeds:[utils.embed('sad', "YOU HAVE NO CARDS IDIOT GO TO THE SHOP")]})
 
 
 			// number of the first card in display list
@@ -115,7 +115,7 @@ module.exports = {
 
 
 			listCards(cards, listEmbed, i, Math.min(i+10, cards.length))
-			message.channel.send({embed:listEmbed}).then(function(sentMsg) {
+			message.channel.send({embeds:[listEmbed]}).then(function(sentMsg) {
 				
 				// listen for arrow reactions
 				let collector = sentMsg.createReactionCollector(
@@ -127,18 +127,18 @@ module.exports = {
 
 					if (r.emoji.name == arrowreactions[0] && i >= 10) {
 						i -= 10
-						sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
+						sentMsg.edit({embeds:[listCards(cards, listEmbed, i, Math.min(i+10, cards.length))]})
 					}
 					if (r.emoji.name == arrowreactions[1] && i < cards.length-10) {
 						i += 10
-						sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)) })
+						sentMsg.edit({embeds:[listCards(cards, listEmbed, i, Math.min(i+10, cards.length))]})
 					}
 					let num = numreactions.indexOf(r.emoji.name)
 					if (num != -1 && num < cards.length-i) {
 						let cardEmbed = utils.cardEmbed(cards[i+num])
 						collector.stop("accept")
 						sentMsg.delete()
-						message.channel.send({embed:cardEmbed}).then((cardMsg) => {
+						message.channel.send({embeds:[cardEmbed]}).then((cardMsg) => {
 							cardDisplayReactions(message, cardMsg, cardEmbed, cards[i+num])
 						})
 					}		
@@ -165,11 +165,11 @@ module.exports = {
 							let cardEmbed = utils.cardEmbed(cards[num-1])
 							textCollector.stop("accept")
 							sentMsg.delete()
-							message.channel.send({embed:cardEmbed}).then((cardMsg) => {
+							message.channel.send({embeds:[cardEmbed]}).then((cardMsg) => {
 								cardDisplayReactions(message, cardMsg, cardEmbed, cards[num-1])
 							})
 						} else {
-							message.channel.send({embed:utils.embed("sad", "BUDDY THAT INPUT'S `out of bounds.`")})
+							message.channel.send({embeds:[utils.embed("sad", "BUDDY THAT INPUT'S `out of bounds.`")]})
 						}
 					}
 
@@ -178,13 +178,13 @@ module.exports = {
 				// notify when the collector has timed out
 				textCollector.on('end', (collected, reason) => {
 					if (reason == "time" && !sentMsg.deleted) {
-						sentMsg.edit({embed:listCards(cards, listEmbed, i, Math.min(i+10, cards.length)).setDescription("This prompt has timed out.")})
+						sentMsg.edit({embeds:[listCards(cards, listEmbed, i, Math.min(i+10, cards.length)).setDescription("This prompt has timed out.")]})
 					}
 				}, 60000)
 				
 			})
 		}).catch(err => {
-			message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")}) 
+			message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]}) 
 		})
 	}
 }

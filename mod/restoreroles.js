@@ -19,13 +19,13 @@ module.exports = {
               message.channel.send(`FAILED TO ADD AN UNKNOWN ROLE: \`${err}\``)
           })
         }
-        message.channel.send({embed:utils.embed("happy",`ATTEMPTED TO RESTORE \`${roles.length}\` ROLES TO **${targetMember.displayName}**`)})
+        message.channel.send({embeds:[utils.embed("happy",`ATTEMPTED TO RESTORE \`${roles.length}\` ROLES TO **${targetMember.displayName}**`)]})
       }).catch(err => {
-        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+        message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
       })
       
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "YOU NEED TO MENTION A USER")})
+      message.channel.send({embeds:[utils.embed("malfunction", "YOU NEED TO MENTION A USER")]})
     }
   }
 }

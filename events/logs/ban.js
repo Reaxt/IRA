@@ -5,7 +5,7 @@ module.exports = (user) => {
 
     let embed = new Discord.MessageEmbed()
     .setTitle(`🔨 Member ${user.username} has been banned from the server`)
-    .setColor("RED")
+    .setColor("Red")
     .setThumbnail(user.avatarURL())
     .setFooter(user.id)
 

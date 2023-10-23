@@ -8,7 +8,7 @@ module.exports = {
   hidden:true,
   func:function(message){
     fs.readdir("./pictures/PEPSI", (err, files) => {
-      var embed = utils.embed("pepsi", "", "RED")
+      var embed = utils.embed("pepsi", "", "Red")
       message.channel.send({embed, files:[`./pictures/PEPSI/pepsi${Math.floor((Math.random() * files.length) + 1)}.png`] })
     })
 

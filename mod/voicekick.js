@@ -11,12 +11,12 @@ module.exports = {
       if (message.mentions.members.first().voice.channel) {
         message.mentions.members.first().voice.setChannel(null)
       } else {
-        message.channel.send({embed:utils.embed("sad", "HOW DO I KICK SOMEONE OUT OF A PLACE THEY'RE NOT INSIDE")})
+        message.channel.send({embeds:[utils.embed("sad", "HOW DO I KICK SOMEONE OUT OF A PLACE THEY'RE NOT INSIDE")]})
       }
       
 
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "LITERALLY WHO CAN YOU MENTION THEM AGAIN")})
+      message.channel.send({embeds:[utils.embed("malfunction", "LITERALLY WHO CAN YOU MENTION THEM AGAIN")]})
     }
   }
 }

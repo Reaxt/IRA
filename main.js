@@ -1,5 +1,15 @@
 const Discord = require("discord.js")
-const client = new Discord.Client()
+const myIntents = new Discord.IntentsBitField();
+myIntents.add(
+  Discord.IntentsBitField.Flags.Guilds,
+  Discord.IntentsBitField.Flags.GuildMessages,
+  Discord.IntentsBitField.Flags.GuildMessageReactions,
+  Discord.IntentsBitField.Flags.MessageContent,
+  Discord.IntentsBitField.Flags.DirectMessageReactions,
+  Discord.IntentsBitField.Flags.DirectMessages,
+  Discord.IntentsBitField.Flags.GuildModeration
+);
+const client = new Discord.Client({ intents: myIntents })
 const fs = require('fs');
 const fsPromises = fs.promises
 const eventEmitter = require('events');
@@ -50,7 +60,7 @@ var logs = require("./events/logs/index.js")
 var poll = require("./events/poll.js")
 //RELOAD FUNC
 function shutdown(message) {
-  message.channel.send({embed:utils.embed("happy", "Good night!")}).then( function() {
+  message.channel.send({embeds:[utils.embed("happy", "Good night!")]}).then( function() {
     fs.writeFileSync("./shutdownstatus.json", `{"shutdown":true}`)
     client.destroy()
     process.exit()
@@ -72,48 +82,48 @@ function reload(arg, message) {
           delete require.cache[require.resolve('./events/dropmanager.js')]
           global.dropmanager = require("./events/dropmanager.js")
           embed = utils.embed("happy", `Reloaded module ${arg}`)
-          message.channel.send({embed})
+          message.channel.send({embeds: [embed]})
           break;
         case "shitpost":
           shitpost.refresh()
           delete require.cache[require.resolve('./shitpost/index.js')]
           shitpost = require('./shitpost/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
-          message.channel.send({embed})
+          message.channel.send({embeds: [embed]})
           break;
         case "mod":
           mod.refresh()
           delete require.cache[require.resolve('./mod/index.js')]
           mod = require('./mod/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
-          message.channel.send({embed})
+          message.channel.send({embeds: [embed]})
           break;
         case "botmanage":
           botmanage.refresh()
           delete require.cache[require.resolve('./botmanage/index.js')]
           botmanage = require('./botmanage/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
-          message.channel.send({embed})
+          message.channel.send({embeds: [embed]})
           break;
         case "dj":
           botmanage.refresh()
           delete require.cache[require.resolve('./dj/index.js')]
           mod = require('./dj/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
-          message.channel.send({embed})
+          message.channel.send({embeds: [embed]})
           break;
         case "music":
           music.refresh(message)
           delete require.cache[require.resolve('./music/index.js')]
           music = require('./music/index.js')
           embed = utils.embed("happy", `Reloaded module ${arg}`)
-          message.channel.send({embed})
+          message.channel.send({embeds: [embed]})
           break;
         case "logs":
           logs.refresh()
           delete require.cache[require.resolve('./events/logs/index.js')]
           logs = require('./events/logs/index.js')
-          message.channel.send({embed:utils.embed("happy", `Reloaded module ${arg}`)})
+          message.channel.send({embeds:[utils.embed("happy", `Reloaded module ${arg}`)]})
           break;
         case "poll":
           delete require.cache[require.resolve('./events/logs/index.js')]
@@ -124,16 +134,16 @@ function reload(arg, message) {
           utils.refresh()
           delete require.cache[require.resolve('./utils/index.js')]
           utils = require('./utils/index.js')
-          message.channel.send({embed:utils.embed("happy", `Reloaded module ${arg}`)})
+          message.channel.send({embeds:[utils.embed("happy", `Reloaded module ${arg}`)]})
           break;
         default:
-            message.channel.send({embed:utils.embed("malfunction", "`Invalid Option`")})
+            message.channel.send({embeds:[utils.embed("malfunction", "`Invalid Option`")]})
           }
 
       }
-     else {message.channel.send({embed:utils.embed("malfunction", "`You dont have permission for this command`")})}
+     else {message.channel.send({embeds:[utils.embed("malfunction", "`You dont have permission for this command`")]})}
   } catch (err) {
-    message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+    message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
   }
 }
 //EVAL FUNC
@@ -148,7 +158,7 @@ function evalcmd(message) {
     if(evalresponse === undefined) {return message.channel.send("```undefined```")} 
     else if (evalresponse === null) {message.channel.send("```null```")} 
     else {
-      message.channel.send({embed:utils.embed("happy", `Eval response:\`\`\`${evalresponse.toString()}\`\`\``)})
+      message.channel.send({embeds:[utils.embed("happy", `Eval response:\`\`\`${evalresponse.toString()}\`\`\``)]})
     }
 }
 //READY EVENT
@@ -169,11 +179,11 @@ client.on("ready", async function() {
   let shutdownstatus = await fsPromises.readFile("./shutdownstatus.json");
   if (JSON.parse(shutdownstatus).shutdown == false) {
     if (logChannel) {
-      logChannel.send(null,{embed:utils.embed("malfunction", "OKAY I DON'T THINK I SHUT DOWN PROPERLY THERE", undefined, `Version ${version}`)})
+      logChannel.send(null,{embeds:[utils.embed("malfunction", "OKAY I DON'T THINK I SHUT DOWN PROPERLY THERE", undefined, `Version ${version}`)]})
     }
     
   } else {
-    logChannel.send(null,{embed:utils.embed("happy", `HEY IDIOTS I'M RUNNIN' ON VERSION ${version} TODAY`)})
+    logChannel.send(null,{embeds:[utils.embed("happy", `HEY IDIOTS I'M RUNNIN' ON VERSION ${version} TODAY`)]})
   }
   fsPromises.writeFile("./shutdownstatus.json", `{"shutdown":false}`, (err) => {})
 
@@ -185,7 +195,7 @@ client.on("ready", async function() {
       pollChan = await defaultGuild.channels.resolve(global.pollobject["pollchan"])
       pollChan.messages.resolve(global.pollobject.pollmessage)
     }
-    if (defaultGuild.me.voice.channel) {
+    if (defaultGuild.me?.voice?.channel) {
       defaultGuild.me.voice.kick("Cleaning up crashed voice connection")
     }
   }
@@ -253,7 +263,7 @@ client.on("message", message => {
     
     var func = lookupCommand(message, command); 
     if (func) {
-      if(limitusers.includes(message.author.id)) return message.channel.send({embed:utils.embed("angry", `SLOW DOWN I'M GONNA TRIP A BREAKER!`)}).then((message) => {
+      if(limitusers.includes(message.author.id)) return message.channel.send({embeds:[utils.embed("angry", `SLOW DOWN I'M GONNA TRIP A BREAKER!`)]}).then((message) => {
         setTimeout(function() {
           message.delete()
         }, config.ratelimitmessage)
@@ -262,22 +272,26 @@ client.on("message", message => {
         func.call(client, message)
         ira.emit("ratelimit", message.author)
       }catch(err) {
-        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")
-        message.channel.send({embed})
+        var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")
+        message.channel.send({embeds: [embed]})
       }
     }
   } catch (err) { // Catch an error not in a promise
-    utils.messageOwner.func({embed:utils.embed(
+    utils.messageOwner.func({embeds:[utils.embed(
       `malfunction`, 
       `Unhandled error due to \`${message.content}\`! \`\`\`${err}\`\`\` ${message.url}`, 
-      "RED", 
-    )});
+      "Red", 
+    )]});
   }
 })
 
 client.on('error', (error) => {
+    var myError = error.error;
+    if(myError === undefined) {
+      myError = error
+    }
 		console.log("Unhandled Error!")
-		console.log(error.error)
+		console.log(myError)
 })
 //BOT HANDLER EVENTS
 ira.on("ratelimit", (user) => {
@@ -325,8 +339,9 @@ client.on("messageReactionAdd", (reaction, user) => {
 //LOGS OVER HERE
 //log error function
 function logerr(err) {
-  logChannel.send({embed:utils.embed("malfunction", `OH BOY ERROR IN MY LOGS \`\`\`${err}\`\`\``)})
+  logChannel.send({embeds:[utils.embed("malfunction", `OH BOY ERROR IN MY LOGS \`\`\`${err}\`\`\``)]})
 }
+
 //Log events
 client.on("messageDelete", (message) => {
   try {logs.mdelete(message)}catch(err){logerr(err)}

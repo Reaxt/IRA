@@ -11,12 +11,12 @@ module.exports = {
       if (!targetMember.roles.cache) return message.channel.send("no roles found")
       let roles = targetMember.roles.cache.filter(e => e.name != "@everyone").keyArray()
       global.usermanager.saveRoles(message, targetMember, roles).then((doc) => {
-        message.channel.send({embed:utils.embed("happy",`OK I SAVED \`${roles.length}\` ROLES TO **${targetMember.displayName}**`)})
+        message.channel.send({embeds:[utils.embed("happy",`OK I SAVED \`${roles.length}\` ROLES TO **${targetMember.displayName}**`)]})
       }).catch((err) => {
-        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "RED")})
+        message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
       })
     } else {
-      message.channel.send({embed:utils.embed("malfunction", "YOU NEED TO MENTION A USER")})
+      message.channel.send({embeds:[utils.embed("malfunction", "YOU NEED TO MENTION A USER")]})
     }
   }
 }
