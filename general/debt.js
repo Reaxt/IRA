@@ -27,10 +27,10 @@ module.exports = {
             if(doc.debt > 0){
             count++}
           }
-          message.channel.send({embed: utils.embed("happy", `YOU GUYS TOOK \`${total_debt}\` COINS FROM ME AND ONLY HAVE \`${total_gains}\` COINS LEFT MEANING THE SERVER'S NET WORTH IS \`${total_gains - total_debt}\`\n\`------------------------\`\n\`${count}\` DEBTORS OWE ME MONEY MAKING THE AVERAGE GAINS \`${total_gains / count}\` AND THE AVERAGE DEBT \`${total_debt / count}\` AND THE AVERAGE NET WORTH \`${(total_gains - total_debt) / count}\``)})
+          message.channel.send({embeds: [utils.embed("happy", `YOU GUYS TOOK \`${total_debt}\` COINS FROM ME AND ONLY HAVE \`${total_gains}\` COINS LEFT MEANING THE SERVER'S NET WORTH IS \`${total_gains - total_debt}\`\n\`------------------------\`\n\`${count}\` DEBTORS OWE ME MONEY MAKING THE AVERAGE GAINS \`${total_gains / count}\` AND THE AVERAGE DEBT \`${total_debt / count}\` AND THE AVERAGE NET WORTH \`${(total_gains - total_debt) / count}\``)]})
       })
     } catch(err) {
-      message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+      message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
       }
   }
 }

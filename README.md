@@ -10,7 +10,7 @@ module.exports = {
   name:"!command",
   desc:"Command Description",
   func:function(message){
-    message.channel.send({embed:utils.("expression", "Example text", "Custom color (not required), "Footer"")})
+    message.channel.send({embeds:[utils.("expression", "Example text", "Custom color (not required), "Footer"")]})
   }
 }
 ```

@@ -53,7 +53,7 @@ module.exports = {
             console.log("Failed to load carddata! Err: " + err);
           }
         });
-        sentMsg.edit({ embed: utils.embed(`happy`, `YOU SELECTED A CARD WITH INDEX \`${selectedCardIndex + 1}\`: \`${selectedCard.displayName}\` - ARE YOU SURE YOU WANT TO UPDATE IT FOR EVERYONE`) });
+        sentMsg.edit({ embeds: [utils.embed(`happy`, `YOU SELECTED A CARD WITH INDEX \`${selectedCardIndex + 1}\`: \`${selectedCard.displayName}\` - ARE YOU SURE YOU WANT TO UPDATE IT FOR EVERYONE`) ]});
         // Confirmation step
         await sentMsg.react("✅");
         await sentMsg.react("❌");
@@ -66,25 +66,25 @@ module.exports = {
               // Update all instances of the selected card in the database
               db.update({ name: selectedCard.name }, { $set: { displayName: selectedCard.displayName, image: selectedCard.image, description: selectedCard.description, rarity: selectedCard.rarity } }, { multi: true }, function (err, numReplaced) {
                 if (err) {
-                  sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE UPDATING THE CARD: \`\`\`${err}\`\`\``, "Red") })
+                  sentMsg.edit({ embeds: [utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE UPDATING THE CARD: \`\`\`${err}\`\`\``, "Red")] })
                 } else {
-                  sentMsg.edit({ embed: utils.embed(`happy`, `UPDATED \`${numReplaced}\` CARDS WITH THE NEW INFO FOR \`${selectedCard.displayName}\``) })
+                  sentMsg.edit({ embeds: [utils.embed(`happy`, `UPDATED \`${numReplaced}\` CARDS WITH THE NEW INFO FOR \`${selectedCard.displayName}\``)] })
                   db.persistence.compactDatafile()
                   sentMsg.reactions.removeAll();
                 }
               });
             } catch (err) {
-              sentMsg.edit({ embed: utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red") });
+              sentMsg.edit({ embeds: [utils.embed(`malfunction`, `AN ERROR OCCURRED WHILE DELETING THE CARD: \`\`\`${err}\`\`\``, "Red")] });
             }
           } else {
-            sentMsg.edit({ embed: utils.embed(`sad`, `OK THANKS FOR WASTING MY TIME`) });
+            sentMsg.edit({ embeds: [utils.embed(`sad`, `OK THANKS FOR WASTING MY TIME`)] });
           }
         });
       } catch (err) {
         if (err instanceof Discord.Collection) {
-          sentMsg.edit({ embed: utils.embed(`angry`, `REQUEST EXPIRED`), content: null });
+          sentMsg.edit({ embeds: [utils.embed(`angry`, `REQUEST EXPIRED`)], content: null });
         } else {
-          sentMsg.edit({ embed: utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red") });
+          sentMsg.edit({ embeds: [utils.embed(`malfunction`, `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")] });
         }
         await sentMsg.reactions.removeAll();
       }

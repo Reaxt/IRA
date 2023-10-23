@@ -7,9 +7,9 @@ module.exports = {
   desc:"Makes the bot leave the voice channel and reset the queue.",
   music:true,
   func:function(message){
-  	if(!message.guild.voice?.connection) return message.channel.send({embed:utils.embed("sad","HOW DO I LEAVE A PLACE I'M NOT IN")})
+  	if(!message.guild.voice?.connection) return message.channel.send({embeds:[utils.embed("sad","HOW DO I LEAVE A PLACE I'M NOT IN")]})
     try {music.events.emit("end", message)} catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``)})
+      message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``)]})
     }
   }
 }

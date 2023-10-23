@@ -43,7 +43,15 @@ module.exports = (expression, content, color, footer) => {
   let result = new Discord.EmbedBuilder().setTitle("S4N-D4L").setColor(Ecolor).setThumbnail(url).setDescription(content)
 
   if(footer != undefined) {
-    result.setFooter(footer)
+    let footer_obj = footer
+    if(Array.isArray(footer)){
+      if(footer.length === 2){
+        footer_obj = {text: footer[0], iconURL: footer[1]}
+    }
+  }else{
+    footer_obj = {text: footer}
+  }
+    result.setFooter(footer_obj)
   }
   return result
 }

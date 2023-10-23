@@ -157,7 +157,7 @@ function probeRarity(searchOptions, rarity) {
 // callback: function(message, card_doc)
 function getCardfromID(message, card_id, callback) {
 	db.findOne({_id:card_id}, (err, doc) => {
-		if (err) message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")}) 
+		if (err) message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]}) 
 		else callback(message, card_doc)
 	})
 }
@@ -218,7 +218,7 @@ function fuseCards(message, user, cardDoc, callback) {
 							genuine = true;
 						}
 						db.remove({_id:docs[i]._id}, {}, (err, numRemoved) => {
-							if (err || numRemoved === 0) message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")}) 
+							if (err || numRemoved === 0) message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]}) 
 						}) 
 					} else {
 						selfFuseAvoided = true;
@@ -257,13 +257,13 @@ function getRefCard(message, cardName) {
 function favoriteCard(message, cardDoc) {
 	db.update({_id:cardDoc._id},{$set: {favorite: true} }, {}, (err) => {
 		if (err) 
-			return message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")}) 
+			return message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]}) 
 	})
 }
 function unFavoriteCard(message, cardDoc) {
 	db.update({_id:cardDoc._id},{$set: {favorite: false} }, {}, (err) => {
 		if (err) 
-			return message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")}) 
+			return message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]}) 
 	})
 }
 function updateCard(doc) {

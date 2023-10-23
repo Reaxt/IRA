@@ -6,7 +6,7 @@ module.exports = {
   hidden:true,
   func:function(message){
   	var msgParams = message.content.substring(message.content.indexOf(" ")+1);
-  	//eval(`message.channel.send({embed:utils.embed(${msgParams}")});`);
+  	//eval(`message.channel.send({embeds:[utils.embed(${msgParams}")]});`);
   	message.delete();
   }
 }

@@ -21,7 +21,7 @@ module.exports = {
     		content = message.content.substring(message.content.indexOf(" "))
 
     	} else{
-    		return message.channel.send({embed:utils.embed("malfunction", "NOT A REAL CHANNEL")})
+    		return message.channel.send({embeds:[utils.embed("malfunction", "NOT A REAL CHANNEL")]})
 
     	}
     }
@@ -38,15 +38,15 @@ module.exports = {
 			if (message.attachments && message.attachments.size > 0) {
 				const attachment = new Attachment(message.attachments.first().url)
 				targetChannel.send(content, attachment).catch(err => {
-					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
+					message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")]})
 				})
 			} else {
 				targetChannel.send(content).catch(err => {
-					message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
+					message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")]})
 				})
 			}
 		} else {
-			message.channel.send({embed:utils.embed("malfunction", "IT HAS TO BE A *TEXT* CHANNEL")})
+			message.channel.send({embeds:[utils.embed("malfunction", "IT HAS TO BE A *TEXT* CHANNEL")]})
 		}
 		targetChannel.stopTyping();
     }, 700)

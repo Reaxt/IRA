@@ -38,21 +38,21 @@ module.exports = {
         target = message.content.substr(5)
       	type = utils.getaudiotype(target)
       } else {
-	      return message.channel.send({embed:utils.embed("happy", "GIVE ME SOMETHING IF IT'S A DIRECT LINK A YOUTUBE SEARCH OR A SOUNDCLOUD LINK I CAN PLAY IT")})
+	      return message.channel.send({embeds:[utils.embed("happy", "GIVE ME SOMETHING IF IT'S A DIRECT LINK A YOUTUBE SEARCH OR A SOUNDCLOUD LINK I CAN PLAY IT")]})
       }
     }
 
     // initiate the connection
-    if(!message.member.voice.channel) return message.channel.send({embed:utils.embed("sad", "GET IN A VOICE CHANNEL FIRST")})
+    if(!message.member.voice.channel) return message.channel.send({embeds:[utils.embed("sad", "GET IN A VOICE CHANNEL FIRST")]})
     if(!message.guild.me.voice.channel) {
       try {
         await music.summon.func.call(this, message);
       }catch(err) {
         var embed = utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")
-        message.channel.send({embed})
+        message.channel.send({embeds:[embed]})
       }
     }
-    else if(message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embed:utils.embed("sad", "I CAN'T HEAR YOU OVER THERE COME CLOSER")})
+    else if(message.member.voice.channel !== message.guild.me.voice.channel) return message.channel.send({embeds:[utils.embed("sad", "I CAN'T HEAR YOU OVER THERE COME CLOSER")]})
 
     //case 1: use youtube
     if (type === "youtube" || type === "search") {
@@ -61,7 +61,7 @@ module.exports = {
         var result = global.queue.filter(function( obj ) {
           return obj.user.id == message.author.id;
         });
-        if(result.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("angry", "QUIT HOGGING THE QUEUE")})
+        if(result.length === hogqueuethreshold) return message.channel.send({embeds:[utils.embed("angry", "QUIT HOGGING THE QUEUE")]})
         let time = utils.tomins(info.player_response.videoDetails.lengthSeconds)
         let seconds = time[1]
         if(seconds < 10) seconds = "0" + time[1].toString()
@@ -74,21 +74,21 @@ module.exports = {
             "seconds":seconds, 
             "startTime":0, 
             "type":"youtube"})
-        message.channel.send({embed:utils.embed("track_played", `QUEUED \`${info.player_response.videoDetails.title}\``)})
+        message.channel.send({embeds:[utils.embed("track_played", `QUEUED \`${info.player_response.videoDetails.title}\``)]})
         setTimeout(function () {
           music.play.func(message)
         }, 500);
       } catch (err) {
         search(message.content.slice(5), searchopts, function(err, results) {
-          if(err) return message.channel.send({embed:utils.embed("malfunction",`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
-          if(results.length === 0) return message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`NO RESULTS FOUND.\`\`\``)})
+          if(err) return message.channel.send({embeds:[utils.embed("malfunction",`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")]})
+          if(results.length === 0) return message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`NO RESULTS FOUND.\`\`\``)]})
           
           results = results.map((r) => {
             r.title = entities.decode(r.title)
             return r;
           })
 
-          message.channel.send({embed:utils.embed("happy",results.map(r => `${results.indexOf(r) + 1}  ${r.title}`))}).then(message1 => {
+          message.channel.send({embeds:[utils.embed("happy",results.map(r => `${results.indexOf(r) + 1}  ${r.title}`))]}).then(message1 => {
             var i = 0
             utils.numreact(message1, i, 5)
             //2500
@@ -102,7 +102,7 @@ module.exports = {
                 var result = global.queue.filter(function( obj ) {
                   return obj.user.id == message.author.id;
                 });
-                if(result.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("angry", "QUIT QUEUE-HOGGING")})
+                if(result.length === hogqueuethreshold) return message.channel.send({embeds:[utils.embed("angry", "QUIT QUEUE-HOGGING")]})
                 var info = await ytdl.getInfo(results[numreactions.indexOf(r.emoji.name)].id);
                 let time = utils.tomins(info.player_response.videoDetails.lengthSeconds)
                 let seconds = time[1] 
@@ -115,12 +115,12 @@ module.exports = {
                     "seconds":seconds, 
                     "startTime":0,
                     "type":"youtube"})
-                message.channel.send({embed:utils.embed("track_played", `QUEUED \`${results[numreactions.indexOf(r.emoji.name)].title}\``)})
+                message.channel.send({embeds:[utils.embed("track_played", `QUEUED \`${results[numreactions.indexOf(r.emoji.name)].title}\``)]})
                 setTimeout(function () {
                   music.play.func(message)
                 }, 500);
               } catch (err) {
-                message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``)});
+                message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``)]});
               }
             })
           })
@@ -130,17 +130,17 @@ module.exports = {
     else if (type == "soundcloud") {
       request(`http://api.soundcloud.com/resolve?url=${target}&client_id=${config.scid}`, (error, response, body) => {
         if (error) { //request error case
-          message.channel.send({embed:utils.embed("malfunction", `WHAT THE HELL KIND OF GYM MUSIC IS THIS \`\`\`${error}\`\`\``,"Red")})
+          message.channel.send({embeds:[utils.embed("malfunction", `WHAT THE HELL KIND OF GYM MUSIC IS THIS \`\`\`${error}\`\`\``,"Red")]})
         }
         if (!body) {
-          return message.channel.send({embed:utils.embed("sad","WHAT THE HELL KIND OF GYM MUSIC IS THIS","Red")});
+          return message.channel.send({embeds:[utils.embed("sad","WHAT THE HELL KIND OF GYM MUSIC IS THIS","Red")]});
         }
         track = JSON.parse(body);
-        if (track.kind === "playlist") return message.channel.send({embed:utils.embed("sad","PLAYLISTS AREN'T DONE YET COME BACK WHEN THEY'RE FINISHED","Red")});
+        if (track.kind === "playlist") return message.channel.send({embeds:[utils.embed("sad","PLAYLISTS AREN'T DONE YET COME BACK WHEN THEY'RE FINISHED","Red")]});
         var result = global.queue.filter(function( obj ) {
           return obj.user.id == message.author.id;
         });
-        if(result.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("angry", "QUIT QUEUE-HOGGING")})
+        if(result.length === hogqueuethreshold) return message.channel.send({embeds:[utils.embed("angry", "QUIT QUEUE-HOGGING")]})
         //duration conversion (ms to min:sec)
         let length_seconds = Math.floor(track.duration/1000)
         let time = utils.tomins(length_seconds)
@@ -156,7 +156,7 @@ module.exports = {
             "startTime":0,
             "permalink_url":track.permalink_url, 
             "type":"soundcloud"}) 
-        message.channel.send({embed:utils.embed("track_played", `QUEUED \`${track.title}\``)})
+        message.channel.send({embeds:[utils.embed("track_played", `QUEUED \`${track.title}\``)]})
         setTimeout(function () {
           music.play.func(message)
         }, 500);
@@ -167,7 +167,7 @@ module.exports = {
       var prevQueues = global.queue.filter(function( obj ) {
         return obj.user.id == message.author.id;
       });
-      if(prevQueues.length === hogqueuethreshold) return message.channel.send({embed:utils.embed("angry", "QUIT QUEUE-HOGGING")})
+      if(prevQueues.length === hogqueuethreshold) return message.channel.send({embeds:[utils.embed("angry", "QUIT QUEUE-HOGGING")]})
 
       let url = target;
 
@@ -177,10 +177,10 @@ module.exports = {
           let statusCode = res.statusCode;
           let contentType = res.headers['content-type'];
           if (/4\d\d/.test(statusCode) === true) { // checks 4xx status code
-            message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","Red")})
+            message.channel.send({embeds:[utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","Red")]})
             dispatcher.end();
           } else if (!/^video\/*/.test(contentType) && !/^audio\/*/.test(contentType) ) {
-            message.channel.send({embed:utils.embed("sad", "ONLY SEND ME RAW VIDEO AND AUDIO FILES ALL THIS OTHER STUFF MAKES MY CIRCUITS WOOZY","Red")})
+            message.channel.send({embeds:[utils.embed("sad", "ONLY SEND ME RAW VIDEO AND AUDIO FILES ALL THIS OTHER STUFF MAKES MY CIRCUITS WOOZY","Red")]})
             dispatcher.end();
           } else {
             var info = target.split('/').pop()
@@ -190,14 +190,14 @@ module.exports = {
                 "user":message.author, 
                 "startTime":0,
                 "type":"direct"})
-            message.channel.send({embed:utils.embed("track_played", `QUEUED \`${info}\``)})
+            message.channel.send({embeds:[utils.embed("track_played", `QUEUED \`${info}\``)]})
             setTimeout(function () {
               music.play.func(message)
             }, 500);
           }
         } catch (error) {
           console.log(error);
-          message.channel.send({embed:utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","Red")})
+          message.channel.send({embeds:[utils.embed("sad", "WHAT THE HELL DID YOU JUST SEND ME I CANT READ THIS TRY SOMETHING ELSE","Red")]})
         }
       })();
       

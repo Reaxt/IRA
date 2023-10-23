@@ -62,7 +62,7 @@ module.exports = {
 	  	shopEmbed.setFooter("Abby says: " + abbyQuotes[Math.floor(Math.random()*abbyQuotes.length)], "https://cdn.discordapp.com/attachments/203334579166117888/528414646034628625/abbyhappy.png")
 
 
-		message.channel.send({embed:shopEmbed}).then(sentMsg => {
+		message.channel.send({embeds:[shopEmbed]}).then(sentMsg => {
 	  		var i = 0
 	    	utils.numreact(sentMsg, i, Math.min(numreactions.length, shopList.length))
 
@@ -78,7 +78,7 @@ module.exports = {
 			})
 	  	})
   	}).catch(err => {
-  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+  		message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
   	})
   	
   }
@@ -109,7 +109,7 @@ var shopList = [
 				}, 500)
 				
 			}).catch(()=> {
-		  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+		  		message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
 			})
 		}
 	},
@@ -135,7 +135,7 @@ var shopList = [
 				}, 500)
 				
 			}).catch(()=> {
-		  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+		  		message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
 			})
 		}
 	}

@@ -8,12 +8,12 @@ module.exports = {
   music:true,
   hidden:true,
   func:function(message){
-    if(global.queue.length === 0) return message.channel.send({embed:utils.embed("sad","THERE'S NOTHING LEFT TO PLAY ADD SOMETHING WITH COMMAND[`!add`]")})
-    if(!message.guild.voice.connection) return message.channel.send({embed:utils.embed("sad","I'M NOT THERE LET ME IN WITH COMMAND[`!summon`]")})
+    if(global.queue.length === 0) return message.channel.send({embeds:[utils.embed("sad","THERE'S NOTHING LEFT TO PLAY ADD SOMETHING WITH COMMAND[`!add`]")]})
+    if(!message.guild.voice.connection) return message.channel.send({embeds:[utils.embed("sad","I'M NOT THERE LET ME IN WITH COMMAND[`!summon`]")]})
 
-    if(message.guild.voice.connection.dispatcher || global.playing) return //message.channel.send({embed:utils.embed("angry", "Im already playing stuff")})
+    if(message.guild.voice.connection.dispatcher || global.playing) return //message.channel.send({embeds:[utils.embed("angry", "Im already playing stuff")]})
     try {events.events.emit("play", message)} catch(err) {
-      message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")})
+      message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``,"Red")]})
     }
 
   }

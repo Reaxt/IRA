@@ -27,13 +27,13 @@ module.exports = {
 			userDoc.lastLoan = now;
 
 			global.usermanager.setUser(message, message.author, userDoc).then(() => {
-				message.channel.send({embed:utils.embed("happy", `**\`${message.author.username}\`** TOOK OUT A LOAN OF \`${amount}\` ABBYCOIN`)})
+				message.channel.send({embeds:[utils.embed("happy", `**\`${message.author.username}\`** TOOK OUT A LOAN OF \`${amount}\` ABBYCOIN`)]})
 			}).catch(err => {
-				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+				message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
 			})
 			
 		} else {
-			message.channel.send({embed:utils.embed("sad", `**\`${message.author.username}\`**HANG ON YOUR LOAN REGENERATES IN \`${hm(84600000 - timeSinceLastLoan)}\` HOURS`)})
+			message.channel.send({embeds:[utils.embed("sad", `**\`${message.author.username}\`**HANG ON YOUR LOAN REGENERATES IN \`${hm(84600000 - timeSinceLastLoan)}\` HOURS`)]})
 		}
     })
   }

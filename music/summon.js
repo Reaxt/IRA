@@ -7,8 +7,8 @@ module.exports = {
   hidden:true,
   func:function(message){
     var voiceChannel = message.member.voice.channel
-    if(!voiceChannel) return message.channel.send({embed:utils.embed("sad", "GET IN A VOICE CHANNEL FIRST")})
-    if(message.guild.me.voice.channel) return message.channel.send({embed:utils.embed("sad", "I'M ALREADY IN A VOICE CHANNEL JUST GET IN HERE INSTEAD")})
+    if(!voiceChannel) return message.channel.send({embeds:[utils.embed("sad", "GET IN A VOICE CHANNEL FIRST")]})
+    if(message.guild.me.voice.channel) return message.channel.send({embeds:[utils.embed("sad", "I'M ALREADY IN A VOICE CHANNEL JUST GET IN HERE INSTEAD")]})
     return voiceChannel.join()
   }
 }

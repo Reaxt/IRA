@@ -11,7 +11,7 @@ module.exports = {
   func:async function(message){
     let things = message.content.split(" ")
     var db = new NeDB({filename: './carddata.db'})
-    let sentMsg = await message.channel.send({embed:utils.embed("sad", `YOU SURE YOU WANNA FLUSH EVERYONE'S ETHER RESERVES?`)});
+    let sentMsg = await message.channel.send({embeds:[utils.embed("sad", `YOU SURE YOU WANNA FLUSH EVERYONE'S ETHER RESERVES?`)]});
     sentMsg.react(confirmEmote)
     sentMsg.react(cancelEmote)
     let collector = sentMsg.createReactionCollector(
@@ -36,15 +36,15 @@ module.exports = {
                         }
                         db.update({_id:doc._id}, doc);
                     }
-                    sentMsg.edit({embed:utils.embed(`happy`,`\`parsed ${docs.length} users\``)})
+                    sentMsg.edit({embeds:[utils.embed(`happy`,`\`parsed ${docs.length} users\``)]})
                 })
             } catch(err) {
-                sentMsg.edit({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+                sentMsg.edit({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
                 }
         } else if (r.emoji.name == cancelEmote) {
             collector.stop()
 			sentMsg.reactions.removeAll()
-			sentMsg.edit({embed:utils.embed(`happy`,`ETHER FLUSH CANCELLED!`)})
+			sentMsg.edit({embeds:[utils.embed(`happy`,`ETHER FLUSH CANCELLED!`)]})
 		}
     })
     }

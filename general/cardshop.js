@@ -30,18 +30,18 @@ function buyItem(message, user, shopItem) {
 				shopItem.func(message).catch(err=>{
 					// refund on error
 					global.usermanager.updateUser(message, user, {$inc: {[shopItem.currency]:shopItem.price}})
-					message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+					message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
 				})
 			}).catch(err => {
-				message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+				message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
 			})
 
 
         } else {
-            message.channel.send({embed:utils.embed('angry', "YOU'RE TOO BROKE TO GAMBLE ON CARDBOARD")})
+            message.channel.send({embeds:[utils.embed('angry', "YOU'RE TOO BROKE TO GAMBLE ON CARDBOARD")]})
         }
     }).catch(err => {
-        message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+        message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
     })
 }
 
@@ -69,7 +69,7 @@ module.exports = {
 	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)], "https://cdn.discordapp.com/attachments/512493868839731201/978463721875705966/unknown.png")
 
 
-		message.channel.send({embed:shopEmbed}).then(sentMsg => {
+		message.channel.send({embeds:[shopEmbed]}).then(sentMsg => {
 	  		var i = 0
 	    	utils.numreact(sentMsg, i, Math.min(numreactions.length, shopList.length))
 
@@ -85,7 +85,7 @@ module.exports = {
 			})
 	  	})
   	}).catch(err => {
-  		message.channel.send({embed:utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+  		message.channel.send({embeds:[utils.embed(`malfunction`,`OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
   	})
   	
   }
@@ -110,7 +110,7 @@ var shopList = [
 					global.cardmanager.updateCard(cardDoc).catch(err => reject(err))
 	
 					setTimeout(()=> {
-						message.channel.send(`**${message.member.displayName}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
+						message.channel.send(`**${message.member.displayName}**, Your new card!`, {embeds:[utils.cardEmbed(cardDoc)]})
 						message.channel.stopTyping()
 						resolve()
 					}, 1500)
@@ -142,7 +142,7 @@ for (let prop in eventTypes) {
 						global.cardmanager.updateCard(cardDoc).catch(err => reject(err))
 		
 						setTimeout(()=> {
-							message.channel.send(`**${message.member.displayName}**, Your new card!`, {embed:utils.cardEmbed(cardDoc)})
+							message.channel.send(`**${message.member.displayName}**, Your new card!`, {embeds:[utils.cardEmbed(cardDoc)]})
 							message.channel.stopTyping()
 							resolve()
 						}, 1500)

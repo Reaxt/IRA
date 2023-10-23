@@ -64,7 +64,7 @@ module.exports = {
 
 
   } catch (err) {
-    message.channel.send({embed:utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")})
+    message.channel.send({embeds:[utils.embed("malfunction", `OH THAT'S NOT GOOD \`\`\`${err}\`\`\``, "Red")]})
   }
 
 

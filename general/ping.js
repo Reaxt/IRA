@@ -5,6 +5,6 @@ module.exports = {
   desc:"Pings the bot",
   func:function(message){
   var content = utils.embed("happy", `PONG! THAT TOOK \`${global.client.ws.ping} ms\``)
-    message.channel.send({embed: content})
+    message.channel.send({embeds: [content]})
   }
 }

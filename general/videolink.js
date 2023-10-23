@@ -1,11 +1,12 @@
 const Discord = require("discord.js");
 var utils = require("../utils/index.js")
+//Todo: Remove, since we have screenshare base now.
 module.exports = {
   name:"!videolink",
   desc:"Gets a screenshare video link for your voice channel.",
   func:function(message){
   	var voiceChannel = message.member.voice.channel
-    if(!voiceChannel) return message.channel.send({embed:utils.embed("sad", "BUDDY YOU GOTTA BE IN A VOICE CHANNEL FOR THAT!")})
+    if(!voiceChannel) return message.channel.send({embeds:[utils.embed("sad", "BUDDY YOU GOTTA BE IN A VOICE CHANNEL FOR THAT!")]})
 
     // stuff for updating the url in #voice-chat description
     var urlString = "https://discordapp.com/channels/"+message.guild.id+"/"+message.member.voice.channelID+"/"
@@ -22,6 +23,6 @@ module.exports = {
     	null);
     content.setTitle("🖥️ Screenshare Link");
     content.setFooter("Here's your video link!", "https://cdn.discordapp.com/attachments/203334579166117888/528414646034628625/abbyhappy.png")
-    message.channel.send({embed: content})
+    message.channel.send({embeds: [content]})
   }
 }
