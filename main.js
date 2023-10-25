@@ -235,7 +235,7 @@ client.on("message", message => {
 
     // if bot is mentioned, forward it to owner
     if(message.mentions.has(client.user, options={"ignoreRoles":true, "ignoreEveryone":true})) {
-      utils.messageOwner.func("I've been messaged: "+message.url);
+      logChannel.send("I've been messaged: "+message.url);
     }
 
     // basic input parsing
