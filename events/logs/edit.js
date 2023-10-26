@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 var fs = require("fs")
 var config = JSON.parse(fs.readFileSync("./cfg.json"))
 module.exports = (OldMessage, NewMessage) => {
-    if(NewMessage.author.id === "172002275412279296") return
+    if(NewMessage.author.bot) return
     if(NewMessage.author === NewMessage.client.user) return
     if(NewMessage.channel.type === "dm") return
     if(NewMessage.content === OldMessage.content) return
