@@ -14,12 +14,42 @@ const symbols = {
 // ether 🔹
 // cogs ⚙️
 
-var shopQuotes = [
-	"Ether Shards 🔹 can be purchased in the shop. Careful - they'll expire at the end of the event!",
-	"Crystallized Ether is rare. I'd love to have some as a snack sometime...",
-	"Remember, this isn't gambling! You're spending money for randomized rewards with no monetary value.",
-	"I love capitalism."
-]
+var monkeyQuotes = {
+	"image": "https://cdn.discordapp.com/attachments/512493868839731201/978463721875705966/unknown.png",
+	"quotes": [
+		"Don't tell her I can talk.",
+		"Get this bitch a banana.",
+		"You haven't seen any balloons around here, right?",
+		"Mind pointing me to the bathroom?",
+		"OOOK OOOOK OOK AAAAH AHHHHH",
+		"She peddles falsehoods.",
+		"This ape is \'boutta escape",
+		"I'm a very quiet monkey.",
+		"Did you hear about the monkey that escaped the zoo?",
+		]
+}
+
+var nerfQuotes = {
+	"image": "https://cdn.discordapp.com/attachments/250999587156787210/1165395874902450376/PLACEHOLDER_nerfpic.png",
+	"quotes": [
+		"Ether Shards 🔹 can be purchased in the shop. Careful - they'll expire at the end of the event!",
+		"Crystallized Ether is rare. Looks kinda tasty, too...",
+		"Remember, this isn't gamblin'! You're spending money for randomized rewards with NO monetary value.",
+		"I love capitalism!",
+		"If you buy ten packs at once, you get an extra chance to get no additional rare cards!",
+		"No, cards don't contain the souls of the people they depict. Not yet, anyways.",
+		"\"Foil Cards\"? Oh yeah, I've uh- already used all the ones I found for cookin'.",
+		"I found that monkey in one of the trashcans here a while back. Been callin' him \"Dart\"!",
+		"Since you all kept asking me about hittin' something, I installed a punching bag in the shop! Go wild!"
+		]
+}
+
+var boltyQuotes = {
+    "image": "https://cdn.discordapp.com/attachments/512493868839731201/1166883338926174338/emoji.png",
+    "quotes": [
+            "Bitch"
+             ]
+}
 
 const eventTypes = JSON.parse(fs.readFileSync("./events/eventTypes.json"))
 
@@ -62,11 +92,24 @@ module.exports = {
 
   	let shopEmbed = new Discord.MessageEmbed().setTitle("Heaven Grand Order").setColor("#ff2ecb")
   	global.usermanager.getUser(message, message.author).then(userDoc => {
-  		shopEmbed.setDescription(`${message.author.username}, you have ${userDoc.coins} AbbyCoin and ${userDoc.eventCardCoins?userDoc.eventCardCoins:0}${symbols.eventCardCoins}`)
+  		shopEmbed.setDescription(`\`${message.author.username}\`, YOU HAVE \`${userDoc.coins}\` ABBYCOIN AND \`${userDoc.eventCardCoins?userDoc.eventCardCoins:0}\`${symbols.eventCardCoins}`)
   		for (let i = 0; i < shopList.length; i++) {
 	  		shopEmbed.addField(`${(i+1)}. **${shopList[i].name}**`,`${shopList[i].price}${symbols[shopList[i].currency]}`, true)
 	  	}
-	  	shopEmbed.setFooter(shopQuotes[Math.floor(Math.random()*shopQuotes.length)], "https://cdn.discordapp.com/attachments/512493868839731201/978463721875705966/unknown.png")
+		let monkeyLength = monkeyQuotes["quotes"].length
+		let nerfLength = nerfQuotes["quotes"].length
+		let totalquote = monkeyLength + nerfLength + 1
+		let randnum = utils.randrange(1, totalquote)
+		let quoteSpeaker = boltyQuotes
+		switch(true){
+			case (randnum < monkeyLength):
+				quoteSpeaker = monkeyQuotes
+				break;
+			case (randnum < nerfLength+monkeyLength):
+				quoteSpeaker = nerfQuotes
+				break;
+		}
+	  	shopEmbed.setFooter(utils.getrandom(quoteSpeaker["quotes"]), quoteSpeaker["image"])
 
 
 		message.channel.send({embed:shopEmbed}).then(sentMsg => {

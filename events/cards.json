@@ -165,12 +165,12 @@
     "event": false
   },
   {
-    "name": "Iris",
-    "displayName": "Iris",
+    "name": "Ana",
+    "displayName": "Ana",
     "rarity": 4,
     "notes": "Done",
     "charOwner": "Thai",
-    "imgURL": "https://cdn.discordapp.com/attachments/559307748211425280/562247088382148630/irisfucker.png",
+    "imgURL": "https://cdn.discordapp.com/attachments/512493868839731201/1166248749593530398/ana_fucker.png",
     "attack": 1000,
     "defense": 1800,
     "totalPwr": 2800,
@@ -330,7 +330,7 @@
     "event": false
   },
   {
-    "name": "Seb",
+    "name": "Moka",
     "displayName": "Moka",
     "rarity": 5,
     "notes": "Done",
@@ -420,7 +420,7 @@
     "event": false
   },
   {
-    "name": "Reaxt",
+    "name": "Rea",
     "displayName": "Rea",
     "rarity": 3,
     "notes": "Done",
